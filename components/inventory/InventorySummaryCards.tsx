@@ -124,10 +124,14 @@ export default function InventorySummaryCards({
         const monthData = currentYearData[String(selectedMonth)];
         if (monthData?.기초데이터) {
           // 기말재고: 선택된 월의 월말 재고금액
-          currentEndingStock = monthData.기초데이터.전체재고금액 || 0;
+          currentEndingStock = typeof monthData.기초데이터.전체재고금액 === "number" 
+            ? monthData.기초데이터.전체재고금액 
+            : 0;
           
           // 판매액: 선택된 월의 당월 판매매출
-          currentSales = monthData.기초데이터.전체판매금액 || 0;
+          currentSales = typeof monthData.기초데이터.전체판매금액 === "number"
+            ? monthData.기초데이터.전체판매금액
+            : 0;
 
           // 재고주수 계산
           const weeks = calcWeeksFromBase(
@@ -147,10 +151,14 @@ export default function InventorySummaryCards({
         const monthData = prevYearData[String(selectedMonth)];
         if (monthData?.기초데이터) {
           // 기말재고: 선택된 월의 월말 재고금액
-          prevEndingStock = monthData.기초데이터.전체재고금액 || 0;
+          prevEndingStock = typeof monthData.기초데이터.전체재고금액 === "number"
+            ? monthData.기초데이터.전체재고금액
+            : 0;
           
           // 판매액: 선택된 월의 당월 판매매출
-          prevSales = monthData.기초데이터.전체판매금액 || 0;
+          prevSales = typeof monthData.기초데이터.전체판매금액 === "number"
+            ? monthData.기초데이터.전체판매금액
+            : 0;
 
           // 재고주수 계산
           const weeks = calcWeeksFromBase(
@@ -180,19 +188,41 @@ export default function InventorySummaryCards({
       if (currentYearData) {
         const monthData = currentYearData[String(selectedMonth)];
         if (monthData?.기초데이터) {
-          totalCurrentEndingStock += monthData.기초데이터.전체재고금액 || 0;
-          totalCurrentSales += monthData.기초데이터.전체판매금액 || 0;
+          const totalStock = typeof monthData.기초데이터.전체재고금액 === "number"
+            ? monthData.기초데이터.전체재고금액
+            : 0;
+          const totalSales = typeof monthData.기초데이터.전체판매금액 === "number"
+            ? monthData.기초데이터.전체판매금액
+            : 0;
+          const agencyStock = typeof monthData.기초데이터.대리상재고금액 === "number"
+            ? monthData.기초데이터.대리상재고금액
+            : 0;
+          const orStock = typeof monthData.기초데이터.직영재고금액 === "number"
+            ? monthData.기초데이터.직영재고금액
+            : 0;
+          const agencySales = typeof monthData.기초데이터.대리상판매금액 === "number"
+            ? monthData.기초데이터.대리상판매금액
+            : 0;
+          const orSales = typeof monthData.기초데이터.직영판매금액 === "number"
+            ? monthData.기초데이터.직영판매금액
+            : 0;
+          const daysInMonth = typeof monthData.기초데이터.월일수 === "number"
+            ? monthData.기초데이터.월일수
+            : 0;
+
+          totalCurrentEndingStock += totalStock;
+          totalCurrentSales += totalSales;
           
           // 기초데이터 합산 (월일수는 첫 번째 아이템의 값 사용)
           if (totalCurrentBaseData.월일수 === 0) {
-            totalCurrentBaseData.월일수 = monthData.기초데이터.월일수 || 0;
+            totalCurrentBaseData.월일수 = daysInMonth;
           }
-          totalCurrentBaseData.전체재고금액 += monthData.기초데이터.전체재고금액 || 0;
-          totalCurrentBaseData.대리상재고금액 += monthData.기초데이터.대리상재고금액 || 0;
-          totalCurrentBaseData.직영재고금액 += monthData.기초데이터.직영재고금액 || 0;
-          totalCurrentBaseData.전체판매금액 += monthData.기초데이터.전체판매금액 || 0;
-          totalCurrentBaseData.대리상판매금액 += monthData.기초데이터.대리상판매금액 || 0;
-          totalCurrentBaseData.직영판매금액 += monthData.기초데이터.직영판매금액 || 0;
+          totalCurrentBaseData.전체재고금액 += totalStock;
+          totalCurrentBaseData.대리상재고금액 += agencyStock;
+          totalCurrentBaseData.직영재고금액 += orStock;
+          totalCurrentBaseData.전체판매금액 += totalSales;
+          totalCurrentBaseData.대리상판매금액 += agencySales;
+          totalCurrentBaseData.직영판매금액 += orSales;
         }
       }
 
@@ -200,19 +230,41 @@ export default function InventorySummaryCards({
       if (prevYearData) {
         const monthData = prevYearData[String(selectedMonth)];
         if (monthData?.기초데이터) {
-          totalPrevEndingStock += monthData.기초데이터.전체재고금액 || 0;
-          totalPrevSales += monthData.기초데이터.전체판매금액 || 0;
+          const totalStock = typeof monthData.기초데이터.전체재고금액 === "number"
+            ? monthData.기초데이터.전체재고금액
+            : 0;
+          const totalSales = typeof monthData.기초데이터.전체판매금액 === "number"
+            ? monthData.기초데이터.전체판매금액
+            : 0;
+          const agencyStock = typeof monthData.기초데이터.대리상재고금액 === "number"
+            ? monthData.기초데이터.대리상재고금액
+            : 0;
+          const orStock = typeof monthData.기초데이터.직영재고금액 === "number"
+            ? monthData.기초데이터.직영재고금액
+            : 0;
+          const agencySales = typeof monthData.기초데이터.대리상판매금액 === "number"
+            ? monthData.기초데이터.대리상판매금액
+            : 0;
+          const orSales = typeof monthData.기초데이터.직영판매금액 === "number"
+            ? monthData.기초데이터.직영판매금액
+            : 0;
+          const daysInMonth = typeof monthData.기초데이터.월일수 === "number"
+            ? monthData.기초데이터.월일수
+            : 0;
+
+          totalPrevEndingStock += totalStock;
+          totalPrevSales += totalSales;
           
           // 기초데이터 합산
           if (totalPrevBaseData.월일수 === 0) {
-            totalPrevBaseData.월일수 = monthData.기초데이터.월일수 || 0;
+            totalPrevBaseData.월일수 = daysInMonth;
           }
-          totalPrevBaseData.전체재고금액 += monthData.기초데이터.전체재고금액 || 0;
-          totalPrevBaseData.대리상재고금액 += monthData.기초데이터.대리상재고금액 || 0;
-          totalPrevBaseData.직영재고금액 += monthData.기초데이터.직영재고금액 || 0;
-          totalPrevBaseData.전체판매금액 += monthData.기초데이터.전체판매금액 || 0;
-          totalPrevBaseData.대리상판매금액 += monthData.기초데이터.대리상판매금액 || 0;
-          totalPrevBaseData.직영판매금액 += monthData.기초데이터.직영판매금액 || 0;
+          totalPrevBaseData.전체재고금액 += totalStock;
+          totalPrevBaseData.대리상재고금액 += agencyStock;
+          totalPrevBaseData.직영재고금액 += orStock;
+          totalPrevBaseData.전체판매금액 += totalSales;
+          totalPrevBaseData.대리상판매금액 += agencySales;
+          totalPrevBaseData.직영판매금액 += orSales;
         }
       }
     });

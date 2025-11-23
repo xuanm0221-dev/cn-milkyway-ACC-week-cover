@@ -89,9 +89,17 @@ export default function InventoryMonthlySummaryCard({
         if (currentYearData) {
           const monthData = currentYearData[String(month)];
           if (monthData?.기초데이터) {
-            stockAmountCurrent += monthData.기초데이터.전체재고금액 || 0;
-            salesAmountCurrent += monthData.기초데이터.전체판매금액 || 0;
+            const totalStockAmount =
+              typeof monthData.기초데이터.전체재고금액 === "number"
+                ? monthData.기초데이터.전체재고금액
+                : 0;
+            const totalSalesAmount =
+              typeof monthData.기초데이터.전체판매금액 === "number"
+                ? monthData.기초데이터.전체판매금액
+                : 0;
 
+            stockAmountCurrent += totalStockAmount;
+            salesAmountCurrent += totalSalesAmount;
           }
         }
 
@@ -100,8 +108,17 @@ export default function InventoryMonthlySummaryCard({
         if (prevYearData) {
           const monthData = prevYearData[String(month)];
           if (monthData?.기초데이터) {
-            stockAmountPrev += monthData.기초데이터.전체재고금액 || 0;
-            salesAmountPrev += monthData.기초데이터.전체판매금액 || 0;
+            const totalStockAmount =
+              typeof monthData.기초데이터.전체재고금액 === "number"
+                ? monthData.기초데이터.전체재고금액
+                : 0;
+            const totalSalesAmount =
+              typeof monthData.기초데이터.전체판매금액 === "number"
+                ? monthData.기초데이터.전체판매금액
+                : 0;
+
+            stockAmountPrev += totalStockAmount;
+            salesAmountPrev += totalSalesAmount;
           }
         }
       });
