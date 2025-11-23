@@ -1,0 +1,82 @@
+{
+  "common": {
+    "loading": "数据加载中...",
+    "error": "无法加载数据。",
+    "weeks": "周",
+    "month": "月",
+    "year": "年",
+    "all": "全部",
+    "expand": "展开",
+    "collapse": "折叠",
+    "subcategoryView": "查看小分类",
+    "noSales": "销售0"
+  },
+  "brands": {
+    "MLB": "MLB",
+    "MLB_KIDS": "MLB KIDS",
+    "DISCOVERY": "DISCOVERY"
+  },
+  "categories": {
+    "all": "全部",
+    "shoes": "鞋",
+    "headwear": "帽",
+    "bag": "包",
+    "acc_etc": "其他"
+  },
+  "page": {
+    "title": "库存周数仪表板",
+    "description": "库存周数热图仪表板",
+    "directSalesForecastWeeks": "直营销售预计周数"
+  },
+  "heatmap": {
+    "title": "库存资产分析",
+    "inventorySummary": "项目别库存 SUMMARY",
+    "monthlyInventorySales": "月度库存 & 销售金额 & 库存周数",
+    "heatmapTitle": "库存周数热图",
+    "baseMonth": "基准月",
+    "description": "代理商 + 直营合计，库存金额(M)，销售金额(M)，库存周数趋势及YOY",
+    "heatmapDescription": "月度库存周数分布及代理商/仓库库存区分"
+  },
+  "summary": {
+    "all": "全部",
+    "stockWeeks": "库存周数",
+    "endingStock": "期末库存(M)",
+    "sales": "销售额(M)",
+    "currentYear": "当年",
+    "prevYear": "去年",
+    "yoy": "YOY"
+  },
+  "heatmapTable": {
+    "totalStockWeeks": "总库存周数",
+    "agencyStockWeeks": "代理商库存周数",
+    "warehouseStockWeeks": "仓库库存周数",
+    "agency": "代理商",
+    "warehouse": "仓库库存",
+    "yoyTotal": "同比(总计)",
+    "yoyAgency": "同比(代理商)",
+    "yoyWarehouse": "同比(仓库库存)"
+  },
+  "chart": {
+    "stock": "库存",
+    "sales": "销售金额",
+    "stockWeeks": "库存周数",
+    "amountM": "金额(M)"
+  },
+  "monthlyTable": {
+    "stockWeeks": "库存周数",
+    "salesM": "销售金额(M)",
+    "salesYOY": "销售金额 YOY",
+    "stockM": "库存资产(M)",
+    "stockYOY": "库存资产 YOY",
+    "category": "区分"
+  },
+  "legend": {
+    "weeks0": "0周",
+    "weeks1to19": "1~19周",
+    "weeks20to29": "20~29周",
+    "weeks30to39": "30~39周",
+    "weeks40to49": "40~49周",
+    "weeks50plus": "50周以上"
+  }
+}
+

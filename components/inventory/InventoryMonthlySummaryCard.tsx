@@ -15,6 +15,7 @@ import {
   ComposedChart,
 } from "recharts";
 import { StockWeeksData, CATEGORY_ORDER, CATEGORY_NAMES } from "@/types/stock-weeks";
+import { useT, formatNumber } from "@/lib/i18n";
 
 interface InventoryMonthlySummaryCardProps {
   data: StockWeeksData;
@@ -44,6 +45,8 @@ export default function InventoryMonthlySummaryCard({
   selectedCategory,
   nWeeks,
 }: InventoryMonthlySummaryCardProps) {
+  const t = useT();
+  
   // 기준 연도와 전년도 추출
   const { currentYear, prevYear } = useMemo(() => {
     const years = new Set<string>();
@@ -172,10 +175,15 @@ export default function InventoryMonthlySummaryCard({
   }, [data, selectedCategory, currentYear, prevYear, nWeeks]);
 
   // 카테고리명
-  const categoryLabel =
-    selectedCategory === "전체"
-      ? "전체"
-      : CATEGORY_NAMES[selectedCategory] || selectedCategory;
+  const getCategoryLabel = (): string => {
+    if (selectedCategory === "전체") return t("common.all");
+    if (selectedCategory === "Shoes") return t("categories.shoes");
+    if (selectedCategory === "Headwear") return t("categories.headwear");
+    if (selectedCategory === "Bag") return t("categories.bag");
+    if (selectedCategory === "Acc_etc") return t("categories.acc_etc");
+    return CATEGORY_NAMES[selectedCategory] || selectedCategory;
+  };
+  const categoryLabel = getCategoryLabel();
 
   return (
     <div className="p-6">
@@ -194,24 +202,24 @@ export default function InventoryMonthlySummaryCard({
               yAxisId="left"
               tick={{ fontSize: 12, fill: "#64748b" }}
               stroke="#cbd5e1"
-              tickFormatter={(value) => `${value.toLocaleString('ko-KR')}M`}
+              tickFormatter={(value) => `${formatNumber(value)}M`}
             />
             <YAxis
               yAxisId="right"
               orientation="right"
               tick={{ fontSize: 12, fill: "#64748b" }}
               stroke="#cbd5e1"
-              tickFormatter={(value) => `${value}주`}
+              tickFormatter={(value) => `${value}${t("common.weeks")}`}
             />
             <Tooltip
               formatter={(value: any, name: string) => {
-                if (name === "재고주수") {
-                  return [`${value}주`, name];
+                if (name === t("chart.stockWeeks")) {
+                  return [`${value}${t("common.weeks")}`, name];
                 }
                 // 재고와 판매매출은 K(천단위)로 표시, 천 단위 구분자 포함
                 // value는 백만 단위이므로, K로 표시하려면 * 1000
                 const valueInK = Math.round(Number(value) * 1000);
-                const formattedValue = valueInK.toLocaleString('ko-KR');
+                const formattedValue = formatNumber(valueInK);
                 return [`${formattedValue}K`, name];
               }}
               labelStyle={{ color: "#1e293b", fontWeight: 600 }}
@@ -243,7 +251,7 @@ export default function InventoryMonthlySummaryCard({
             <Bar
               yAxisId="left"
               dataKey="stockAmountCurrent"
-              name="재고"
+              name={t("chart.stock")}
               fill="#1e40af"
               radius={[4, 4, 0, 0]}
             />
@@ -251,7 +259,7 @@ export default function InventoryMonthlySummaryCard({
             <Bar
               yAxisId="left"
               dataKey="salesAmountCurrent"
-              name="판매매출"
+              name={t("chart.sales")}
               fill="#60a5fa"
               radius={[4, 4, 0, 0]}
             />
@@ -260,7 +268,7 @@ export default function InventoryMonthlySummaryCard({
               yAxisId="right"
               type="monotone"
               dataKey="weeksCurrent"
-              name="재고주수"
+              name={t("chart.stockWeeks")}
               stroke="#9333ea"
               strokeWidth={2}
               dot={{ fill: "#9333ea", r: 4 }}
@@ -283,7 +291,7 @@ export default function InventoryMonthlySummaryCard({
                   key={item.month}
                   className="px-3 py-2 text-center text-xs font-semibold text-slate-800"
                 >
-                  {item.month}월
+                  {item.month}{t("common.month")}
                 </th>
               ))}
             </tr>
@@ -292,7 +300,7 @@ export default function InventoryMonthlySummaryCard({
             {/* 재고주수 행 (당년도) - 연한 회색 배경 */}
             <tr className="border-b border-slate-100 bg-slate-50">
               <td className="px-4 py-2 text-sm font-medium text-slate-900">
-                재고주수
+                {t("monthlyTable.stockWeeks")}
               </td>
               {monthlyData.map((item) => (
                 <td
@@ -301,14 +309,14 @@ export default function InventoryMonthlySummaryCard({
                 >
                   {item.weeksCurrent === null
                     ? "-"
-                    : `${Math.round(item.weeksCurrent)}주`}
+                    : `${Math.round(item.weeksCurrent)}${t("common.weeks")}`}
                 </td>
               ))}
             </tr>
             {/* 판매매출(M) 행 (당년도) */}
             <tr className="border-b border-slate-100">
               <td className="px-4 py-2 text-sm font-medium text-slate-900">
-                판매매출(M)
+                {t("monthlyTable.salesM")}
               </td>
               {monthlyData.map((item) => {
                 // 이미 백만 단위이므로 그대로 사용
@@ -319,7 +327,7 @@ export default function InventoryMonthlySummaryCard({
                   >
                     {item.salesAmountCurrent === 0 || !item.salesAmountCurrent
                       ? "-"
-                      : `${Math.round(item.salesAmountCurrent).toLocaleString('ko-KR')}M`}
+                      : `${formatNumber(Math.round(item.salesAmountCurrent))}M`}
                   </td>
                 );
               })}
@@ -327,7 +335,7 @@ export default function InventoryMonthlySummaryCard({
             {/* 판매매출 YOY 행 - 연한 회색 배경 */}
             <tr className="border-b border-slate-100 bg-slate-50">
               <td className="px-4 py-2 text-sm font-medium text-slate-900">
-                판매매출 YOY
+                {t("monthlyTable.salesYOY")}
               </td>
               {monthlyData.map((item) => (
                 <td
@@ -343,7 +351,7 @@ export default function InventoryMonthlySummaryCard({
             {/* 재고자산(M) 행 (당년도) */}
             <tr className="border-b border-slate-100">
               <td className="px-4 py-2 text-sm font-medium text-slate-900">
-                재고자산(M)
+                {t("monthlyTable.stockM")}
               </td>
               {monthlyData.map((item) => {
                 // 이미 백만 단위이므로 그대로 사용
@@ -354,7 +362,7 @@ export default function InventoryMonthlySummaryCard({
                   >
                     {item.stockAmountCurrent === 0 || !item.stockAmountCurrent
                       ? "-"
-                      : `${Math.round(item.stockAmountCurrent).toLocaleString('ko-KR')}M`}
+                      : `${formatNumber(Math.round(item.stockAmountCurrent))}M`}
                   </td>
                 );
               })}
@@ -362,7 +370,7 @@ export default function InventoryMonthlySummaryCard({
             {/* 재고자산 YOY 행 - 연한 회색 배경 */}
             <tr className="border-b border-slate-100 bg-slate-50">
               <td className="px-4 py-2 text-sm font-medium text-slate-900">
-                재고자산 YOY
+                {t("monthlyTable.stockYOY")}
               </td>
               {monthlyData.map((item) => (
                 <td

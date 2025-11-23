@@ -1,0 +1,82 @@
+{
+  "common": {
+    "loading": "데이터 로딩 중...",
+    "error": "데이터를 불러올 수 없습니다.",
+    "weeks": "주",
+    "month": "월",
+    "year": "년",
+    "all": "전체",
+    "expand": "펼치기",
+    "collapse": "접기",
+    "subcategoryView": "소분류 보기",
+    "noSales": "판매0"
+  },
+  "brands": {
+    "MLB": "MLB",
+    "MLB_KIDS": "MLB KIDS",
+    "DISCOVERY": "DISCOVERY"
+  },
+  "categories": {
+    "all": "전체",
+    "shoes": "신발",
+    "headwear": "모자",
+    "bag": "가방",
+    "acc_etc": "기타"
+  },
+  "page": {
+    "title": "재고주수 대시보드",
+    "description": "재고주수 히트맵 대시보드",
+    "directSalesForecastWeeks": "직영 판매예정 주수"
+  },
+  "heatmap": {
+    "title": "재고자산 분석",
+    "inventorySummary": "아이템별 재고 SUMMARY",
+    "monthlyInventorySales": "월별 재고 & 판매매출 & 재고주수",
+    "heatmapTitle": "재고주수 히트맵",
+    "baseMonth": "기준 월",
+    "description": "대리상 + 직영 합산, 재고금액(M), 판매매출(M), 재고주수 추이 및 YOY",
+    "heatmapDescription": "월별 재고주수 분포 및 대리상/창고재고 구분"
+  },
+  "summary": {
+    "all": "전체",
+    "stockWeeks": "재고주수",
+    "endingStock": "기말재고(M)",
+    "sales": "판매액(M)",
+    "currentYear": "당년",
+    "prevYear": "전년",
+    "yoy": "YOY"
+  },
+  "heatmapTable": {
+    "totalStockWeeks": "전체재고주수",
+    "agencyStockWeeks": "대리상재고주수",
+    "warehouseStockWeeks": "창고재고주수",
+    "agency": "대리상",
+    "warehouse": "창고재고",
+    "yoyTotal": "전년대비(전체)",
+    "yoyAgency": "전년대비(대리상)",
+    "yoyWarehouse": "전년대비(창고재고)"
+  },
+  "chart": {
+    "stock": "재고",
+    "sales": "판매매출",
+    "stockWeeks": "재고주수",
+    "amountM": "금액(M)"
+  },
+  "monthlyTable": {
+    "stockWeeks": "재고주수",
+    "salesM": "판매매출(M)",
+    "salesYOY": "판매매출 YOY",
+    "stockM": "재고자산(M)",
+    "stockYOY": "재고자산 YOY",
+    "category": "구분"
+  },
+  "legend": {
+    "weeks0": "0주",
+    "weeks1to19": "1~19주",
+    "weeks20to29": "20~29주",
+    "weeks30to39": "30~39주",
+    "weeks40to49": "40~49주",
+    "weeks50plus": "50주 이상"
+  }
+}
+

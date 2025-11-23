@@ -2,5 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Microsoft YaHei 폰트 (중국어용) */
+@layer base {
+  body[data-lang="zh"] {
+    font-family: "Microsoft YaHei", "微软雅黑", "SimHei", "黑体", Arial, sans-serif;
+  }
+  
+  body[data-lang="ko"] {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+}
+
 
 

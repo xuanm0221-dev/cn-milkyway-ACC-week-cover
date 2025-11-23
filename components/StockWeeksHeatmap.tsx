@@ -7,6 +7,7 @@ import { calcWeeksFromBase, WeeksKind } from "@/utils/calc-weeks";
 import { formatSubcategoryLabel } from "@/utils/subcategory-names";
 import InventoryMonthlySummaryCard from "@/components/inventory/InventoryMonthlySummaryCard";
 import InventorySummaryCards from "@/components/inventory/InventorySummaryCards";
+import { useT, formatNumber } from "@/lib/i18n";
 
 interface StockWeeksHeatmapProps {
   data: StockWeeksData;
@@ -18,6 +19,8 @@ interface StockWeeksHeatmapProps {
  * 재고주수 히트맵 컴포넌트
  */
 export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHeatmapProps) {
+  const t = useT();
+  
   // 중분류 탭 선택 상태 ("전체" | "Shoes" | "Headwear" | "Bag" | "Acc_etc")
   const [selectedCategory, setSelectedCategory] = useState<string>("전체");
   
@@ -35,11 +38,11 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
   
   // 탭 옵션 정의
   const categoryTabs = [
-    { key: "전체", label: "전체" },
-    { key: "Shoes", label: "신발" },
-    { key: "Headwear", label: "모자" },
-    { key: "Bag", label: "가방" },
-    { key: "Acc_etc", label: "기타" },
+    { key: "전체", label: t("categories.all") },
+    { key: "Shoes", label: t("categories.shoes") },
+    { key: "Headwear", label: t("categories.headwear") },
+    { key: "Bag", label: t("categories.bag") },
+    { key: "Acc_etc", label: t("categories.acc_etc") },
   ];
 
   /**
@@ -149,7 +152,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                         {/* 전체재고주수 행 */}
                         <tr className="bg-slate-50">
                           <td className="px-3 py-2.5 text-sm font-semibold text-slate-900 border-b border-slate-100">
-                            {formatSubcategoryLabel(subCategory)}({year}년)
+                            {formatSubcategoryLabel(subCategory)}({year}{t("common.year")})
                           </td>
                           {months.map((month) => {
                             const monthData = subYearData[String(month)];
@@ -159,7 +162,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                                 key={month}
                                 className={`px-3 py-2 text-xs text-center border-b border-slate-100 transition-all hover:brightness-105 ${getHeatmapClass(value)}`}
                               >
-                                {formatWeeksValue(value)}
+                                {formatWeeksValue(value, t)}
                               </td>
                             );
                           })}
@@ -167,7 +170,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                         {/* 대리상 행 */}
                         <tr className="bg-white">
                           <td className="px-3 py-2 text-xs text-slate-600 pl-8 border-b border-slate-100">
-                            - 대리상
+                            - {t("heatmapTable.agency")}
                           </td>
                           {months.map((month) => {
                             const monthData = subYearData[String(month)];
@@ -177,7 +180,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                                 key={month}
                                 className={`px-3 py-2 text-xs text-center border-b border-slate-100 transition-all hover:brightness-105 ${getHeatmapClass(value)}`}
                               >
-                                {formatWeeksValue(value)}
+                                {formatWeeksValue(value, t)}
                               </td>
                             );
                           })}
@@ -185,7 +188,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                         {/* 창고재고 행 */}
                         <tr className="bg-white">
                           <td className="px-3 py-2 text-xs text-slate-600 pl-8 border-b border-slate-100">
-                            - 창고재고
+                            - {t("heatmapTable.warehouse")}
                           </td>
                           {months.map((month) => {
                             const monthData = subYearData[String(month)];
@@ -195,7 +198,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                                 key={month}
                                 className="px-3 py-2 text-xs text-center border-b border-slate-100 bg-white"
                               >
-                                {formatWeeksValue(value)}
+                                {formatWeeksValue(value, t)}
                               </td>
                             );
                           })}
@@ -331,31 +334,31 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
           {/* 히트맵 색상 범례 (첫 번째 섹션에만 표시) */}
           {showLegend && (
             <div className="flex items-center gap-4 text-xs">
-              <span className="text-slate-600 font-medium">재고주수:</span>
+              <span className="text-slate-600 font-medium">{t("summary.stockWeeks")}:</span>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-4 bg-slate-50 border border-slate-200 rounded"></div>
-                  <span className="text-slate-600">0주</span>
+                  <span className="text-slate-600">{t("legend.weeks0")}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-4 bg-emerald-50 border border-slate-200 rounded"></div>
-                  <span className="text-slate-600">1~19주</span>
+                  <span className="text-slate-600">{t("legend.weeks1to19")}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-4 bg-emerald-100 border border-slate-200 rounded"></div>
-                  <span className="text-slate-600">20~29주</span>
+                  <span className="text-slate-600">{t("legend.weeks20to29")}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-4 bg-yellow-100 border border-slate-200 rounded"></div>
-                  <span className="text-slate-600">30~39주</span>
+                  <span className="text-slate-600">{t("legend.weeks30to39")}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-4 bg-orange-100 border border-slate-200 rounded"></div>
-                  <span className="text-slate-600">40~49주</span>
+                  <span className="text-slate-600">{t("legend.weeks40to49")}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-4 bg-red-100 border border-slate-200 rounded"></div>
-                  <span className="text-slate-600">50주 이상</span>
+                  <span className="text-slate-600">{t("legend.weeks50plus")}</span>
                 </div>
               </div>
             </div>
@@ -421,7 +424,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                             {/* 연도 행 */}
                             <tr className="bg-slate-50">
                               <td className="px-3 py-2.5 text-sm font-bold text-slate-900 border-b border-slate-100">
-                                {categoryName}({year}년)
+                                {categoryName}({year}{t("common.year")})
                               </td>
                               {months.map((month) => {
                                 const monthData = yearData[String(month)];
@@ -431,7 +434,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                                     key={month}
                                     className={`px-3 py-2 text-xs text-center border-b border-slate-100 transition-all hover:brightness-105 ${getHeatmapClass(value)}`}
                                   >
-                                    {formatWeeksValue(value)}
+                                    {formatWeeksValue(value, t)}
                                   </td>
                                 );
                               })}
@@ -440,7 +443,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                             {expanded && (
                               <tr className="bg-white">
                                 <td className="px-3 py-2 text-xs text-slate-600 pl-8 border-b border-slate-100">
-                                  - 대리상
+                                  - {t("heatmapTable.agency")}
                                 </td>
                                 {months.map((month) => {
                                   const monthData = yearData[String(month)];
@@ -450,7 +453,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                                       key={month}
                                       className={`px-3 py-2 text-xs text-center border-b border-slate-100 transition-all hover:brightness-105 ${getHeatmapClass(value)}`}
                                     >
-                                      {formatWeeksValue(value)}
+                                      {formatWeeksValue(value, t)}
                                     </td>
                                   );
                                 })}
@@ -460,7 +463,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                             {expanded && (
                               <tr className="bg-white">
                                 <td className="px-3 py-2 text-xs text-slate-600 pl-8 border-b border-slate-100">
-                                  - 창고재고
+                                  - {t("heatmapTable.warehouse")}
                                 </td>
                                 {months.map((month) => {
                                   const monthData = yearData[String(month)];
@@ -470,7 +473,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                                       key={month}
                                       className="px-3 py-2 text-xs text-center border-b border-slate-100 bg-white"
                                     >
-                                      {formatWeeksValue(value)}
+                                      {formatWeeksValue(value, t)}
                                     </td>
                                   );
                                 })}
@@ -486,7 +489,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                           {/* 전년대비(전체) - 접었을 때도 항상 표시 */}
                           <tr className="bg-blue-50">
                             <td className="px-3 py-2 text-xs text-slate-600 pl-8 border-b border-slate-100 font-bold">
-                              - 전년대비(전체)
+                              - {t("heatmapTable.yoyTotal")}
                             </td>
                             {months.map((month) => {
                               const monthData = currentYearData[String(month)];
@@ -511,7 +514,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                           {expanded && (
                             <tr className="bg-blue-50">
                               <td className="px-3 py-2 text-xs text-slate-600 pl-8 border-b border-slate-100 font-medium">
-                                - 전년대비(대리상)
+                                - {t("heatmapTable.yoyAgency")}
                               </td>
                               {months.map((month) => {
                                 const monthData = currentYearData[String(month)];
@@ -537,7 +540,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                           {expanded && (
                             <tr className="bg-blue-50">
                               <td className="px-3 py-2 text-xs text-slate-600 pl-8 border-b border-slate-100 font-medium">
-                                - 전년대비(창고재고)
+                                - {t("heatmapTable.yoyWarehouse")}
                               </td>
                               {months.map((month) => {
                                 const monthData = currentYearData[String(month)];
@@ -676,7 +679,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
       {/* 제목 카드 */}
       <div className="bg-white rounded-xl shadow-sm px-6 py-4 mb-6">
         <div className="flex items-center gap-4 flex-wrap">
-          <h1 className="text-2xl font-semibold text-slate-900">{brand} 재고자산 분석</h1>
+          <h1 className="text-2xl font-semibold text-slate-900">{brand} {t("heatmap.title")}</h1>
           
           {/* 중분류 탭 */}
           <div className={`inline-flex ${brandColors.tabColor.container} p-1 rounded-lg`}>
@@ -708,10 +711,10 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
             1
           </div>
           <h2 className="text-base md:text-lg font-semibold text-slate-900">
-            {brand} 아이템별 재고 SUMMARY
+            {brand} {t("heatmap.inventorySummary")}
           </h2>
           <div className="flex items-center gap-2">
-            <label className="text-sm text-slate-500">기준 월:</label>
+            <label className="text-sm text-slate-500">{t("heatmap.baseMonth")}:</label>
             <select
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(Number(e.target.value))}
@@ -719,7 +722,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
             >
               {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
                 <option key={m} value={m}>
-                  {m}월
+                  {m}{t("common.month")}
                 </option>
               ))}
             </select>
@@ -752,10 +755,10 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
             </div>
             <div className="flex-1">
               <h2 className="text-base md:text-lg font-semibold text-slate-900">
-                {brand} {categoryTabs.find(t => t.key === selectedCategory)?.label || "전체"} 월별 재고 & 판매매출
+                {brand} {categoryTabs.find(t => t.key === selectedCategory)?.label || t("common.all")} {t("heatmap.monthlyInventorySales")}
               </h2>
               <p className="text-xs md:text-sm text-slate-500 mt-1">
-                대리상 + 직영 합산, 재고금액(M), 판매매출(M), 재고주수 추이 및 YOY
+                {t("heatmap.description")}
               </p>
             </div>
           </div>
@@ -784,7 +787,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
               </div>
               <div className="flex-1 flex items-center gap-3">
                 <h2 className="text-base md:text-lg font-semibold text-slate-900">
-                  {brand} {categoryTabs.find(t => t.key === selectedCategory)?.label || "전체"} 재고주수 히트맵
+                  {brand} {categoryTabs.find(t => t.key === selectedCategory)?.label || t("common.all")} {t("heatmap.heatmapTitle")}
                 </h2>
                 {/* 전체 탭일 때: 접기/펼치기 버튼 (4개 아이템 동시 적용) */}
                 {selectedCategory === "전체" && (() => {
@@ -806,7 +809,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                       }}
                       className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all"
                     >
-                      {expanded ? "접기" : "펼치기"}
+                      {expanded ? t("common.collapse") : t("common.expand")}
                     </button>
                   );
                 })()}
@@ -832,7 +835,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                           }}
                           className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all"
                         >
-                          소분류 보기
+                          {t("common.subcategoryView")}
                         </button>
                       )}
                       {/* 펼치기 버튼 */}
@@ -845,7 +848,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
                         }}
                         className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all"
                       >
-                        {expanded ? "접기" : "펼치기"}
+                        {expanded ? t("common.collapse") : t("common.expand")}
                       </button>
                     </div>
                   );
@@ -853,7 +856,7 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
               </div>
             </div>
             <p className="text-xs md:text-sm text-slate-500 ml-8">
-              월별 재고주수 분포 및 대리상/창고재고 구분
+              {t("heatmap.heatmapDescription")}
             </p>
           </div>
           

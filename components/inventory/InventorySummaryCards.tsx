@@ -3,6 +3,7 @@
 import React, { useMemo } from "react";
 import { StockWeeksData, CATEGORY_ORDER, CATEGORY_NAMES, BaseData } from "@/types/stock-weeks";
 import { calcWeeksFromBase } from "@/utils/calc-weeks";
+import { useT } from "@/lib/i18n";
 
 interface InventorySummaryCardsProps {
   data: StockWeeksData;
@@ -58,6 +59,8 @@ export default function InventorySummaryCards({
   selectedMonth,
   onMonthChange,
 }: InventorySummaryCardsProps) {
+  const t = useT();
+  
   // 기준 연도와 전년도 추출
   const { currentYear, prevYear } = useMemo(() => {
     const years = new Set<string>();
@@ -110,7 +113,15 @@ export default function InventorySummaryCards({
       const categoryData = data[categoryKey];
       if (!categoryData) return;
 
-      const itemName = CATEGORY_NAMES[categoryKey] || categoryKey;
+      // 카테고리명을 i18n으로 가져오기
+      const getCategoryName = (key: string): string => {
+        if (key === "Shoes") return t("categories.shoes");
+        if (key === "Headwear") return t("categories.headwear");
+        if (key === "Bag") return t("categories.bag");
+        if (key === "Acc_etc") return t("categories.acc_etc");
+        return CATEGORY_NAMES[key] || key;
+      };
+      const itemName = getCategoryName(categoryKey);
       let currentWeeks: number | null = null;
       let prevWeeks: number | null = null;
       let currentEndingStock = 0;
@@ -310,7 +321,7 @@ export default function InventorySummaryCards({
 
     // 전체(ALL) 카드를 맨 앞에 추가
     const allSummary: ItemSummary = {
-      itemName: "전체",
+      itemName: t("summary.all"),
       itemKey: "ALL",
       currentWeeks: allCurrentWeeks,
       prevWeeks: allPrevWeeks,
@@ -392,16 +403,16 @@ export default function InventorySummaryCards({
             {/* 헤더 */}
             <div className="flex items-center gap-3 text-xs text-slate-500 mb-2 pb-2 border-b border-slate-100">
               <div className="w-12"></div>
-              <div className="flex-1 text-right">재고주수</div>
-              <div className="flex-1 text-right">기말재고(M)</div>
-              <div className="flex-1 text-right">판매액(M)</div>
+              <div className="flex-1 text-right">{t("summary.stockWeeks")}</div>
+              <div className="flex-1 text-right">{t("summary.endingStock")}</div>
+              <div className="flex-1 text-right">{t("summary.sales")}</div>
             </div>
 
             {/* 데이터 테이블 */}
             <div className="space-y-2">
               {/* 당년 행 */}
               <div className="flex items-center gap-3 text-xs">
-                <div className="w-12 text-slate-500">당년</div>
+                <div className="w-12 text-slate-500">{t("summary.currentYear")}</div>
                 <div className="flex-1 text-sm md:text-base font-semibold text-slate-900 text-right">
                   {formatWeeks(item.currentWeeks)}
                 </div>
@@ -415,7 +426,7 @@ export default function InventorySummaryCards({
 
               {/* 전년 행 */}
               <div className="flex items-center gap-3 text-xs">
-                <div className="w-12 text-slate-500">전년</div>
+                <div className="w-12 text-slate-500">{t("summary.prevYear")}</div>
                 <div className="flex-1 text-sm md:text-base font-semibold text-slate-900 text-right">
                   {formatWeeks(item.prevWeeks)}
                 </div>
@@ -429,7 +440,7 @@ export default function InventorySummaryCards({
 
               {/* YOY 행 */}
               <div className="flex items-center gap-3 text-xs pt-2 border-t border-slate-100">
-                <div className="w-12 text-slate-500">YOY</div>
+                <div className="w-12 text-slate-500">{t("summary.yoy")}</div>
                 <div className={`flex-1 text-sm md:text-base font-semibold text-right ${
                   deltaWeeks === null
                     ? "text-slate-400"

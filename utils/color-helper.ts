@@ -59,15 +59,16 @@ export function getCellColor(value: number | string | null): string {
 /**
  * 재고주수 값을 표시용 텍스트로 변환
  * @param value - 재고주수 값
+ * @param t - i18n 번역 함수 (옵션)
  * @returns 표시용 텍스트
  */
-export function formatWeeksValue(value: number | string | null): string {
+export function formatWeeksValue(value: number | string | null, t?: (key: string) => string): string {
   if (value === null || value === undefined) {
     return "-";
   }
 
   if (value === "판매0") {
-    return "판매0";
+    return t ? t("common.noSales") : "판매0";
   }
 
   const numValue = typeof value === "string" ? parseFloat(value) : value;
@@ -77,6 +78,7 @@ export function formatWeeksValue(value: number | string | null): string {
   }
 
   // 소수점 없이 반올림하여 표시
-  return `${Math.round(numValue)}주`;
+  const weeks = t ? t("common.weeks") : "주";
+  return `${Math.round(numValue)}${weeks}`;
 }
 

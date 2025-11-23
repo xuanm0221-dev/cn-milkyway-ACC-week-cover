@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import StockWeeksHeatmap from "@/components/StockWeeksHeatmap";
 import { StockWeeksData, Brand } from "@/types/stock-weeks";
+import { useLanguageStore } from "@/lib/store/language-store";
+import { useT } from "@/lib/i18n";
 
 // JSON 데이터 import (public/data 폴더에 있는 파일)
 import MLBData from "@/data/stock_weeks_MLB.json";
@@ -17,6 +19,8 @@ export default function Home() {
   const [data, setData] = useState<StockWeeksData | null>(null);
   const [loading, setLoading] = useState(true);
   const [nWeeks, setNWeeks] = useState<number>(25);
+  const { language, setLanguage } = useLanguageStore();
+  const t = useT();
 
   const brands: Brand[] = ["MLB", "MLB KIDS", "DISCOVERY"];
 
@@ -53,6 +57,29 @@ export default function Home() {
       <div className="bg-white shadow-sm border-b">
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
+            {/* 언어 선택 토글 */}
+            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl shadow-inner">
+              <button
+                onClick={() => setLanguage("ko")}
+                className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                  language === "ko"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                한국어
+              </button>
+              <button
+                onClick={() => setLanguage("zh")}
+                className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                  language === "zh"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                中文
+              </button>
+            </div>
             {/* 브랜드 탭 */}
             <div className="flex space-x-1">
               {brands.map((brand) => {
@@ -112,7 +139,7 @@ export default function Home() {
             {/* 직영 판매예정 주수 입력 */}
             <div className="flex items-center gap-3">
               <label htmlFor="nWeeks" className="text-sm font-semibold text-slate-700">
-                직영 판매예정 주수:
+                {t("page.directSalesForecastWeeks")}:
               </label>
               <div className="relative">
                 <input
@@ -125,7 +152,7 @@ export default function Home() {
                   className="w-24 px-4 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm hover:border-slate-300"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-500 pointer-events-none">
-                  주
+                  {t("common.weeks")}
                 </span>
               </div>
             </div>
@@ -137,13 +164,13 @@ export default function Home() {
       <div className="w-full">
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <div className="text-gray-500">데이터 로딩 중...</div>
+            <div className="text-gray-500">{t("common.loading")}</div>
           </div>
         ) : data ? (
           <StockWeeksHeatmap data={data} brand={selectedBrand} nWeeks={nWeeks} />
         ) : (
           <div className="flex justify-center items-center h-64">
-            <div className="text-gray-500">데이터를 불러올 수 없습니다.</div>
+            <div className="text-gray-500">{t("common.error")}</div>
           </div>
         )}
       </div>
