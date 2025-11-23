@@ -654,7 +654,13 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
         if (currentYearData) {
           for (let month = 12; month >= 1; month--) {
             const monthData = currentYearData[String(month)];
-            if (monthData?.기초데이터 && monthData.기초데이터.전체재고금액 > 0) {
+
+            const totalStockAmount =
+              typeof monthData?.기초데이터?.전체재고금액 === "number"
+                ? monthData.기초데이터.전체재고금액
+                : 0;
+
+            if (totalStockAmount > 0) {
               latestMonth = Math.max(latestMonth, month);
               break;
             }
