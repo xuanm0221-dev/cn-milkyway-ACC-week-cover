@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { StockWeeksData, CATEGORY_ORDER, CATEGORY_NAMES } from "@/types/stock-weeks";
+import { StockWeeksData, CATEGORY_ORDER, CATEGORY_NAMES, BaseData } from "@/types/stock-weeks";
 import { calcWeeksFromBase } from "@/utils/calc-weeks";
 
 interface InventorySummaryCardsProps {
@@ -134,8 +134,15 @@ export default function InventorySummaryCards({
             : 0;
 
           // 재고주수 계산
+          const baseData: BaseData | undefined = 
+            monthData.기초데이터 && 
+            typeof monthData.기초데이터 === "object" && 
+            "월일수" in monthData.기초데이터 &&
+            !Array.isArray(monthData.기초데이터)
+            ? (monthData.기초데이터 as BaseData)
+            : undefined;
           const weeks = calcWeeksFromBase(
-            monthData.기초데이터,
+            baseData,
             "전체재고주수",
             nWeeks
           );
@@ -161,8 +168,14 @@ export default function InventorySummaryCards({
             : 0;
 
           // 재고주수 계산
+          const baseData = monthData.기초데이터 && 
+            typeof monthData.기초데이터 === "object" && 
+            "월일수" in monthData.기초데이터 &&
+            !Array.isArray(monthData.기초데이터)
+            ? monthData.기초데이터 as BaseData
+            : undefined;
           const weeks = calcWeeksFromBase(
-            monthData.기초데이터,
+            baseData,
             "전체재고주수",
             nWeeks
           );
