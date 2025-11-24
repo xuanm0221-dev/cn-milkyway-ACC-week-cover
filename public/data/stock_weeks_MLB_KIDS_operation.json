@@ -1,0 +1,3240 @@
+{
+  "Acc_etc": {
+    "CARE": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 37.18,
+          "is_outlier_100wks": false,
+          "total_stock": 862490.0,
+          "total_sales": 96105.0
+        },
+        "3": {
+          "stock_weeks": 51.6,
+          "is_outlier_100wks": false,
+          "total_stock": 810988.0,
+          "total_sales": 69603.0
+        },
+        "4": {
+          "stock_weeks": 42.61,
+          "is_outlier_100wks": false,
+          "total_stock": 797287.0,
+          "total_sales": 80187.0
+        },
+        "5": {
+          "stock_weeks": 37.43,
+          "is_outlier_100wks": false,
+          "total_stock": 876725.0,
+          "total_sales": 103737.0
+        },
+        "6": {
+          "stock_weeks": 44.8,
+          "is_outlier_100wks": false,
+          "total_stock": 832649.0,
+          "total_sales": 79650.0
+        },
+        "7": {
+          "stock_weeks": 53.45,
+          "is_outlier_100wks": false,
+          "total_stock": 878875.0,
+          "total_sales": 72816.0
+        },
+        "8": {
+          "stock_weeks": 40.02,
+          "is_outlier_100wks": false,
+          "total_stock": 1258109.0,
+          "total_sales": 139219.0
+        },
+        "9": {
+          "stock_weeks": 51.8,
+          "is_outlier_100wks": false,
+          "total_stock": 1248246.0,
+          "total_sales": 103268.0
+        },
+        "10": {
+          "stock_weeks": 42.96,
+          "is_outlier_100wks": false,
+          "total_stock": 1140024.0,
+          "total_sales": 117514.0
+        },
+        "11": {
+          "stock_weeks": 52.49,
+          "is_outlier_100wks": false,
+          "total_stock": 1081735.0,
+          "total_sales": 88323.0
+        },
+        "12": {
+          "stock_weeks": 64.15,
+          "is_outlier_100wks": false,
+          "total_stock": 1610289.0,
+          "total_sales": 111160.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 42.48,
+          "is_outlier_100wks": false,
+          "total_stock": 1783022.0,
+          "total_sales": 185876.0
+        },
+        "2": {
+          "stock_weeks": 100.51,
+          "is_outlier_100wks": true,
+          "total_stock": 1726024.0,
+          "total_sales": 68694.0
+        },
+        "3": {
+          "stock_weeks": 74.59,
+          "is_outlier_100wks": false,
+          "total_stock": 1617673.0,
+          "total_sales": 96047.0
+        },
+        "4": {
+          "stock_weeks": 72.75,
+          "is_outlier_100wks": false,
+          "total_stock": 1523507.0,
+          "total_sales": 89746.0
+        },
+        "5": {
+          "stock_weeks": 56.24,
+          "is_outlier_100wks": false,
+          "total_stock": 1392368.0,
+          "total_sales": 109648.0
+        },
+        "6": {
+          "stock_weeks": 81.37,
+          "is_outlier_100wks": false,
+          "total_stock": 1335039.0,
+          "total_sales": 70314.0
+        },
+        "7": {
+          "stock_weeks": 89.7,
+          "is_outlier_100wks": false,
+          "total_stock": 1250016.0,
+          "total_sales": 61715.0
+        },
+        "8": {
+          "stock_weeks": 64.4,
+          "is_outlier_100wks": false,
+          "total_stock": 1177278.0,
+          "total_sales": 80959.0
+        },
+        "9": {
+          "stock_weeks": 94.83,
+          "is_outlier_100wks": false,
+          "total_stock": 1131321.0,
+          "total_sales": 51126.0
+        },
+        "10": {
+          "stock_weeks": 66.95,
+          "is_outlier_100wks": false,
+          "total_stock": 1049011.0,
+          "total_sales": 69394.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "DONE": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 70.95,
+          "is_outlier_100wks": false,
+          "total_stock": 2693016.0,
+          "total_sales": 157245.0
+        },
+        "3": {
+          "stock_weeks": 149.56,
+          "is_outlier_100wks": true,
+          "total_stock": 2524893.0,
+          "total_sales": 74766.0
+        },
+        "4": {
+          "stock_weeks": 187.4,
+          "is_outlier_100wks": true,
+          "total_stock": 2529433.0,
+          "total_sales": 57847.0
+        },
+        "5": {
+          "stock_weeks": 220.12,
+          "is_outlier_100wks": true,
+          "total_stock": 2492116.0,
+          "total_sales": 50139.0
+        },
+        "6": {
+          "stock_weeks": 230.06,
+          "is_outlier_100wks": true,
+          "total_stock": 2445589.0,
+          "total_sales": 45559.0
+        },
+        "7": {
+          "stock_weeks": 228.36,
+          "is_outlier_100wks": true,
+          "total_stock": 2303341.0,
+          "total_sales": 44669.0
+        },
+        "8": {
+          "stock_weeks": 221.1,
+          "is_outlier_100wks": true,
+          "total_stock": 2190398.0,
+          "total_sales": 43874.0
+        },
+        "9": {
+          "stock_weeks": 204.31,
+          "is_outlier_100wks": true,
+          "total_stock": 2252855.0,
+          "total_sales": 47256.0
+        },
+        "10": {
+          "stock_weeks": 124.97,
+          "is_outlier_100wks": true,
+          "total_stock": 2178052.0,
+          "total_sales": 77183.0
+        },
+        "11": {
+          "stock_weeks": 91.88,
+          "is_outlier_100wks": false,
+          "total_stock": 2036990.0,
+          "total_sales": 95017.0
+        },
+        "12": {
+          "stock_weeks": 74.9,
+          "is_outlier_100wks": false,
+          "total_stock": 1903451.0,
+          "total_sales": 112542.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 78.57,
+          "is_outlier_100wks": false,
+          "total_stock": 1788311.0,
+          "total_sales": 100797.0
+        },
+        "2": {
+          "stock_weeks": 305.61,
+          "is_outlier_100wks": true,
+          "total_stock": 1727226.0,
+          "total_sales": 22607.0
+        },
+        "3": {
+          "stock_weeks": 235.55,
+          "is_outlier_100wks": true,
+          "total_stock": 1559248.0,
+          "total_sales": 29315.0
+        },
+        "4": {
+          "stock_weeks": 174.91,
+          "is_outlier_100wks": true,
+          "total_stock": 1522885.0,
+          "total_sales": 37315.0
+        },
+        "5": {
+          "stock_weeks": 337.44,
+          "is_outlier_100wks": true,
+          "total_stock": 1466260.0,
+          "total_sales": 19243.0
+        },
+        "6": {
+          "stock_weeks": 370.72,
+          "is_outlier_100wks": true,
+          "total_stock": 1475631.0,
+          "total_sales": 17059.0
+        },
+        "7": {
+          "stock_weeks": 568.68,
+          "is_outlier_100wks": true,
+          "total_stock": 1434477.0,
+          "total_sales": 11171.0
+        },
+        "8": {
+          "stock_weeks": 315.48,
+          "is_outlier_100wks": true,
+          "total_stock": 1178109.0,
+          "total_sales": 16538.0
+        },
+        "9": {
+          "stock_weeks": 329.45,
+          "is_outlier_100wks": true,
+          "total_stock": 1417517.0,
+          "total_sales": 18440.0
+        },
+        "10": {
+          "stock_weeks": 70.2,
+          "is_outlier_100wks": false,
+          "total_stock": 1344175.0,
+          "total_sales": 84798.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "INTRO": {
+      "2025": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "7": {
+          "stock_weeks": 100.64,
+          "is_outlier_100wks": true,
+          "total_stock": 45471.0,
+          "total_sales": 2001.0
+        },
+        "8": {
+          "stock_weeks": 74.2,
+          "is_outlier_100wks": false,
+          "total_stock": 194437.0,
+          "total_sales": 11605.0
+        },
+        "9": {
+          "stock_weeks": 70.32,
+          "is_outlier_100wks": false,
+          "total_stock": 410209.0,
+          "total_sales": 25000.0
+        },
+        "10": {
+          "stock_weeks": 26.66,
+          "is_outlier_100wks": false,
+          "total_stock": 353552.0,
+          "total_sales": 58732.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "OUTLET": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 61.94,
+          "is_outlier_100wks": false,
+          "total_stock": 1478007.0,
+          "total_sales": 98861.0
+        },
+        "3": {
+          "stock_weeks": 102.69,
+          "is_outlier_100wks": true,
+          "total_stock": 1398151.0,
+          "total_sales": 60295.0
+        },
+        "4": {
+          "stock_weeks": 99.99,
+          "is_outlier_100wks": false,
+          "total_stock": 1398812.0,
+          "total_sales": 59954.0
+        },
+        "5": {
+          "stock_weeks": 88.53,
+          "is_outlier_100wks": false,
+          "total_stock": 1343979.0,
+          "total_sales": 67227.0
+        },
+        "6": {
+          "stock_weeks": 115.44,
+          "is_outlier_100wks": true,
+          "total_stock": 1311762.0,
+          "total_sales": 48698.0
+        },
+        "7": {
+          "stock_weeks": 131.42,
+          "is_outlier_100wks": true,
+          "total_stock": 1312181.0,
+          "total_sales": 44216.0
+        },
+        "8": {
+          "stock_weeks": 59.23,
+          "is_outlier_100wks": false,
+          "total_stock": 1195295.0,
+          "total_sales": 89368.0
+        },
+        "9": {
+          "stock_weeks": 100.26,
+          "is_outlier_100wks": true,
+          "total_stock": 1230559.0,
+          "total_sales": 52604.0
+        },
+        "10": {
+          "stock_weeks": 85.53,
+          "is_outlier_100wks": false,
+          "total_stock": 1462826.0,
+          "total_sales": 75742.0
+        },
+        "11": {
+          "stock_weeks": 40.23,
+          "is_outlier_100wks": false,
+          "total_stock": 1521769.0,
+          "total_sales": 162102.0
+        },
+        "12": {
+          "stock_weeks": 29.88,
+          "is_outlier_100wks": false,
+          "total_stock": 1328373.0,
+          "total_sales": 196896.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 52.66,
+          "is_outlier_100wks": false,
+          "total_stock": 1215345.0,
+          "total_sales": 102207.0
+        },
+        "2": {
+          "stock_weeks": 203.05,
+          "is_outlier_100wks": true,
+          "total_stock": 1193303.0,
+          "total_sales": 23508.0
+        },
+        "3": {
+          "stock_weeks": 94.27,
+          "is_outlier_100wks": false,
+          "total_stock": 1126876.0,
+          "total_sales": 52939.0
+        },
+        "4": {
+          "stock_weeks": 303.54,
+          "is_outlier_100wks": true,
+          "total_stock": 1103271.0,
+          "total_sales": 15577.0
+        },
+        "5": {
+          "stock_weeks": 221.46,
+          "is_outlier_100wks": true,
+          "total_stock": 1077621.0,
+          "total_sales": 21549.0
+        },
+        "6": {
+          "stock_weeks": 252.39,
+          "is_outlier_100wks": true,
+          "total_stock": 1070809.0,
+          "total_sales": 18183.0
+        },
+        "7": {
+          "stock_weeks": 272.63,
+          "is_outlier_100wks": true,
+          "total_stock": 1029802.0,
+          "total_sales": 16728.0
+        },
+        "8": {
+          "stock_weeks": 201.93,
+          "is_outlier_100wks": true,
+          "total_stock": 1011961.0,
+          "total_sales": 22194.0
+        },
+        "9": {
+          "stock_weeks": 303.82,
+          "is_outlier_100wks": true,
+          "total_stock": 1009995.0,
+          "total_sales": 14247.0
+        },
+        "10": {
+          "stock_weeks": 116.34,
+          "is_outlier_100wks": true,
+          "total_stock": 963899.0,
+          "total_sales": 36690.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "运营基准없음": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -138.0,
+          "total_sales": 0.0
+        },
+        "4": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -69.0,
+          "total_sales": 0.0
+        },
+        "5": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -138.0,
+          "total_sales": 0.0
+        },
+        "6": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -69.0,
+          "total_sales": 0.0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -69.0,
+          "total_sales": 0.0
+        },
+        "9": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "10": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": 159.0,
+          "total_sales": 0.0
+        },
+        "4": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": 159.0,
+          "total_sales": 0.0
+        },
+        "5": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": 159.0,
+          "total_sales": 0.0
+        },
+        "6": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "10": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    }
+  },
+  "Bag": {
+    "CARE": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "10": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "11": {
+          "stock_weeks": 550.86,
+          "is_outlier_100wks": true,
+          "total_stock": 1291636.0,
+          "total_sales": 10049.0
+        },
+        "12": {
+          "stock_weeks": 182.97,
+          "is_outlier_100wks": true,
+          "total_stock": 4069175.0,
+          "total_sales": 98489.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 53.58,
+          "is_outlier_100wks": false,
+          "total_stock": 5451714.0,
+          "total_sales": 450613.0
+        },
+        "2": {
+          "stock_weeks": 34.0,
+          "is_outlier_100wks": false,
+          "total_stock": 5086194.0,
+          "total_sales": 598383.0
+        },
+        "3": {
+          "stock_weeks": 35.93,
+          "is_outlier_100wks": false,
+          "total_stock": 4660229.0,
+          "total_sales": 574322.0
+        },
+        "4": {
+          "stock_weeks": 29.33,
+          "is_outlier_100wks": false,
+          "total_stock": 4315930.0,
+          "total_sales": 630679.0
+        },
+        "5": {
+          "stock_weeks": 18.43,
+          "is_outlier_100wks": false,
+          "total_stock": 3863771.0,
+          "total_sales": 928562.0
+        },
+        "6": {
+          "stock_weeks": 22.01,
+          "is_outlier_100wks": false,
+          "total_stock": 3538583.0,
+          "total_sales": 688921.0
+        },
+        "7": {
+          "stock_weeks": 26.74,
+          "is_outlier_100wks": false,
+          "total_stock": 3024977.0,
+          "total_sales": 500921.0
+        },
+        "8": {
+          "stock_weeks": 11.79,
+          "is_outlier_100wks": false,
+          "total_stock": 2255173.0,
+          "total_sales": 847066.0
+        },
+        "9": {
+          "stock_weeks": 39.38,
+          "is_outlier_100wks": false,
+          "total_stock": 2059325.0,
+          "total_sales": 224101.0
+        },
+        "10": {
+          "stock_weeks": 55.36,
+          "is_outlier_100wks": false,
+          "total_stock": 1895210.0,
+          "total_sales": 151612.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "DONE": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 25.52,
+          "is_outlier_100wks": false,
+          "total_stock": 7738254.0,
+          "total_sales": 1256371.0
+        },
+        "3": {
+          "stock_weeks": 34.55,
+          "is_outlier_100wks": false,
+          "total_stock": 6690416.0,
+          "total_sales": 857618.0
+        },
+        "4": {
+          "stock_weeks": 69.64,
+          "is_outlier_100wks": false,
+          "total_stock": 7247812.0,
+          "total_sales": 446009.0
+        },
+        "5": {
+          "stock_weeks": 43.34,
+          "is_outlier_100wks": false,
+          "total_stock": 6546388.0,
+          "total_sales": 668964.0
+        },
+        "6": {
+          "stock_weeks": 41.46,
+          "is_outlier_100wks": false,
+          "total_stock": 5998408.0,
+          "total_sales": 620021.0
+        },
+        "7": {
+          "stock_weeks": 43.24,
+          "is_outlier_100wks": false,
+          "total_stock": 5415516.0,
+          "total_sales": 554595.0
+        },
+        "8": {
+          "stock_weeks": 26.63,
+          "is_outlier_100wks": false,
+          "total_stock": 4494661.0,
+          "total_sales": 747405.0
+        },
+        "9": {
+          "stock_weeks": 65.11,
+          "is_outlier_100wks": false,
+          "total_stock": 4238928.0,
+          "total_sales": 279007.0
+        },
+        "10": {
+          "stock_weeks": 74.93,
+          "is_outlier_100wks": false,
+          "total_stock": 3815312.0,
+          "total_sales": 225502.0
+        },
+        "11": {
+          "stock_weeks": 84.15,
+          "is_outlier_100wks": false,
+          "total_stock": 3590009.0,
+          "total_sales": 182841.0
+        },
+        "12": {
+          "stock_weeks": 108.87,
+          "is_outlier_100wks": true,
+          "total_stock": 3402907.0,
+          "total_sales": 138425.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 65.28,
+          "is_outlier_100wks": false,
+          "total_stock": 3164679.0,
+          "total_sales": 214680.0
+        },
+        "2": {
+          "stock_weeks": 76.25,
+          "is_outlier_100wks": false,
+          "total_stock": 2985366.0,
+          "total_sales": 156611.0
+        },
+        "3": {
+          "stock_weeks": 32.98,
+          "is_outlier_100wks": false,
+          "total_stock": 2409720.0,
+          "total_sales": 323576.0
+        },
+        "4": {
+          "stock_weeks": 69.03,
+          "is_outlier_100wks": false,
+          "total_stock": 2218387.0,
+          "total_sales": 137736.0
+        },
+        "5": {
+          "stock_weeks": 45.33,
+          "is_outlier_100wks": false,
+          "total_stock": 1999665.0,
+          "total_sales": 195345.0
+        },
+        "6": {
+          "stock_weeks": 57.67,
+          "is_outlier_100wks": false,
+          "total_stock": 1891165.0,
+          "total_sales": 140539.0
+        },
+        "7": {
+          "stock_weeks": 43.83,
+          "is_outlier_100wks": false,
+          "total_stock": 1742249.0,
+          "total_sales": 176038.0
+        },
+        "8": {
+          "stock_weeks": 36.64,
+          "is_outlier_100wks": false,
+          "total_stock": 1619269.0,
+          "total_sales": 195695.0
+        },
+        "9": {
+          "stock_weeks": 83.75,
+          "is_outlier_100wks": false,
+          "total_stock": 1579552.0,
+          "total_sales": 80826.0
+        },
+        "10": {
+          "stock_weeks": 109.43,
+          "is_outlier_100wks": true,
+          "total_stock": 1494756.0,
+          "total_sales": 60494.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "FOCUS": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "10": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "11": {
+          "stock_weeks": 142.23,
+          "is_outlier_100wks": true,
+          "total_stock": 636138.0,
+          "total_sales": 19168.0
+        },
+        "12": {
+          "stock_weeks": 31.04,
+          "is_outlier_100wks": false,
+          "total_stock": 1293241.0,
+          "total_sales": 184492.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 12.61,
+          "is_outlier_100wks": false,
+          "total_stock": 1221361.0,
+          "total_sales": 428884.0
+        },
+        "2": {
+          "stock_weeks": 11.51,
+          "is_outlier_100wks": false,
+          "total_stock": 836204.0,
+          "total_sales": 290515.0
+        },
+        "3": {
+          "stock_weeks": 9.71,
+          "is_outlier_100wks": false,
+          "total_stock": 573842.0,
+          "total_sales": 261763.0
+        },
+        "4": {
+          "stock_weeks": 4.85,
+          "is_outlier_100wks": false,
+          "total_stock": 383959.0,
+          "total_sales": 339633.0
+        },
+        "5": {
+          "stock_weeks": 17.87,
+          "is_outlier_100wks": false,
+          "total_stock": 1826950.0,
+          "total_sales": 452844.0
+        },
+        "6": {
+          "stock_weeks": 4.45,
+          "is_outlier_100wks": false,
+          "total_stock": 1157867.0,
+          "total_sales": 1114739.0
+        },
+        "7": {
+          "stock_weeks": 9.32,
+          "is_outlier_100wks": false,
+          "total_stock": 803259.0,
+          "total_sales": 381563.0
+        },
+        "8": {
+          "stock_weeks": 52.45,
+          "is_outlier_100wks": false,
+          "total_stock": 3469408.0,
+          "total_sales": 292911.0
+        },
+        "9": {
+          "stock_weeks": 36.18,
+          "is_outlier_100wks": false,
+          "total_stock": 3382553.0,
+          "total_sales": 400731.0
+        },
+        "10": {
+          "stock_weeks": 18.91,
+          "is_outlier_100wks": false,
+          "total_stock": 2570309.0,
+          "total_sales": 601995.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "INTRO": {
+      "2025": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 0.0,
+          "is_outlier_100wks": false,
+          "total_stock": 0.0,
+          "total_sales": 799.0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": 191487.0,
+          "total_sales": 0.0
+        },
+        "6": {
+          "stock_weeks": 70.28,
+          "is_outlier_100wks": false,
+          "total_stock": 2860142.0,
+          "total_sales": 174401.0
+        },
+        "7": {
+          "stock_weeks": 22.78,
+          "is_outlier_100wks": false,
+          "total_stock": 4523720.0,
+          "total_sales": 879440.0
+        },
+        "8": {
+          "stock_weeks": 10.67,
+          "is_outlier_100wks": false,
+          "total_stock": 4613166.0,
+          "total_sales": 1915174.0
+        },
+        "9": {
+          "stock_weeks": 18.15,
+          "is_outlier_100wks": false,
+          "total_stock": 4283502.0,
+          "total_sales": 1011667.0
+        },
+        "10": {
+          "stock_weeks": 13.61,
+          "is_outlier_100wks": false,
+          "total_stock": 3912382.0,
+          "total_sales": 1272912.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "OUTLET": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 22.98,
+          "is_outlier_100wks": false,
+          "total_stock": 6368739.0,
+          "total_sales": 1148326.0
+        },
+        "3": {
+          "stock_weeks": 28.87,
+          "is_outlier_100wks": false,
+          "total_stock": 5476171.0,
+          "total_sales": 839896.0
+        },
+        "4": {
+          "stock_weeks": 49.63,
+          "is_outlier_100wks": false,
+          "total_stock": 5848534.0,
+          "total_sales": 505081.0
+        },
+        "5": {
+          "stock_weeks": 33.31,
+          "is_outlier_100wks": false,
+          "total_stock": 5170875.0,
+          "total_sales": 687495.0
+        },
+        "6": {
+          "stock_weeks": 32.13,
+          "is_outlier_100wks": false,
+          "total_stock": 5205304.0,
+          "total_sales": 694280.0
+        },
+        "7": {
+          "stock_weeks": 38.22,
+          "is_outlier_100wks": false,
+          "total_stock": 8801086.0,
+          "total_sales": 1019835.0
+        },
+        "8": {
+          "stock_weeks": 16.01,
+          "is_outlier_100wks": false,
+          "total_stock": 8878465.0,
+          "total_sales": 2455972.0
+        },
+        "9": {
+          "stock_weeks": 36.87,
+          "is_outlier_100wks": false,
+          "total_stock": 8680268.0,
+          "total_sales": 1009021.0
+        },
+        "10": {
+          "stock_weeks": 48.39,
+          "is_outlier_100wks": false,
+          "total_stock": 8282319.0,
+          "total_sales": 757982.0
+        },
+        "11": {
+          "stock_weeks": 49.15,
+          "is_outlier_100wks": false,
+          "total_stock": 7773329.0,
+          "total_sales": 677874.0
+        },
+        "12": {
+          "stock_weeks": 57.82,
+          "is_outlier_100wks": false,
+          "total_stock": 7232757.0,
+          "total_sales": 553972.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 51.91,
+          "is_outlier_100wks": false,
+          "total_stock": 6625451.0,
+          "total_sales": 565277.0
+        },
+        "2": {
+          "stock_weeks": 55.6,
+          "is_outlier_100wks": false,
+          "total_stock": 6214999.0,
+          "total_sales": 447116.0
+        },
+        "3": {
+          "stock_weeks": 50.31,
+          "is_outlier_100wks": false,
+          "total_stock": 5805612.0,
+          "total_sales": 511030.0
+        },
+        "4": {
+          "stock_weeks": 70.97,
+          "is_outlier_100wks": false,
+          "total_stock": 5979796.0,
+          "total_sales": 361120.0
+        },
+        "5": {
+          "stock_weeks": 39.58,
+          "is_outlier_100wks": false,
+          "total_stock": 5485014.0,
+          "total_sales": 613783.0
+        },
+        "6": {
+          "stock_weeks": 30.76,
+          "is_outlier_100wks": false,
+          "total_stock": 5006170.0,
+          "total_sales": 697423.0
+        },
+        "7": {
+          "stock_weeks": 35.83,
+          "is_outlier_100wks": false,
+          "total_stock": 4375192.0,
+          "total_sales": 540786.0
+        },
+        "8": {
+          "stock_weeks": 26.11,
+          "is_outlier_100wks": false,
+          "total_stock": 3669178.0,
+          "total_sales": 622253.0
+        },
+        "9": {
+          "stock_weeks": 39.01,
+          "is_outlier_100wks": false,
+          "total_stock": 3308206.0,
+          "total_sales": 363471.0
+        },
+        "10": {
+          "stock_weeks": 75.74,
+          "is_outlier_100wks": false,
+          "total_stock": 3064124.0,
+          "total_sales": 179159.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "运营基准없음": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -999.0,
+          "total_sales": 0.0
+        },
+        "10": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -999.0,
+          "total_sales": 0.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": -4.29,
+          "is_outlier_100wks": false,
+          "total_stock": -2995.0,
+          "total_sales": 2995.0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "10": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    }
+  },
+  "Headwear": {
+    "24FW": {
+      "2025": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": 0.0,
+          "total_sales": 0.0
+        },
+        "10": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -239.0,
+          "total_sales": 0.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "CARE": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 40.92,
+          "is_outlier_100wks": false,
+          "total_stock": 4683134.0,
+          "total_sales": 474186.0
+        },
+        "3": {
+          "stock_weeks": 30.26,
+          "is_outlier_100wks": false,
+          "total_stock": 3683239.0,
+          "total_sales": 539012.0
+        },
+        "4": {
+          "stock_weeks": 39.8,
+          "is_outlier_100wks": false,
+          "total_stock": 3973622.0,
+          "total_sales": 427864.0
+        },
+        "5": {
+          "stock_weeks": 43.0,
+          "is_outlier_100wks": false,
+          "total_stock": 3473777.0,
+          "total_sales": 357786.0
+        },
+        "6": {
+          "stock_weeks": 61.36,
+          "is_outlier_100wks": false,
+          "total_stock": 3231175.0,
+          "total_sales": 225672.0
+        },
+        "7": {
+          "stock_weeks": 82.28,
+          "is_outlier_100wks": false,
+          "total_stock": 3519999.0,
+          "total_sales": 189448.0
+        },
+        "8": {
+          "stock_weeks": 83.79,
+          "is_outlier_100wks": false,
+          "total_stock": 3276190.0,
+          "total_sales": 173164.0
+        },
+        "9": {
+          "stock_weeks": 73.59,
+          "is_outlier_100wks": false,
+          "total_stock": 4483328.0,
+          "total_sales": 261116.0
+        },
+        "10": {
+          "stock_weeks": 39.8,
+          "is_outlier_100wks": false,
+          "total_stock": 4186490.0,
+          "total_sales": 465829.0
+        },
+        "11": {
+          "stock_weeks": 40.95,
+          "is_outlier_100wks": false,
+          "total_stock": 4123072.0,
+          "total_sales": 431560.0
+        },
+        "12": {
+          "stock_weeks": 50.91,
+          "is_outlier_100wks": false,
+          "total_stock": 5395167.0,
+          "total_sales": 469330.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 38.99,
+          "is_outlier_100wks": false,
+          "total_stock": 5014198.0,
+          "total_sales": 569462.0
+        },
+        "2": {
+          "stock_weeks": 52.02,
+          "is_outlier_100wks": false,
+          "total_stock": 4925387.0,
+          "total_sales": 378720.0
+        },
+        "3": {
+          "stock_weeks": 30.49,
+          "is_outlier_100wks": false,
+          "total_stock": 5344274.0,
+          "total_sales": 776139.0
+        },
+        "4": {
+          "stock_weeks": 28.99,
+          "is_outlier_100wks": false,
+          "total_stock": 5104169.0,
+          "total_sales": 754566.0
+        },
+        "5": {
+          "stock_weeks": 25.83,
+          "is_outlier_100wks": false,
+          "total_stock": 4219150.0,
+          "total_sales": 723445.0
+        },
+        "6": {
+          "stock_weeks": 49.26,
+          "is_outlier_100wks": false,
+          "total_stock": 4958977.0,
+          "total_sales": 431429.0
+        },
+        "7": {
+          "stock_weeks": 60.82,
+          "is_outlier_100wks": false,
+          "total_stock": 4574373.0,
+          "total_sales": 333095.0
+        },
+        "8": {
+          "stock_weeks": 80.53,
+          "is_outlier_100wks": false,
+          "total_stock": 4424912.0,
+          "total_sales": 243353.0
+        },
+        "9": {
+          "stock_weeks": 101.16,
+          "is_outlier_100wks": true,
+          "total_stock": 4654439.0,
+          "total_sales": 197197.0
+        },
+        "10": {
+          "stock_weeks": 44.09,
+          "is_outlier_100wks": false,
+          "total_stock": 4195527.0,
+          "total_sales": 421398.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "DONE": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 49.49,
+          "is_outlier_100wks": false,
+          "total_stock": 30802456.0,
+          "total_sales": 2578595.0
+        },
+        "3": {
+          "stock_weeks": 52.73,
+          "is_outlier_100wks": false,
+          "total_stock": 27082545.0,
+          "total_sales": 2274642.0
+        },
+        "4": {
+          "stock_weeks": 71.02,
+          "is_outlier_100wks": false,
+          "total_stock": 28273921.0,
+          "total_sales": 1706310.0
+        },
+        "5": {
+          "stock_weeks": 75.45,
+          "is_outlier_100wks": false,
+          "total_stock": 26766247.0,
+          "total_sales": 1571033.0
+        },
+        "6": {
+          "stock_weeks": 92.3,
+          "is_outlier_100wks": false,
+          "total_stock": 25840382.0,
+          "total_sales": 1199819.0
+        },
+        "7": {
+          "stock_weeks": 130.71,
+          "is_outlier_100wks": true,
+          "total_stock": 24260145.0,
+          "total_sales": 821943.0
+        },
+        "8": {
+          "stock_weeks": 100.2,
+          "is_outlier_100wks": true,
+          "total_stock": 22889673.0,
+          "total_sales": 1011670.0
+        },
+        "9": {
+          "stock_weeks": 103.32,
+          "is_outlier_100wks": true,
+          "total_stock": 22976906.0,
+          "total_sales": 953091.0
+        },
+        "10": {
+          "stock_weeks": 60.53,
+          "is_outlier_100wks": false,
+          "total_stock": 21261801.0,
+          "total_sales": 1555526.0
+        },
+        "11": {
+          "stock_weeks": 69.03,
+          "is_outlier_100wks": false,
+          "total_stock": 19284210.0,
+          "total_sales": 1197251.0
+        },
+        "12": {
+          "stock_weeks": 79.94,
+          "is_outlier_100wks": false,
+          "total_stock": 18299792.0,
+          "total_sales": 1013733.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 69.01,
+          "is_outlier_100wks": false,
+          "total_stock": 16863882.0,
+          "total_sales": 1082207.0
+        },
+        "2": {
+          "stock_weeks": 101.82,
+          "is_outlier_100wks": true,
+          "total_stock": 15367152.0,
+          "total_sales": 603685.0
+        },
+        "3": {
+          "stock_weeks": 64.63,
+          "is_outlier_100wks": false,
+          "total_stock": 11646597.0,
+          "total_sales": 798010.0
+        },
+        "4": {
+          "stock_weeks": 56.34,
+          "is_outlier_100wks": false,
+          "total_stock": 11668987.0,
+          "total_sales": 887662.0
+        },
+        "5": {
+          "stock_weeks": 55.78,
+          "is_outlier_100wks": false,
+          "total_stock": 10765569.0,
+          "total_sales": 854764.0
+        },
+        "6": {
+          "stock_weeks": 94.33,
+          "is_outlier_100wks": false,
+          "total_stock": 10572389.0,
+          "total_sales": 480349.0
+        },
+        "7": {
+          "stock_weeks": 122.72,
+          "is_outlier_100wks": true,
+          "total_stock": 9213847.0,
+          "total_sales": 332489.0
+        },
+        "8": {
+          "stock_weeks": 95.33,
+          "is_outlier_100wks": false,
+          "total_stock": 8566581.0,
+          "total_sales": 397961.0
+        },
+        "9": {
+          "stock_weeks": 99.49,
+          "is_outlier_100wks": false,
+          "total_stock": 8591705.0,
+          "total_sales": 370114.0
+        },
+        "10": {
+          "stock_weeks": 72.08,
+          "is_outlier_100wks": false,
+          "total_stock": 8382569.0,
+          "total_sales": 515037.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "FOCUS": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 27.43,
+          "is_outlier_100wks": false,
+          "total_stock": 4359800.0,
+          "total_sales": 658590.0
+        },
+        "3": {
+          "stock_weeks": 17.93,
+          "is_outlier_100wks": false,
+          "total_stock": 3244626.0,
+          "total_sales": 801339.0
+        },
+        "4": {
+          "stock_weeks": 21.4,
+          "is_outlier_100wks": false,
+          "total_stock": 3478727.0,
+          "total_sales": 696568.0
+        },
+        "5": {
+          "stock_weeks": 22.28,
+          "is_outlier_100wks": false,
+          "total_stock": 2864469.0,
+          "total_sales": 569358.0
+        },
+        "6": {
+          "stock_weeks": 35.96,
+          "is_outlier_100wks": false,
+          "total_stock": 4342368.0,
+          "total_sales": 517467.0
+        },
+        "7": {
+          "stock_weeks": 40.77,
+          "is_outlier_100wks": false,
+          "total_stock": 4121084.0,
+          "total_sales": 447691.0
+        },
+        "8": {
+          "stock_weeks": 34.81,
+          "is_outlier_100wks": false,
+          "total_stock": 4236157.0,
+          "total_sales": 538873.0
+        },
+        "9": {
+          "stock_weeks": 31.28,
+          "is_outlier_100wks": false,
+          "total_stock": 4195091.0,
+          "total_sales": 574853.0
+        },
+        "10": {
+          "stock_weeks": 23.9,
+          "is_outlier_100wks": false,
+          "total_stock": 3777329.0,
+          "total_sales": 699829.0
+        },
+        "11": {
+          "stock_weeks": 24.87,
+          "is_outlier_100wks": false,
+          "total_stock": 3781772.0,
+          "total_sales": 651645.0
+        },
+        "12": {
+          "stock_weeks": 24.73,
+          "is_outlier_100wks": false,
+          "total_stock": 3750035.0,
+          "total_sales": 671612.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 14.19,
+          "is_outlier_100wks": false,
+          "total_stock": 3017893.0,
+          "total_sales": 941732.0
+        },
+        "2": {
+          "stock_weeks": 24.67,
+          "is_outlier_100wks": false,
+          "total_stock": 3236825.0,
+          "total_sales": 524721.0
+        },
+        "3": {
+          "stock_weeks": 12.79,
+          "is_outlier_100wks": false,
+          "total_stock": 2971709.0,
+          "total_sales": 1029360.0
+        },
+        "4": {
+          "stock_weeks": 19.26,
+          "is_outlier_100wks": false,
+          "total_stock": 3572401.0,
+          "total_sales": 794865.0
+        },
+        "5": {
+          "stock_weeks": 14.53,
+          "is_outlier_100wks": false,
+          "total_stock": 2782624.0,
+          "total_sales": 847876.0
+        },
+        "6": {
+          "stock_weeks": 35.92,
+          "is_outlier_100wks": false,
+          "total_stock": 4348451.0,
+          "total_sales": 518858.0
+        },
+        "7": {
+          "stock_weeks": 32.68,
+          "is_outlier_100wks": false,
+          "total_stock": 3866966.0,
+          "total_sales": 524008.0
+        },
+        "8": {
+          "stock_weeks": 28.16,
+          "is_outlier_100wks": false,
+          "total_stock": 3450683.0,
+          "total_sales": 542721.0
+        },
+        "9": {
+          "stock_weeks": 41.98,
+          "is_outlier_100wks": false,
+          "total_stock": 4910603.0,
+          "total_sales": 501371.0
+        },
+        "10": {
+          "stock_weeks": 22.86,
+          "is_outlier_100wks": false,
+          "total_stock": 4680239.0,
+          "total_sales": 906610.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "INTRO": {
+      "2025": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": 325.89,
+          "is_outlier_100wks": true,
+          "total_stock": 1051633.0,
+          "total_sales": 13830.0
+        },
+        "7": {
+          "stock_weeks": 53.11,
+          "is_outlier_100wks": false,
+          "total_stock": 2786598.0,
+          "total_sales": 232350.0
+        },
+        "8": {
+          "stock_weeks": 35.69,
+          "is_outlier_100wks": false,
+          "total_stock": 3492719.0,
+          "total_sales": 433403.0
+        },
+        "9": {
+          "stock_weeks": 63.7,
+          "is_outlier_100wks": false,
+          "total_stock": 6772008.0,
+          "total_sales": 455595.0
+        },
+        "10": {
+          "stock_weeks": 20.49,
+          "is_outlier_100wks": false,
+          "total_stock": 5965530.0,
+          "total_sales": 1289373.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "OUTLET": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 39.66,
+          "is_outlier_100wks": false,
+          "total_stock": 12908292.0,
+          "total_sales": 1348446.0
+        },
+        "3": {
+          "stock_weeks": 33.69,
+          "is_outlier_100wks": false,
+          "total_stock": 13522124.0,
+          "total_sales": 1777284.0
+        },
+        "4": {
+          "stock_weeks": 38.41,
+          "is_outlier_100wks": false,
+          "total_stock": 14459034.0,
+          "total_sales": 1613102.0
+        },
+        "5": {
+          "stock_weeks": 32.13,
+          "is_outlier_100wks": false,
+          "total_stock": 13334399.0,
+          "total_sales": 1838186.0
+        },
+        "6": {
+          "stock_weeks": 38.42,
+          "is_outlier_100wks": false,
+          "total_stock": 12678968.0,
+          "total_sales": 1414239.0
+        },
+        "7": {
+          "stock_weeks": 61.69,
+          "is_outlier_100wks": false,
+          "total_stock": 13854484.0,
+          "total_sales": 994649.0
+        },
+        "8": {
+          "stock_weeks": 60.75,
+          "is_outlier_100wks": false,
+          "total_stock": 15687328.0,
+          "total_sales": 1143522.0
+        },
+        "9": {
+          "stock_weeks": 68.42,
+          "is_outlier_100wks": false,
+          "total_stock": 15925741.0,
+          "total_sales": 997507.0
+        },
+        "10": {
+          "stock_weeks": 47.85,
+          "is_outlier_100wks": false,
+          "total_stock": 14873055.0,
+          "total_sales": 1376417.0
+        },
+        "11": {
+          "stock_weeks": 58.5,
+          "is_outlier_100wks": false,
+          "total_stock": 14144673.0,
+          "total_sales": 1036315.0
+        },
+        "12": {
+          "stock_weeks": 64.9,
+          "is_outlier_100wks": false,
+          "total_stock": 13286898.0,
+          "total_sales": 906687.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 37.52,
+          "is_outlier_100wks": false,
+          "total_stock": 11964514.0,
+          "total_sales": 1412203.0
+        },
+        "2": {
+          "stock_weeks": 62.29,
+          "is_outlier_100wks": false,
+          "total_stock": 11488954.0,
+          "total_sales": 737825.0
+        },
+        "3": {
+          "stock_weeks": 27.3,
+          "is_outlier_100wks": false,
+          "total_stock": 10033779.0,
+          "total_sales": 1627677.0
+        },
+        "4": {
+          "stock_weeks": 44.22,
+          "is_outlier_100wks": false,
+          "total_stock": 9274941.0,
+          "total_sales": 899009.0
+        },
+        "5": {
+          "stock_weeks": 47.62,
+          "is_outlier_100wks": false,
+          "total_stock": 8333613.0,
+          "total_sales": 774965.0
+        },
+        "6": {
+          "stock_weeks": 56.94,
+          "is_outlier_100wks": false,
+          "total_stock": 8032807.0,
+          "total_sales": 604625.0
+        },
+        "7": {
+          "stock_weeks": 62.17,
+          "is_outlier_100wks": false,
+          "total_stock": 7466273.0,
+          "total_sales": 531849.0
+        },
+        "8": {
+          "stock_weeks": 54.43,
+          "is_outlier_100wks": false,
+          "total_stock": 7047492.0,
+          "total_sales": 573403.0
+        },
+        "9": {
+          "stock_weeks": 70.48,
+          "is_outlier_100wks": false,
+          "total_stock": 6882053.0,
+          "total_sales": 418474.0
+        },
+        "10": {
+          "stock_weeks": 34.47,
+          "is_outlier_100wks": false,
+          "total_stock": 6182977.0,
+          "total_sales": 794474.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "运营基准없음": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -598.0,
+          "total_sales": 0.0
+        },
+        "3": {
+          "stock_weeks": 0.0,
+          "is_outlier_100wks": false,
+          "total_stock": 0.0,
+          "total_sales": 598.0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "10": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -299.0,
+          "total_sales": 0.0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": -6.62,
+          "is_outlier_100wks": false,
+          "total_stock": -678.0,
+          "total_sales": 439.0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "10": {
+          "stock_weeks": -2.87,
+          "is_outlier_100wks": false,
+          "total_stock": -239.0,
+          "total_sales": 369.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    }
+  },
+  "Shoes": {
+    "CARE": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 49.77,
+          "is_outlier_100wks": false,
+          "total_stock": 2266357.0,
+          "total_sales": 188657.0
+        },
+        "3": {
+          "stock_weeks": 64.04,
+          "is_outlier_100wks": false,
+          "total_stock": 2021885.0,
+          "total_sales": 139821.0
+        },
+        "4": {
+          "stock_weeks": 64.83,
+          "is_outlier_100wks": false,
+          "total_stock": 2066512.0,
+          "total_sales": 136608.0
+        },
+        "5": {
+          "stock_weeks": 67.09,
+          "is_outlier_100wks": false,
+          "total_stock": 1825749.0,
+          "total_sales": 120521.0
+        },
+        "6": {
+          "stock_weeks": 105.85,
+          "is_outlier_100wks": true,
+          "total_stock": 2181875.0,
+          "total_sales": 88338.0
+        },
+        "7": {
+          "stock_weeks": 142.51,
+          "is_outlier_100wks": true,
+          "total_stock": 4899492.0,
+          "total_sales": 152255.0
+        },
+        "8": {
+          "stock_weeks": 43.11,
+          "is_outlier_100wks": false,
+          "total_stock": 5671900.0,
+          "total_sales": 582640.0
+        },
+        "9": {
+          "stock_weeks": 45.67,
+          "is_outlier_100wks": false,
+          "total_stock": 10070579.0,
+          "total_sales": 944936.0
+        },
+        "10": {
+          "stock_weeks": 32.14,
+          "is_outlier_100wks": false,
+          "total_stock": 10157508.0,
+          "total_sales": 1399644.0
+        },
+        "11": {
+          "stock_weeks": 34.7,
+          "is_outlier_100wks": false,
+          "total_stock": 11336502.0,
+          "total_sales": 1400033.0
+        },
+        "12": {
+          "stock_weeks": 37.33,
+          "is_outlier_100wks": false,
+          "total_stock": 14846755.0,
+          "total_sales": 1761322.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 18.13,
+          "is_outlier_100wks": false,
+          "total_stock": 16918676.0,
+          "total_sales": 4133602.0
+        },
+        "2": {
+          "stock_weeks": 58.47,
+          "is_outlier_100wks": false,
+          "total_stock": 23910238.0,
+          "total_sales": 1635620.0
+        },
+        "3": {
+          "stock_weeks": 39.72,
+          "is_outlier_100wks": false,
+          "total_stock": 25534746.0,
+          "total_sales": 2846885.0
+        },
+        "4": {
+          "stock_weeks": 40.06,
+          "is_outlier_100wks": false,
+          "total_stock": 27444059.0,
+          "total_sales": 2936375.0
+        },
+        "5": {
+          "stock_weeks": 30.7,
+          "is_outlier_100wks": false,
+          "total_stock": 23546577.0,
+          "total_sales": 3396605.0
+        },
+        "6": {
+          "stock_weeks": 57.86,
+          "is_outlier_100wks": false,
+          "total_stock": 22085655.0,
+          "total_sales": 1635973.0
+        },
+        "7": {
+          "stock_weeks": 87.72,
+          "is_outlier_100wks": false,
+          "total_stock": 20527045.0,
+          "total_sales": 1036332.0
+        },
+        "8": {
+          "stock_weeks": 74.96,
+          "is_outlier_100wks": false,
+          "total_stock": 19412882.0,
+          "total_sales": 1146872.0
+        },
+        "9": {
+          "stock_weeks": 97.7,
+          "is_outlier_100wks": false,
+          "total_stock": 18202503.0,
+          "total_sales": 798489.0
+        },
+        "10": {
+          "stock_weeks": 77.22,
+          "is_outlier_100wks": false,
+          "total_stock": 16981526.0,
+          "total_sales": 973935.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "DONE": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 46.44,
+          "is_outlier_100wks": false,
+          "total_stock": 29485633.0,
+          "total_sales": 2630189.0
+        },
+        "3": {
+          "stock_weeks": 59.28,
+          "is_outlier_100wks": false,
+          "total_stock": 27587085.0,
+          "total_sales": 2060790.0
+        },
+        "4": {
+          "stock_weeks": 74.76,
+          "is_outlier_100wks": false,
+          "total_stock": 29323762.0,
+          "total_sales": 1680990.0
+        },
+        "5": {
+          "stock_weeks": 56.13,
+          "is_outlier_100wks": false,
+          "total_stock": 27536367.0,
+          "total_sales": 2172403.0
+        },
+        "6": {
+          "stock_weeks": 60.77,
+          "is_outlier_100wks": false,
+          "total_stock": 25776518.0,
+          "total_sales": 1817797.0
+        },
+        "7": {
+          "stock_weeks": 75.69,
+          "is_outlier_100wks": false,
+          "total_stock": 24447772.0,
+          "total_sales": 1430454.0
+        },
+        "8": {
+          "stock_weeks": 42.95,
+          "is_outlier_100wks": false,
+          "total_stock": 24233579.0,
+          "total_sales": 2498646.0
+        },
+        "9": {
+          "stock_weeks": 52.55,
+          "is_outlier_100wks": false,
+          "total_stock": 21748531.0,
+          "total_sales": 1773852.0
+        },
+        "10": {
+          "stock_weeks": 60.49,
+          "is_outlier_100wks": false,
+          "total_stock": 19435485.0,
+          "total_sales": 1422840.0
+        },
+        "11": {
+          "stock_weeks": 98.44,
+          "is_outlier_100wks": false,
+          "total_stock": 18647009.0,
+          "total_sales": 811813.0
+        },
+        "12": {
+          "stock_weeks": 85.15,
+          "is_outlier_100wks": false,
+          "total_stock": 17665261.0,
+          "total_sales": 918734.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 53.91,
+          "is_outlier_100wks": false,
+          "total_stock": 16249351.0,
+          "total_sales": 1334905.0
+        },
+        "2": {
+          "stock_weeks": 121.92,
+          "is_outlier_100wks": true,
+          "total_stock": 15834361.0,
+          "total_sales": 519488.0
+        },
+        "3": {
+          "stock_weeks": 70.71,
+          "is_outlier_100wks": false,
+          "total_stock": 14860056.0,
+          "total_sales": 930699.0
+        },
+        "4": {
+          "stock_weeks": 67.57,
+          "is_outlier_100wks": false,
+          "total_stock": 14173050.0,
+          "total_sales": 898970.0
+        },
+        "5": {
+          "stock_weeks": 56.33,
+          "is_outlier_100wks": false,
+          "total_stock": 12576826.0,
+          "total_sales": 988829.0
+        },
+        "6": {
+          "stock_weeks": 70.68,
+          "is_outlier_100wks": false,
+          "total_stock": 11939054.0,
+          "total_sales": 723979.0
+        },
+        "7": {
+          "stock_weeks": 62.51,
+          "is_outlier_100wks": false,
+          "total_stock": 10580005.0,
+          "total_sales": 749510.0
+        },
+        "8": {
+          "stock_weeks": 84.67,
+          "is_outlier_100wks": false,
+          "total_stock": 10021708.0,
+          "total_sales": 524162.0
+        },
+        "9": {
+          "stock_weeks": 66.28,
+          "is_outlier_100wks": false,
+          "total_stock": 9491834.0,
+          "total_sales": 613721.0
+        },
+        "10": {
+          "stock_weeks": 69.8,
+          "is_outlier_100wks": false,
+          "total_stock": 8774280.0,
+          "total_sales": 556660.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "FOCUS": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 10.53,
+          "is_outlier_100wks": false,
+          "total_stock": 6277271.0,
+          "total_sales": 2469527.0
+        },
+        "3": {
+          "stock_weeks": 26.21,
+          "is_outlier_100wks": false,
+          "total_stock": 6894019.0,
+          "total_sales": 1164971.0
+        },
+        "4": {
+          "stock_weeks": 40.47,
+          "is_outlier_100wks": false,
+          "total_stock": 7979413.0,
+          "total_sales": 845003.0
+        },
+        "5": {
+          "stock_weeks": 36.02,
+          "is_outlier_100wks": false,
+          "total_stock": 7458826.0,
+          "total_sales": 917116.0
+        },
+        "6": {
+          "stock_weeks": 45.23,
+          "is_outlier_100wks": false,
+          "total_stock": 7389131.0,
+          "total_sales": 700168.0
+        },
+        "7": {
+          "stock_weeks": 49.99,
+          "is_outlier_100wks": false,
+          "total_stock": 11299118.0,
+          "total_sales": 1001065.0
+        },
+        "8": {
+          "stock_weeks": 22.1,
+          "is_outlier_100wks": false,
+          "total_stock": 11209431.0,
+          "total_sales": 2246125.0
+        },
+        "9": {
+          "stock_weeks": 28.85,
+          "is_outlier_100wks": false,
+          "total_stock": 12475802.0,
+          "total_sales": 1853134.0
+        },
+        "10": {
+          "stock_weeks": 24.51,
+          "is_outlier_100wks": false,
+          "total_stock": 10470224.0,
+          "total_sales": 1891523.0
+        },
+        "11": {
+          "stock_weeks": 31.5,
+          "is_outlier_100wks": false,
+          "total_stock": 9782436.0,
+          "total_sales": 1330934.0
+        },
+        "12": {
+          "stock_weeks": 29.42,
+          "is_outlier_100wks": false,
+          "total_stock": 8943319.0,
+          "total_sales": 1346017.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 9.65,
+          "is_outlier_100wks": false,
+          "total_stock": 9100795.0,
+          "total_sales": 4176230.0
+        },
+        "2": {
+          "stock_weeks": 26.07,
+          "is_outlier_100wks": false,
+          "total_stock": 9917286.0,
+          "total_sales": 1521815.0
+        },
+        "3": {
+          "stock_weeks": 26.66,
+          "is_outlier_100wks": false,
+          "total_stock": 10242287.0,
+          "total_sales": 1701576.0
+        },
+        "4": {
+          "stock_weeks": 47.25,
+          "is_outlier_100wks": false,
+          "total_stock": 10038199.0,
+          "total_sales": 910446.0
+        },
+        "5": {
+          "stock_weeks": 48.69,
+          "is_outlier_100wks": false,
+          "total_stock": 11721011.0,
+          "total_sales": 1066127.0
+        },
+        "6": {
+          "stock_weeks": 63.25,
+          "is_outlier_100wks": false,
+          "total_stock": 13867341.0,
+          "total_sales": 939666.0
+        },
+        "7": {
+          "stock_weeks": 75.83,
+          "is_outlier_100wks": false,
+          "total_stock": 19114501.0,
+          "total_sales": 1116302.0
+        },
+        "8": {
+          "stock_weeks": 29.68,
+          "is_outlier_100wks": false,
+          "total_stock": 20257696.0,
+          "total_sales": 3022831.0
+        },
+        "9": {
+          "stock_weeks": 39.07,
+          "is_outlier_100wks": false,
+          "total_stock": 19242325.0,
+          "total_sales": 2110683.0
+        },
+        "10": {
+          "stock_weeks": 21.55,
+          "is_outlier_100wks": false,
+          "total_stock": 16173775.0,
+          "total_sales": 3323262.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "INTRO": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": 0.0,
+          "is_outlier_100wks": false,
+          "total_stock": 0.0,
+          "total_sales": 8386.0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "10": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": -2.21,
+          "is_outlier_100wks": false,
+          "total_stock": -569.0,
+          "total_sales": 1138.0
+        },
+        "2": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": 0.0,
+          "total_sales": 0.0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": 1289.3,
+          "is_outlier_100wks": true,
+          "total_stock": 584303.0,
+          "total_sales": 2007.0
+        },
+        "6": {
+          "stock_weeks": 102.27,
+          "is_outlier_100wks": true,
+          "total_stock": 4534552.0,
+          "total_sales": 190016.0
+        },
+        "7": {
+          "stock_weeks": 80.21,
+          "is_outlier_100wks": false,
+          "total_stock": 10846064.0,
+          "total_sales": 598823.0
+        },
+        "8": {
+          "stock_weeks": 36.71,
+          "is_outlier_100wks": false,
+          "total_stock": 16607716.0,
+          "total_sales": 2003383.0
+        },
+        "9": {
+          "stock_weeks": 39.27,
+          "is_outlier_100wks": false,
+          "total_stock": 15980512.0,
+          "total_sales": 1743912.0
+        },
+        "10": {
+          "stock_weeks": 26.79,
+          "is_outlier_100wks": false,
+          "total_stock": 16277827.0,
+          "total_sales": 2690923.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "OUTLET": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": 41.92,
+          "is_outlier_100wks": false,
+          "total_stock": 69577384.0,
+          "total_sales": 6876436.0
+        },
+        "3": {
+          "stock_weeks": 68.44,
+          "is_outlier_100wks": false,
+          "total_stock": 69139203.0,
+          "total_sales": 4473931.0
+        },
+        "4": {
+          "stock_weeks": 70.25,
+          "is_outlier_100wks": false,
+          "total_stock": 71131882.0,
+          "total_sales": 4339364.0
+        },
+        "5": {
+          "stock_weeks": 56.05,
+          "is_outlier_100wks": false,
+          "total_stock": 68573550.0,
+          "total_sales": 5418395.0
+        },
+        "6": {
+          "stock_weeks": 74.38,
+          "is_outlier_100wks": false,
+          "total_stock": 66234898.0,
+          "total_sales": 3816394.0
+        },
+        "7": {
+          "stock_weeks": 95.36,
+          "is_outlier_100wks": false,
+          "total_stock": 64578231.0,
+          "total_sales": 2999054.0
+        },
+        "8": {
+          "stock_weeks": 58.47,
+          "is_outlier_100wks": false,
+          "total_stock": 64269373.0,
+          "total_sales": 4868179.0
+        },
+        "9": {
+          "stock_weeks": 61.26,
+          "is_outlier_100wks": false,
+          "total_stock": 62808617.0,
+          "total_sales": 4394163.0
+        },
+        "10": {
+          "stock_weeks": 48.63,
+          "is_outlier_100wks": false,
+          "total_stock": 57935945.0,
+          "total_sales": 5275973.0
+        },
+        "11": {
+          "stock_weeks": 66.86,
+          "is_outlier_100wks": false,
+          "total_stock": 55820816.0,
+          "total_sales": 3578126.0
+        },
+        "12": {
+          "stock_weeks": 55.9,
+          "is_outlier_100wks": false,
+          "total_stock": 52332637.0,
+          "total_sales": 4146194.0
+        }
+      },
+      "2025": {
+        "1": {
+          "stock_weeks": 30.73,
+          "is_outlier_100wks": false,
+          "total_stock": 45831860.0,
+          "total_sales": 6605946.0
+        },
+        "2": {
+          "stock_weeks": 83.63,
+          "is_outlier_100wks": false,
+          "total_stock": 44665937.0,
+          "total_sales": 2136484.0
+        },
+        "3": {
+          "stock_weeks": 32.67,
+          "is_outlier_100wks": false,
+          "total_stock": 38635730.0,
+          "total_sales": 5237986.0
+        },
+        "4": {
+          "stock_weeks": 87.84,
+          "is_outlier_100wks": false,
+          "total_stock": 36686962.0,
+          "total_sales": 1789887.0
+        },
+        "5": {
+          "stock_weeks": 69.31,
+          "is_outlier_100wks": false,
+          "total_stock": 33549840.0,
+          "total_sales": 2143678.0
+        },
+        "6": {
+          "stock_weeks": 95.8,
+          "is_outlier_100wks": false,
+          "total_stock": 32102983.0,
+          "total_sales": 1436139.0
+        },
+        "7": {
+          "stock_weeks": 39.18,
+          "is_outlier_100wks": false,
+          "total_stock": 28143252.0,
+          "total_sales": 3180913.0
+        },
+        "8": {
+          "stock_weeks": 49.91,
+          "is_outlier_100wks": false,
+          "total_stock": 26499544.0,
+          "total_sales": 2351219.0
+        },
+        "9": {
+          "stock_weeks": 52.65,
+          "is_outlier_100wks": false,
+          "total_stock": 25377618.0,
+          "total_sales": 2065722.0
+        },
+        "10": {
+          "stock_weeks": 38.58,
+          "is_outlier_100wks": false,
+          "total_stock": 22571698.0,
+          "total_sales": 2591282.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    },
+    "运营基准없음": {
+      "2024": {
+        "1": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "2": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "3": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "4": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "5": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "6": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "7": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "8": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "9": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "10": {
+          "stock_weeks": NaN,
+          "is_outlier_100wks": false,
+          "total_stock": -669.0,
+          "total_sales": 0.0
+        },
+        "11": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        },
+        "12": {
+          "stock_weeks": null,
+          "is_outlier_100wks": false,
+          "total_stock": 0,
+          "total_sales": 0
+        }
+      }
+    }
+  }
+}

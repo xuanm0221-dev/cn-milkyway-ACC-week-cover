@@ -2,18 +2,22 @@
 
 import React, { useState, useEffect } from "react";
 import StockWeeksHeatmap from "@/components/StockWeeksHeatmap";
+import OperationStockHeatmap from "@/components/OperationStockHeatmap";
 import { StockWeeksData, Brand } from "@/types/stock-weeks";
+import { OperationStockWeeksData } from "@/types/operation-stock-weeks";
 import { useLanguageStore } from "@/lib/store/language-store";
 import { useT } from "@/lib/i18n";
 
 // JSON 데이터 import
 import MLBData from "@/data/stock_weeks_MLB.json";
+import MLBOperationData from "@/data/stock_weeks_MLB_operation.json";
 
 /**
  * MLB 브랜드 상세 페이지 컴포넌트
  */
 export default function MLBPage() {
   const [data, setData] = useState<StockWeeksData | null>(null);
+  const [operationData, setOperationData] = useState<OperationStockWeeksData | null>(null);
   const [loading, setLoading] = useState(true);
   const [nWeeks, setNWeeks] = useState<number>(25);
   const { language, setLanguage } = useLanguageStore();
@@ -28,9 +32,11 @@ export default function MLBPage() {
     setLoading(true);
     try {
       setData(MLBData as StockWeeksData);
+      setOperationData(MLBOperationData as OperationStockWeeksData);
     } catch (error) {
       console.error("Error loading data:", error);
       setData(null);
+      setOperationData(null);
     } finally {
       setLoading(false);
     }
@@ -50,7 +56,7 @@ export default function MLBPage() {
         </div>
       </section>
 
-      {/* 2. 히트맵 영역 */}
+      {/* 2. 소분류별 히트맵 영역 */}
       <div className="w-full">
         {loading ? (
           <div className="flex justify-center items-center h-64">
@@ -67,6 +73,24 @@ export default function MLBPage() {
         ) : (
           <div className="flex justify-center items-center h-64">
             <div className="text-gray-500">{t("common.error")}</div>
+          </div>
+        )}
+      </div>
+
+      {/* 3. 운영기준별 히트맵 영역 */}
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="text-gray-500">{t("common.loading")}</div>
+          </div>
+        ) : operationData ? (
+          <OperationStockHeatmap
+            data={operationData}
+            brand={selectedBrand}
+          />
+        ) : (
+          <div className="flex justify-center items-center h-64">
+            <div className="text-gray-500">운영기준 데이터를 불러올 수 없습니다.</div>
           </div>
         )}
       </div>
