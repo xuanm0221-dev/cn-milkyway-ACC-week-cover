@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect, useMemo } from "react";
 import BrandCard from "@/components/BrandCard";
 import { StockWeeksData, Brand, CATEGORY_ORDER } from "@/types/stock-weeks";
@@ -15,6 +16,14 @@ import DscData from "@/data/stock_weeks_DISCOVERY.json";
  * 홈 대시보드 페이지 컴포넌트
  */
 export default function HomeDashboard() {
+  const router = useRouter();
+  
+  // /home 경로 접속 시 /로 리다이렉트
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.pathname === "/home") {
+      router.replace("/");
+    }
+  }, [router]);
   const [mlbData, setMlbData] = useState<StockWeeksData | null>(null);
   const [kidsData, setKidsData] = useState<StockWeeksData | null>(null);
   const [discoveryData, setDiscoveryData] = useState<StockWeeksData | null>(null);
