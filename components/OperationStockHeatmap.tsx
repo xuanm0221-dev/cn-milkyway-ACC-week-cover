@@ -111,7 +111,7 @@ export default function OperationStockHeatmap({
 
   // 브랜드별 색상
   const getBrandColor = (): string => {
-    if (brand === "MLB") return "bg-blue-600";
+    if (brand === "MLB") return "bg-blue-900"; // MLB 네이비 색상
     if (brand === "MLB KIDS") return "bg-amber-500";
     if (brand === "DISCOVERY") return "bg-emerald-600";
     return "bg-slate-600";
