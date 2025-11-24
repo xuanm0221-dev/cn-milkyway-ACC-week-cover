@@ -8,18 +8,37 @@ import { formatSubcategoryLabel } from "@/utils/subcategory-names";
 import InventoryMonthlySummaryCard from "@/components/inventory/InventoryMonthlySummaryCard";
 import InventorySummaryCards from "@/components/inventory/InventorySummaryCards";
 import { useT, formatNumber } from "@/lib/i18n";
+import { useLanguageStore } from "@/lib/store/language-store";
+import Link from "next/link";
 
 interface StockWeeksHeatmapProps {
   data: StockWeeksData;
   brand: Brand;
   nWeeks: number;
+  onNWeeksChange?: (nWeeks: number) => void;
+  // 브랜드 선택 탭 (메인 페이지에서만 사용)
+  brands?: Brand[];
+  selectedBrand?: Brand;
+  onBrandChange?: (brand: Brand) => void;
+  // 홈 버튼 표시 여부 (브랜드별 상세 페이지에서만 사용)
+  showHomeButton?: boolean;
 }
 
 /**
  * 재고주수 히트맵 컴포넌트
  */
-export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHeatmapProps) {
+export default function StockWeeksHeatmap({ 
+  data, 
+  brand, 
+  nWeeks,
+  onNWeeksChange,
+  brands,
+  selectedBrand,
+  onBrandChange,
+  showHomeButton = false
+}: StockWeeksHeatmapProps) {
   const t = useT();
+  const { language, setLanguage } = useLanguageStore();
   
   // 중분류 탭 선택 상태 ("전체" | "Shoes" | "Headwear" | "Bag" | "Acc_etc")
   const [selectedCategory, setSelectedCategory] = useState<string>("전체");
@@ -676,11 +695,61 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
-      {/* 제목 카드 */}
+      {/* 브랜드 선택 탭 + 아이템 선택 탭 */}
       <div className="bg-white rounded-xl shadow-sm px-6 py-4 mb-6">
         <div className="flex items-center gap-4 flex-wrap">
-          <h1 className="text-2xl font-semibold text-slate-900">{brand} {t("heatmap.title")}</h1>
-          
+          {/* 브랜드 선택 탭 (메인 페이지에서만 표시) */}
+          {brands && selectedBrand && onBrandChange && (
+            <div className="flex space-x-1">
+              {brands.map((b) => {
+                const getBrandColor = (brandName: Brand) => {
+                  if (brandName === "MLB") {
+                    return {
+                      selected: "text-white",
+                      unselected: "bg-gray-100 text-gray-700 hover:bg-gray-200",
+                    };
+                  } else if (brandName === "MLB KIDS") {
+                    return {
+                      selected: "text-slate-900",
+                      unselected: "bg-gray-100 text-gray-700 hover:bg-gray-200",
+                    };
+                  } else if (brandName === "DISCOVERY") {
+                    return {
+                      selected: "text-white",
+                      unselected: "bg-gray-100 text-gray-700 hover:bg-gray-200",
+                    };
+                  }
+                  return {
+                    selected: "bg-gray-600 text-white",
+                    unselected: "bg-gray-100 text-gray-700 hover:bg-gray-200",
+                  };
+                };
+
+                const colors = getBrandColor(b);
+                const getSelectedBg = (brandName: Brand) => {
+                  if (brandName === "MLB") return "bg-[#1e3a8a]";
+                  if (brandName === "MLB KIDS") return "bg-[#fbbf24]";
+                  if (brandName === "DISCOVERY") return "bg-[#10b981]";
+                  return "bg-gray-600";
+                };
+
+                return (
+                  <button
+                    key={b}
+                    onClick={() => onBrandChange(b)}
+                    className={`px-6 py-2 rounded-lg font-bold transition-colors ${
+                      selectedBrand === b
+                        ? `${getSelectedBg(b)} ${colors.selected}`
+                        : colors.unselected
+                    }`}
+                  >
+                    {b}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           {/* 중분류 탭 */}
           <div className={`inline-flex ${brandColors.tabColor.container} p-1 rounded-lg`}>
             {categoryTabs.map((tab) => (
@@ -697,6 +766,121 @@ export default function StockWeeksHeatmap({ data, brand, nWeeks }: StockWeeksHea
               </button>
             ))}
           </div>
+
+          {/* 언어 선택 토글 */}
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl shadow-inner">
+            <button
+              onClick={() => setLanguage("ko")}
+              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                language === "ko"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              한국어
+            </button>
+            <button
+              onClick={() => setLanguage("zh")}
+              className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                language === "zh"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              中文
+            </button>
+          </div>
+
+          {/* 직영 판매예정 주수 입력 - DISCOVERY일 때는 브랜드 네비게이션 버튼 앞에 배치 */}
+          {onNWeeksChange && brand === "DISCOVERY" && (
+            <div className="flex items-center gap-3">
+              <label
+                htmlFor="nWeeks"
+                className="text-sm font-semibold text-slate-700"
+              >
+                {t("page.directSalesForecastWeeks")}:
+              </label>
+              <div className="relative">
+                <input
+                  id="nWeeks"
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={nWeeks}
+                  onChange={(e) => onNWeeksChange(Number(e.target.value))}
+                  className="w-24 px-4 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm hover:border-slate-300"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-500 pointer-events-none">
+                  {t("common.weeks")}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* 브랜드 네비게이션 버튼 (브랜드별 상세 페이지에서만 표시) */}
+          {showHomeButton && (
+            <div className="flex items-center gap-2">
+              {/* 다른 브랜드로 이동 버튼 */}
+              {brand !== "MLB" && (
+                <Link
+                  href="/mlb"
+                  className="px-4 py-2 rounded-lg text-sm font-semibold bg-[#1e3a8a] text-white hover:bg-[#1e40af] transition-all duration-200 shadow-sm hover:shadow-md"
+                >
+                  MLB
+                </Link>
+              )}
+              {brand !== "MLB KIDS" && (
+                <Link
+                  href="/kids"
+                  className="px-4 py-2 rounded-lg text-sm font-semibold bg-[#fbbf24] text-slate-900 hover:bg-[#f59e0b] transition-all duration-200 shadow-sm hover:shadow-md"
+                >
+                  MLB KIDS
+                </Link>
+              )}
+              {brand !== "DISCOVERY" && (
+                <Link
+                  href="/discovery"
+                  className="px-4 py-2 rounded-lg text-sm font-semibold bg-[#10b981] text-white hover:bg-[#059669] transition-all duration-200 shadow-sm hover:shadow-md"
+                >
+                  DISCOVERY
+                </Link>
+              )}
+              
+              {/* 홈 대시보드 버튼 */}
+              <Link
+                href="/home"
+                className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-gray-500 text-white hover:bg-gray-600 transition-all duration-200 shadow-sm hover:shadow-md"
+              >
+                {t("common.home") || "홈"}
+              </Link>
+            </div>
+          )}
+
+          {/* 직영 판매예정 주수 입력 - DISCOVERY가 아닐 때는 브랜드 네비게이션 버튼 뒤에 배치 */}
+          {onNWeeksChange && brand !== "DISCOVERY" && (
+            <div className="flex items-center gap-3">
+              <label
+                htmlFor="nWeeks"
+                className="text-sm font-semibold text-slate-700"
+              >
+                {t("page.directSalesForecastWeeks")}:
+              </label>
+              <div className="relative">
+                <input
+                  id="nWeeks"
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={nWeeks}
+                  onChange={(e) => onNWeeksChange(Number(e.target.value))}
+                  className="w-24 px-4 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm hover:border-slate-300"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-500 pointer-events-none">
+                  {t("common.weeks")}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       
