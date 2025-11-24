@@ -121,7 +121,10 @@ export default function OperationStockHeatmap({
     <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(15,23,42,0.08)] p-6">
       {/* 헤더 */}
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-slate-900 mb-2">
+        <h2 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-3">
+          <span className={`${getBrandColor()} text-white w-8 h-8 rounded-full flex items-center justify-center text-base font-bold flex-shrink-0`}>
+            4
+          </span>
           {brand} 악세사리 운영기준별 재고주수 분석
         </h2>
         <p className="text-sm text-slate-600">
