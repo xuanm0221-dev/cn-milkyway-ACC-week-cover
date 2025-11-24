@@ -18,8 +18,10 @@ interface OperationStockHeatmapProps {
   brand: string;
 }
 
+const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
 /**
- * 운영기준별 재고주수 히트맵 컴포넌트 (단일 테이블 구조)
+ * 운영기준별 재고주수 히트맵 컴포넌트
  */
 export default function OperationStockHeatmap({
   data,
@@ -28,8 +30,6 @@ export default function OperationStockHeatmap({
   const t = useT();
   const [selectedCategory, setSelectedCategory] = useState<string>("Shoes");
   const [selectedStockType, setSelectedStockType] = useState<StockType>("전체");
-
-  const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   
   // 선택된 카테고리의 데이터 가져오기
   const categoryData = data[selectedCategory] || {};
@@ -62,6 +62,20 @@ export default function OperationStockHeatmap({
     return monthData[selectedStockType] || null;
   };
 
+  // 표시할 운영기준 필터링 (2025 또는 2024에 데이터가 있는 것만)
+  const visibleOperations = useMemo(() => {
+    const hasDataForOperation = (operation: string, year: number): boolean => {
+      return MONTHS.some((month) => {
+        const monthData = getStockWeeks(year, month, operation);
+        return monthData?.stock_weeks != null && monthData.stock_weeks !== 0;
+      });
+    };
+
+    return operations.filter((operation) => {
+      return hasDataForOperation(operation, 2025) || hasDataForOperation(operation, 2024);
+    });
+  }, [operations, categoryData, selectedStockType]);
+
   // 전년 대비 증감 계산
   const getYoYDiff = (
     operation: string,
@@ -88,6 +102,37 @@ export default function OperationStockHeatmap({
     };
   };
 
+  // 전체 운영기준 합산 재고주수 계산
+  const getTotalStockWeeks = (year: number, month: number): OperationMonthData | null => {
+    let totalStock = 0;
+    let totalSales = 0;
+    let hasData = false;
+
+    operations.forEach((operation) => {
+      const opData = getStockWeeks(year, month, operation);
+      if (opData && opData.total_stock !== undefined && opData.total_sales !== undefined) {
+        totalStock += opData.total_stock;
+        totalSales += opData.total_sales;
+        hasData = true;
+      }
+    });
+
+    if (!hasData || totalSales === 0) {
+      return null;
+    }
+
+    // 재고주수 계산: (재고금액 / (판매금액 / 일수 * 7))
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const stockWeeks = (totalStock / (totalSales / daysInMonth)) * 7;
+    
+    return {
+      stock_weeks: stockWeeks,
+      is_outlier_100wks: stockWeeks >= 100,
+      total_stock: totalStock,
+      total_sales: totalSales,
+    };
+  };
+
   // 증감 색상 클래스
   const getDiffColorClass = (diff: number | null): string => {
     if (diff === null) return "bg-slate-100";
@@ -109,9 +154,9 @@ export default function OperationStockHeatmap({
     return OPERATION_CATEGORY_NAMES[key] || key;
   };
 
-  // 브랜드별 색상
+  // 브랜드별 색상 함수
   const getBrandColor = (): string => {
-    if (brand === "MLB") return "bg-blue-900"; // MLB 네이비 색상
+    if (brand === "MLB") return "bg-blue-900";
     if (brand === "MLB KIDS") return "bg-amber-500";
     if (brand === "DISCOVERY") return "bg-emerald-600";
     return "bg-slate-600";
@@ -181,17 +226,25 @@ export default function OperationStockHeatmap({
 
       {/* 단일 통합 테이블 */}
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse">
+        <table className="table-fixed w-full border-collapse">
+          {/* 컬럼 너비 지정 */}
+          <colgroup>
+            <col className="w-40" />
+            {MONTHS.map((month) => (
+              <col key={month} className="w-24" />
+            ))}
+          </colgroup>
+          
           {/* 테이블 헤더 */}
           <thead>
             <tr>
-              <th className="sticky left-0 z-10 bg-slate-800 border border-slate-700 px-4 py-3 text-center text-sm font-semibold text-white">
+              <th className="sticky left-0 z-10 bg-slate-800 border border-slate-700 px-4 py-3 text-center text-sm font-semibold text-white whitespace-nowrap">
                 운영기준
               </th>
               {MONTHS.map((month) => (
                 <th
                   key={month}
-                  className="border border-slate-700 px-3 py-3 text-center text-sm font-semibold text-white bg-slate-800"
+                  className="border border-slate-700 px-3 py-3 text-center text-sm font-semibold text-white bg-slate-800 whitespace-nowrap"
                 >
                   {month}월
                 </th>
@@ -201,15 +254,44 @@ export default function OperationStockHeatmap({
 
           <tbody>
             {/* [1] 2025년 전체 재고주수 그룹 */}
-            <tr>
-              <th
-                colSpan={13}
-                className="bg-slate-100 border border-slate-300 px-4 py-3 text-left text-base font-bold text-slate-900"
-              >
+            {/* 전체 합계 행 */}
+            <tr className="bg-gray-100 hover:bg-gray-200 border-t-2 border-black">
+              <td className="sticky left-0 z-10 bg-gray-100 border border-slate-200 px-4 py-4 text-sm font-bold text-slate-900 whitespace-nowrap">
                 2025년 전체 재고주수
-              </th>
+              </td>
+              {MONTHS.map((month) => {
+                const totalData = getTotalStockWeeks(2025, month);
+                const weeksValue = totalData?.stock_weeks;
+                const isOutlier = totalData?.is_outlier_100wks || false;
+                const colorClass = getHeatmapClass(weeksValue);
+                const outlierStyle = isOutlier
+                  ? "ring-2 ring-rose-500 ring-inset"
+                  : "";
+
+                return (
+                  <td
+                    key={month}
+                    className={`border border-slate-200 px-3 py-3 text-center text-sm whitespace-nowrap ${colorClass} ${outlierStyle}`}
+                  >
+                    <div className="flex flex-col items-center">
+                      <span
+                        className={`font-bold ${
+                          isOutlier ? "text-rose-900" : ""
+                        }`}
+                      >
+                        {formatWeeksValue(weeksValue ?? null, t)}
+                      </span>
+                      {isOutlier && (
+                        <span className="text-xs text-rose-700 font-medium">
+                          ⚠️
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                );
+              })}
             </tr>
-            {operations.map((operation) => (
+            {visibleOperations.map((operation) => (
               <tr key={`2025-${operation}`} className="hover:bg-slate-50">
                 <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
                   {operation === "运营基准없음" ? "운영기준없음" : operation}
@@ -226,7 +308,7 @@ export default function OperationStockHeatmap({
                   return (
                     <td
                       key={month}
-                      className={`border border-slate-200 px-3 py-3 text-center text-sm ${colorClass} ${outlierStyle}`}
+                      className={`border border-slate-200 px-3 py-3 text-center text-sm whitespace-nowrap ${colorClass} ${outlierStyle}`}
                     >
                       <div className="flex flex-col items-center">
                         <span
@@ -249,15 +331,44 @@ export default function OperationStockHeatmap({
             ))}
 
             {/* [2] 2024년 전체 재고주수 그룹 */}
-            <tr>
-              <th
-                colSpan={13}
-                className="bg-slate-100 border border-slate-300 px-4 py-3 text-left text-base font-bold text-slate-900"
-              >
+            {/* 전체 합계 행 */}
+            <tr className="bg-gray-100 hover:bg-gray-200 border-t-[3px] border-black">
+              <td className="sticky left-0 z-10 bg-gray-100 border border-slate-200 px-4 py-4 text-sm font-bold text-slate-900 whitespace-nowrap">
                 2024년 전체 재고주수
-              </th>
+              </td>
+              {MONTHS.map((month) => {
+                const totalData = getTotalStockWeeks(2024, month);
+                const weeksValue = totalData?.stock_weeks;
+                const isOutlier = totalData?.is_outlier_100wks || false;
+                const colorClass = getHeatmapClass(weeksValue);
+                const outlierStyle = isOutlier
+                  ? "ring-2 ring-rose-500 ring-inset"
+                  : "";
+
+                return (
+                  <td
+                    key={month}
+                    className={`border border-slate-200 px-3 py-3 text-center text-sm whitespace-nowrap ${colorClass} ${outlierStyle}`}
+                  >
+                    <div className="flex flex-col items-center">
+                      <span
+                        className={`font-bold ${
+                          isOutlier ? "text-rose-900" : ""
+                        }`}
+                      >
+                        {formatWeeksValue(weeksValue ?? null, t)}
+                      </span>
+                      {isOutlier && (
+                        <span className="text-xs text-rose-700 font-medium">
+                          ⚠️
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                );
+              })}
             </tr>
-            {operations.map((operation) => (
+            {visibleOperations.map((operation) => (
               <tr key={`2024-${operation}`} className="hover:bg-slate-50">
                 <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
                   {operation === "运营基准없음" ? "운영기준없음" : operation}
@@ -274,7 +385,7 @@ export default function OperationStockHeatmap({
                   return (
                     <td
                       key={month}
-                      className={`border border-slate-200 px-3 py-3 text-center text-sm ${colorClass} ${outlierStyle}`}
+                      className={`border border-slate-200 px-3 py-3 text-center text-sm whitespace-nowrap ${colorClass} ${outlierStyle}`}
                     >
                       <div className="flex flex-col items-center">
                         <span
@@ -297,17 +408,44 @@ export default function OperationStockHeatmap({
             ))}
 
             {/* [3] 전년 대비 증감 그룹 */}
-            <tr>
-              <th
-                colSpan={13}
-                className="bg-amber-100 border border-slate-300 px-4 py-3 text-center text-base font-bold text-slate-900"
-              >
+            {/* 전체 합계 행 */}
+            <tr className="bg-gray-100 hover:bg-gray-200 border-t-[3px] border-black">
+              <td className="sticky left-0 z-10 bg-gray-100 border border-slate-200 px-4 py-4 text-sm font-bold text-slate-900 whitespace-nowrap">
                 전년 대비 증감
-              </th>
+              </td>
+              {MONTHS.map((month) => {
+                const total2025 = getTotalStockWeeks(2025, month);
+                const total2024 = getTotalStockWeeks(2024, month);
+                
+                const weeks2025 = total2025?.stock_weeks;
+                const weeks2024 = total2024?.stock_weeks;
+                
+                let diff: number | null = null;
+                if (weeks2025 != null && weeks2024 != null) {
+                  diff = weeks2025 - weeks2024;
+                }
+                
+                const colorClass = getDiffColorClass(diff);
+
+                return (
+                  <td
+                    key={month}
+                    className={`border border-slate-200 px-3 py-3 text-center text-sm font-bold whitespace-nowrap ${colorClass}`}
+                  >
+                    {diff !== null
+                      ? diff > 0
+                        ? `+${diff.toFixed(1)}주`
+                        : diff < 0
+                        ? `△${Math.abs(diff).toFixed(1)}주`
+                        : "0주"
+                      : "-"}
+                  </td>
+                );
+              })}
             </tr>
-            {operations.map((operation) => (
-              <tr key={`diff-${operation}`} className="hover:bg-slate-50">
-                <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
+            {visibleOperations.map((operation) => (
+              <tr key={`diff-${operation}`} className="bg-amber-50/30 hover:bg-amber-50/50">
+                <td className="sticky left-0 z-10 bg-amber-50/30 border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
                   {operation === "运营基准없음" ? "운영기준없음" : operation}
                 </td>
                 {MONTHS.map((month) => {
@@ -320,13 +458,13 @@ export default function OperationStockHeatmap({
                   return (
                     <td
                       key={month}
-                      className={`border border-slate-200 px-3 py-3 text-center text-sm font-bold ${colorClass}`}
+                      className={`border border-slate-200 px-3 py-3 text-center text-sm font-bold whitespace-nowrap ${colorClass}`}
                     >
                       {diff !== null
                         ? diff > 0
                           ? `+${diff.toFixed(1)}주`
                           : diff < 0
-                          ? `${diff.toFixed(1)}주`
+                          ? `△${Math.abs(diff).toFixed(1)}주`
                           : "0주"
                         : is2025Missing && is2024Missing
                         ? "-"
@@ -388,15 +526,15 @@ export default function OperationStockHeatmap({
             <div className="flex flex-wrap gap-4 items-center text-xs">
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-green-300 rounded border border-slate-300"></div>
-                <span className="text-slate-600">크게 개선 (&lt; -5주)</span>
+                <span className="text-slate-600">크게 개선 (△5주 이상)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-green-200 rounded border border-slate-300"></div>
-                <span className="text-slate-600">개선 (-2~-5주)</span>
+                <span className="text-slate-600">개선 (△2~5주)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-green-100 rounded border border-slate-300"></div>
-                <span className="text-slate-600">소폭 개선 (-2주 미만)</span>
+                <span className="text-slate-600">소폭 개선 (△2주 미만)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-yellow-100 rounded border border-slate-300"></div>
