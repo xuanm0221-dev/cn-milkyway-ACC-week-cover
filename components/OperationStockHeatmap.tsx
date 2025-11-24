@@ -18,35 +18,42 @@ interface OperationStockHeatmapProps {
   brand: string;
 }
 
-interface MonthBlockProps {
-  month: number;
-  categoryData: any;
-  operations: string[];
-  selectedStockType: StockType;
-  brand: string;
-  t: (key: string) => string;
-}
+type OperationKey = "26SS" | "CARE" | "DONE" | "FOCUS" | "INTRO" | "OUTLET";
 
 /**
- * 월별 재고주수 블록 컴포넌트
+ * 운영기준별 재고주수 히트맵 컴포넌트 (단일 테이블 구조)
  */
-function MonthBlock({
-  month,
-  categoryData,
-  operations,
-  selectedStockType,
+export default function OperationStockHeatmap({
+  data,
   brand,
-  t,
-}: MonthBlockProps) {
-  // 월별 재고주수 값 가져오기
-  const getWeeksValue = (
-    operation: string,
-    year: string
+}: OperationStockHeatmapProps) {
+  const t = useT();
+  const [selectedCategory, setSelectedCategory] = useState<string>("Shoes");
+  const [selectedStockType, setSelectedStockType] = useState<StockType>("전체");
+
+  const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const OPERATIONS: OperationKey[] = [
+    "26SS",
+    "CARE",
+    "DONE",
+    "FOCUS",
+    "INTRO",
+    "OUTLET",
+  ];
+
+  // 선택된 카테고리의 데이터 가져오기
+  const categoryData = data[selectedCategory] || {};
+
+  // 재고주수 값 가져오기 헬퍼 함수
+  const getStockWeeks = (
+    year: number,
+    month: number,
+    operation: string
   ): OperationMonthData | null => {
     const opData = categoryData[operation];
     if (!opData) return null;
 
-    const yearData = opData[year];
+    const yearData = opData[String(year)];
     if (!yearData) return null;
 
     const monthData = yearData[String(month)];
@@ -57,10 +64,11 @@ function MonthBlock({
 
   // 전년 대비 증감 계산
   const getYoYDiff = (
-    operation: string
+    operation: string,
+    month: number
   ): { diff: number | null; is2025Missing: boolean; is2024Missing: boolean } => {
-    const data2025 = getWeeksValue(operation, "2025");
-    const data2024 = getWeeksValue(operation, "2024");
+    const data2025 = getStockWeeks(2025, month, operation);
+    const data2024 = getStockWeeks(2024, month, operation);
 
     const weeks2025 = data2025?.stock_weeks;
     const weeks2024 = data2024?.stock_weeks;
@@ -91,221 +99,6 @@ function MonthBlock({
     if (diff > -5) return "bg-green-200";
     return "bg-green-300";
   };
-
-  return (
-    <div className="space-y-6 mt-6 pt-6 border-t border-slate-300">
-      {/* [A] 2025년 재고주수 */}
-      <div className="border border-slate-200 rounded-lg overflow-hidden">
-        <div className="bg-blue-50 px-4 py-3 border-b border-slate-200">
-          <h3 className="text-lg font-bold text-slate-900">
-            2025년 {month}월 재고주수
-          </h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="sticky left-0 z-10 bg-slate-100 border border-slate-300 px-4 py-3 text-left text-sm font-semibold text-slate-800">
-                  운영기준
-                </th>
-                <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
-                  재고주수
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {operations.map((operation) => {
-                const monthData = getWeeksValue(operation, "2025");
-                const weeksValue = monthData?.stock_weeks;
-                const isOutlier = monthData?.is_outlier_100wks || false;
-                const colorClass = getHeatmapClass(weeksValue);
-                const outlierStyle = isOutlier
-                  ? "ring-2 ring-rose-500 ring-inset"
-                  : "";
-
-                return (
-                  <tr key={operation} className="hover:bg-slate-50">
-                    <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
-                      {operation === "运营基准없음"
-                        ? "운영기준없음"
-                        : operation}
-                    </td>
-                    <td
-                      className={`border border-slate-200 px-4 py-3 text-center text-sm ${colorClass} ${outlierStyle}`}
-                    >
-                      <div className="flex flex-col items-center">
-                        <span
-                          className={`font-semibold ${
-                            isOutlier ? "text-rose-900" : ""
-                          }`}
-                        >
-                          {formatWeeksValue(weeksValue, t)}
-                        </span>
-                        {isOutlier && (
-                          <span className="text-xs text-rose-700 font-medium">
-                            ⚠️
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* [B] 2024년 재고주수 */}
-      <div className="border border-slate-200 rounded-lg overflow-hidden">
-        <div className="bg-slate-50 px-4 py-3 border-b border-slate-200">
-          <h3 className="text-lg font-bold text-slate-900">
-            2024년 {month}월 재고주수
-          </h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="sticky left-0 z-10 bg-slate-100 border border-slate-300 px-4 py-3 text-left text-sm font-semibold text-slate-800">
-                  운영기준
-                </th>
-                <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
-                  재고주수
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {operations.map((operation) => {
-                const monthData = getWeeksValue(operation, "2024");
-                const weeksValue = monthData?.stock_weeks;
-                const isOutlier = monthData?.is_outlier_100wks || false;
-                const colorClass = getHeatmapClass(weeksValue);
-                const outlierStyle = isOutlier
-                  ? "ring-2 ring-rose-500 ring-inset"
-                  : "";
-
-                return (
-                  <tr key={operation} className="hover:bg-slate-50">
-                    <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
-                      {operation === "运营基准없음"
-                        ? "운영기준없음"
-                        : operation}
-                    </td>
-                    <td
-                      className={`border border-slate-200 px-4 py-3 text-center text-sm ${colorClass} ${outlierStyle}`}
-                    >
-                      <div className="flex flex-col items-center">
-                        <span
-                          className={`font-semibold ${
-                            isOutlier ? "text-rose-900" : ""
-                          }`}
-                        >
-                          {formatWeeksValue(weeksValue, t)}
-                        </span>
-                        {isOutlier && (
-                          <span className="text-xs text-rose-700 font-medium">
-                            ⚠️
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* [C] 전년 대비 증감 */}
-      <div className="border border-slate-200 rounded-lg overflow-hidden">
-        <div className="bg-amber-50 px-4 py-3 border-b border-slate-200">
-          <h3 className="text-lg font-bold text-slate-900">
-            {month}월 전년 대비 증감
-          </h3>
-          <p className="text-xs text-slate-600 mt-1">
-            증가(악화): 빨강 / 감소(개선): 초록
-          </p>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="sticky left-0 z-10 bg-slate-100 border border-slate-300 px-4 py-3 text-left text-sm font-semibold text-slate-800">
-                  운영기준
-                </th>
-                <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
-                  증감 (주)
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {operations.map((operation) => {
-                const { diff, is2025Missing, is2024Missing } =
-                  getYoYDiff(operation);
-                const colorClass = getDiffColorClass(diff);
-
-                return (
-                  <tr key={operation} className="hover:bg-slate-50">
-                    <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
-                      {operation === "运营基准없음"
-                        ? "운영기준없음"
-                        : operation}
-                    </td>
-                    <td
-                      className={`border border-slate-200 px-4 py-3 text-center text-sm font-bold ${colorClass}`}
-                    >
-                      {diff !== null
-                        ? diff > 0
-                          ? `+${diff.toFixed(1)}주`
-                          : diff < 0
-                          ? `${diff.toFixed(1)}주`
-                          : "0주"
-                        : is2025Missing && is2024Missing
-                        ? "-"
-                        : is2025Missing
-                        ? "2025년 데이터 없음"
-                        : "2024년 데이터 없음"}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/**
- * 운영기준별 재고주수 히트맵 컴포넌트 (1~12월 전체 표시)
- */
-export default function OperationStockHeatmap({
-  data,
-  brand,
-}: OperationStockHeatmapProps) {
-  const t = useT();
-  const [selectedCategory, setSelectedCategory] = useState<string>("Shoes");
-  const [selectedStockType, setSelectedStockType] = useState<StockType>("전체");
-
-  // 1~12월 배열
-  const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
-  // 선택된 카테고리의 데이터 가져오기
-  const categoryData = data[selectedCategory] || {};
-
-  // 운영기준 목록 (알파벳 순 정렬)
-  const operations = useMemo(() => {
-    const ops = Object.keys(categoryData);
-    return ops.sort((a, b) => {
-      // "运营基准없음"을 맨 아래로
-      if (a === "运营基准없음") return 1;
-      if (b === "运营基准없음") return -1;
-      return a.localeCompare(b);
-    });
-  }, [categoryData]);
 
   // 카테고리명 가져오기
   const getCategoryName = (key: string): string => {
@@ -383,29 +176,169 @@ export default function OperationStockHeatmap({
         </div>
       </div>
 
-      {/* 1~12월 전체 표시 */}
-      {operations.length > 0 ? (
-        <div>
-          {MONTHS.map((month) => (
-            <MonthBlock
-              key={month}
-              month={month}
-              categoryData={categoryData}
-              operations={operations}
-              selectedStockType={selectedStockType}
-              brand={brand}
-              t={t}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-12 text-slate-500">
-          해당 카테고리에 데이터가 없습니다.
-        </div>
-      )}
+      {/* 단일 통합 테이블 */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse">
+          {/* 테이블 헤더 */}
+          <thead>
+            <tr>
+              <th className="sticky left-0 z-10 bg-slate-100 border border-slate-300 px-4 py-3 text-left text-sm font-semibold text-slate-800">
+                운영기준
+              </th>
+              {MONTHS.map((month) => (
+                <th
+                  key={month}
+                  className="border border-slate-300 px-3 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100"
+                >
+                  {month}월
+                </th>
+              ))}
+            </tr>
+          </thead>
+
+          <tbody>
+            {/* [1] 2025년 전체 재고주수 그룹 */}
+            <tr>
+              <th
+                colSpan={13}
+                className="bg-blue-100 border border-slate-300 px-4 py-3 text-center text-base font-bold text-slate-900"
+              >
+                2025년 전체 재고주수
+              </th>
+            </tr>
+            {OPERATIONS.map((operation) => (
+              <tr key={`2025-${operation}`} className="hover:bg-slate-50">
+                <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
+                  {operation === "运营基准없음" ? "운영기준없음" : operation}
+                </td>
+                {MONTHS.map((month) => {
+                  const monthData = getStockWeeks(2025, month, operation);
+                  const weeksValue = monthData?.stock_weeks;
+                  const isOutlier = monthData?.is_outlier_100wks || false;
+                  const colorClass = getHeatmapClass(weeksValue);
+                  const outlierStyle = isOutlier
+                    ? "ring-2 ring-rose-500 ring-inset"
+                    : "";
+
+                  return (
+                    <td
+                      key={month}
+                      className={`border border-slate-200 px-3 py-3 text-center text-sm ${colorClass} ${outlierStyle}`}
+                    >
+                      <div className="flex flex-col items-center">
+                        <span
+                          className={`font-semibold ${
+                            isOutlier ? "text-rose-900" : ""
+                          }`}
+                        >
+                          {formatWeeksValue(weeksValue, t)}
+                        </span>
+                        {isOutlier && (
+                          <span className="text-xs text-rose-700 font-medium">
+                            ⚠️
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+
+            {/* [2] 2024년 전체 재고주수 그룹 */}
+            <tr>
+              <th
+                colSpan={13}
+                className="bg-slate-100 border border-slate-300 px-4 py-3 text-center text-base font-bold text-slate-900"
+              >
+                2024년 전체 재고주수
+              </th>
+            </tr>
+            {OPERATIONS.map((operation) => (
+              <tr key={`2024-${operation}`} className="hover:bg-slate-50">
+                <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
+                  {operation === "运营基准없음" ? "운영기준없음" : operation}
+                </td>
+                {MONTHS.map((month) => {
+                  const monthData = getStockWeeks(2024, month, operation);
+                  const weeksValue = monthData?.stock_weeks;
+                  const isOutlier = monthData?.is_outlier_100wks || false;
+                  const colorClass = getHeatmapClass(weeksValue);
+                  const outlierStyle = isOutlier
+                    ? "ring-2 ring-rose-500 ring-inset"
+                    : "";
+
+                  return (
+                    <td
+                      key={month}
+                      className={`border border-slate-200 px-3 py-3 text-center text-sm ${colorClass} ${outlierStyle}`}
+                    >
+                      <div className="flex flex-col items-center">
+                        <span
+                          className={`font-semibold ${
+                            isOutlier ? "text-rose-900" : ""
+                          }`}
+                        >
+                          {formatWeeksValue(weeksValue, t)}
+                        </span>
+                        {isOutlier && (
+                          <span className="text-xs text-rose-700 font-medium">
+                            ⚠️
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+
+            {/* [3] 전년 대비 증감 그룹 */}
+            <tr>
+              <th
+                colSpan={13}
+                className="bg-amber-100 border border-slate-300 px-4 py-3 text-center text-base font-bold text-slate-900"
+              >
+                전년 대비 증감
+              </th>
+            </tr>
+            {OPERATIONS.map((operation) => (
+              <tr key={`diff-${operation}`} className="hover:bg-slate-50">
+                <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
+                  {operation === "运营基准없음" ? "운영기준없음" : operation}
+                </td>
+                {MONTHS.map((month) => {
+                  const { diff, is2025Missing, is2024Missing } = getYoYDiff(
+                    operation,
+                    month
+                  );
+                  const colorClass = getDiffColorClass(diff);
+
+                  return (
+                    <td
+                      key={month}
+                      className={`border border-slate-200 px-3 py-3 text-center text-sm font-bold ${colorClass}`}
+                    >
+                      {diff !== null
+                        ? diff > 0
+                          ? `+${diff.toFixed(1)}주`
+                          : diff < 0
+                          ? `${diff.toFixed(1)}주`
+                          : "0주"
+                        : is2025Missing && is2024Missing
+                        ? "-"
+                        : "-"}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* 범례 */}
-      <div className="mt-8 pt-6 border-t border-slate-200">
+      <div className="mt-6 pt-6 border-t border-slate-200">
         <div className="space-y-4">
           {/* 재고주수 범례 */}
           <div>
