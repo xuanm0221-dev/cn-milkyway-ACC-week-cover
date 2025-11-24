@@ -18,8 +18,6 @@ interface OperationStockHeatmapProps {
   brand: string;
 }
 
-type OperationKey = "26SS" | "CARE" | "DONE" | "FOCUS" | "INTRO" | "OUTLET";
-
 /**
  * 운영기준별 재고주수 히트맵 컴포넌트 (단일 테이블 구조)
  */
@@ -32,17 +30,19 @@ export default function OperationStockHeatmap({
   const [selectedStockType, setSelectedStockType] = useState<StockType>("전체");
 
   const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const OPERATIONS: OperationKey[] = [
-    "26SS",
-    "CARE",
-    "DONE",
-    "FOCUS",
-    "INTRO",
-    "OUTLET",
-  ];
-
+  
   // 선택된 카테고리의 데이터 가져오기
   const categoryData = data[selectedCategory] || {};
+
+  // 실제 데이터에서 운영기준 목록 가져오기 (동적으로 추출)
+  const operations = useMemo(() => {
+    const ops = Object.keys(categoryData);
+    // 정의된 순서대로 정렬
+    const definedOps: string[] = ["26SS", "CARE", "DONE", "FOCUS", "INTRO", "OUTLET"];
+    const sortedOps = definedOps.filter(op => ops.includes(op));
+    const remainingOps = ops.filter(op => !definedOps.includes(op));
+    return [...sortedOps, ...remainingOps];
+  }, [categoryData]);
 
   // 재고주수 값 가져오기 헬퍼 함수
   const getStockWeeks = (
@@ -206,7 +206,7 @@ export default function OperationStockHeatmap({
                 2025년 전체 재고주수
               </th>
             </tr>
-            {OPERATIONS.map((operation) => (
+            {operations.map((operation) => (
               <tr key={`2025-${operation}`} className="hover:bg-slate-50">
                 <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
                   {operation === "运营基准없음" ? "운영기준없음" : operation}
@@ -231,7 +231,7 @@ export default function OperationStockHeatmap({
                             isOutlier ? "text-rose-900" : ""
                           }`}
                         >
-                          {formatWeeksValue(weeksValue, t)}
+                          {formatWeeksValue(weeksValue ?? null, t)}
                         </span>
                         {isOutlier && (
                           <span className="text-xs text-rose-700 font-medium">
@@ -254,7 +254,7 @@ export default function OperationStockHeatmap({
                 2024년 전체 재고주수
               </th>
             </tr>
-            {OPERATIONS.map((operation) => (
+            {operations.map((operation) => (
               <tr key={`2024-${operation}`} className="hover:bg-slate-50">
                 <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
                   {operation === "运营基准없음" ? "운영기준없음" : operation}
@@ -279,7 +279,7 @@ export default function OperationStockHeatmap({
                             isOutlier ? "text-rose-900" : ""
                           }`}
                         >
-                          {formatWeeksValue(weeksValue, t)}
+                          {formatWeeksValue(weeksValue ?? null, t)}
                         </span>
                         {isOutlier && (
                           <span className="text-xs text-rose-700 font-medium">
@@ -302,7 +302,7 @@ export default function OperationStockHeatmap({
                 전년 대비 증감
               </th>
             </tr>
-            {OPERATIONS.map((operation) => (
+            {operations.map((operation) => (
               <tr key={`diff-${operation}`} className="hover:bg-slate-50">
                 <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
                   {operation === "运营基准없음" ? "운영기준없음" : operation}
