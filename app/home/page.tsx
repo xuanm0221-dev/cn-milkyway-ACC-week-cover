@@ -81,7 +81,7 @@ export default function HomeDashboard() {
             Object.keys(data[category][selectedYear]).forEach((key) => {
               const month = parseInt(key);
               if (month >= 1 && month <= 12) {
-                const monthData = data[category][selectedYear][key];
+                const monthData = data[category]?.[selectedYear]?.[key];
                 if (monthData?.기초데이터) {
                   const totalStockAmount =
                     typeof monthData.기초데이터.전체재고금액 === "number"
