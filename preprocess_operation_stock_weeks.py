@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 from collections import defaultdict
 import calendar
+import math
 
 
 # 파일 경로 설정
@@ -255,7 +256,10 @@ def compute_operation_stock_weeks(
         if total_sales > 0:
             weekly_sales = (total_sales / days_in_month) * 7
             if weekly_sales > 0:
-                stock_weeks = round(total_stock / weekly_sales, 2)
+                calculated_weeks = total_stock / weekly_sales
+                # NaN 또는 Inf 체크
+                if pd.notna(calculated_weeks) and math.isfinite(calculated_weeks):
+                    stock_weeks = round(calculated_weeks, 2)
         
         # 100주 이상 이상치 플래그
         is_outlier_100wks = False
@@ -363,8 +367,13 @@ def export_operation_json(df: pd.DataFrame, output_path: str = "stock_weeks_oper
                     
                     if len(month_data) > 0:
                         row = month_data.iloc[0]
+                        # stock_weeks가 NaN이면 None(null)으로 변환
+                        stock_weeks_value = row["stock_weeks"]
+                        if pd.isna(stock_weeks_value):
+                            stock_weeks_value = None
+                        
                         result_dict[category][operation][year_str][month_str] = {
-                            "stock_weeks": row["stock_weeks"],
+                            "stock_weeks": stock_weeks_value,
                             "is_outlier_100wks": bool(row["is_outlier_100wks"]),
                             "total_stock": float(row["total_stock"]),
                             "total_sales": float(row["total_sales"]),

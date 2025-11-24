@@ -51,7 +51,7 @@
           "total_sales": 0
         },
         "9": {
-          "stock_weeks": NaN,
+          "stock_weeks": null,
           "is_outlier_100wks": false,
           "total_stock": 10794.0,
           "total_sales": 0.0
@@ -203,7 +203,7 @@
           "total_sales": 0
         },
         "9": {
-          "stock_weeks": NaN,
+          "stock_weeks": null,
           "is_outlier_100wks": false,
           "total_stock": 17560.0,
           "total_sales": 0.0
@@ -355,7 +355,7 @@
           "total_sales": 0
         },
         "9": {
-          "stock_weeks": NaN,
+          "stock_weeks": null,
           "is_outlier_100wks": false,
           "total_stock": 16640.0,
           "total_sales": 0.0
