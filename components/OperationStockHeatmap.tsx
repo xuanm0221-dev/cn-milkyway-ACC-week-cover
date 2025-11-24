@@ -185,13 +185,13 @@ export default function OperationStockHeatmap({
           {/* 테이블 헤더 */}
           <thead>
             <tr>
-              <th className="sticky left-0 z-10 bg-slate-100 border border-slate-300 px-4 py-3 text-left text-sm font-semibold text-slate-800">
+              <th className="sticky left-0 z-10 bg-slate-800 border border-slate-700 px-4 py-3 text-center text-sm font-semibold text-white">
                 운영기준
               </th>
               {MONTHS.map((month) => (
                 <th
                   key={month}
-                  className="border border-slate-300 px-3 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100"
+                  className="border border-slate-700 px-3 py-3 text-center text-sm font-semibold text-white bg-slate-800"
                 >
                   {month}월
                 </th>
@@ -204,7 +204,7 @@ export default function OperationStockHeatmap({
             <tr>
               <th
                 colSpan={13}
-                className="bg-blue-100 border border-slate-300 px-4 py-3 text-center text-base font-bold text-slate-900"
+                className="bg-slate-100 border border-slate-300 px-4 py-3 text-left text-base font-bold text-slate-900"
               >
                 2025년 전체 재고주수
               </th>
@@ -252,7 +252,7 @@ export default function OperationStockHeatmap({
             <tr>
               <th
                 colSpan={13}
-                className="bg-slate-100 border border-slate-300 px-4 py-3 text-center text-base font-bold text-slate-900"
+                className="bg-slate-100 border border-slate-300 px-4 py-3 text-left text-base font-bold text-slate-900"
               >
                 2024년 전체 재고주수
               </th>
