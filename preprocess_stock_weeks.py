@@ -13,7 +13,7 @@ import calendar
 # 파일 경로 설정
 BASE_PATH = Path(r"C:\2.대시보드(파일)\재고주수")
 AGENCY_STOCK_PATH = BASE_PATH / "대리상재고"
-OR_STOCK_PATH = BASE_PATH / "직영재고"
+# OR_STOCK_PATH = BASE_PATH / "직영재고"  # 더 이상 사용하지 않음 - 대리상재고 CSV의 Channel 2로 분리
 SALES_PATH = BASE_PATH / "판매매출"
 
 # 출력 경로 설정 (스크립트 위치 기준)
@@ -24,7 +24,9 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)  # 폴더가 없으면 생성
 # 분석 대상 브랜드
 TARGET_BRANDS = ["MLB", "MLB KIDS", "DISCOVERY"]
 
-# 중분류 매핑 (직영재고용)
+# 중분류 매핑 (직영재고 중분류 변환용)
+# 대리상재고 CSV의 OR 데이터는 중분류가 영문(Shoes, Headwear 등)으로 되어 있지 않고
+# 중국어로 되어 있을 수 있으므로, 필요 시 매핑 적용
 OR_CATEGORY_MAP = {
     "A0120": "Acc_etc",  # 기타악세
     "A0130": "Bag",      # 가방
@@ -94,23 +96,23 @@ def validate_amount(
     return df
 
 
-def load_stock_agency_chunked(year: int, month: int, chunk_size: int = 100_000) -> pd.DataFrame:
+def load_stock_all_from_agency(year: int, month: int, chunk_size: int = 100_000) -> pd.DataFrame:
     """
-    대리상재고 파일을 청크 단위로 읽어서 집계
+    대리상재고 파일에서 전체 재고 데이터를 청크 단위로 읽어서 집계
+    (Channel 2 구분 없이 FRS + OR 모두 로딩)
     
     필터링 조건:
-    - Channel 2 == "FRS" (대리상)
     - 产品品牌 in TARGET_BRANDS (MLB, MLB KIDS, DISCOVERY)
     - 产品大分类 == "饰品" (악세사리)
     - 产品中分类 in ["Shoes", "Headwear", "Bag", "Acc_etc"] (중분류 4개만)
     
     Returns:
-        집계된 DataFrame: [year, month, brand, 중분류, 소분류, 재고금액]
+        집계된 DataFrame: [year, month, channel, brand, 중분류, 소분류, 재고금액]
     """
     file_path = AGENCY_STOCK_PATH / f"{year}.{month:02d}.csv"
     
     if not file_path.exists():
-        return pd.DataFrame(columns=["year", "month", "brand", "중분류", "소분류", "재고금액"])
+        return pd.DataFrame(columns=["year", "month", "channel", "brand", "중분류", "소분류", "재고금액"])
     
     usecols = [
         "Channel 2",
@@ -130,8 +132,8 @@ def load_stock_agency_chunked(year: int, month: int, chunk_size: int = 100_000) 
         usecols=usecols,
         low_memory=False
     ):
-        # 1) FRS(대리상)
-        chunk = chunk[chunk["Channel 2"] == "FRS"].copy()
+        # 1) FRS 또는 OR (Channel 2 필터 제거 → 모두 포함)
+        chunk = chunk[chunk["Channel 2"].isin(["FRS", "OR"])].copy()
         # 2) 브랜드
         chunk = chunk[chunk["产品品牌"].isin(TARGET_BRANDS)].copy()
         # 3) 대분류 = 饰品
@@ -141,8 +143,8 @@ def load_stock_agency_chunked(year: int, month: int, chunk_size: int = 100_000) 
         chunk = chunk[chunk["产品中分类"].isin(valid_mid)].copy()
         
         # 5) 필요한 컬럼만
-        chunk = chunk[["产品品牌", "产品中分类", "本地小分类", "预计库存金额"]].copy()
-        chunk.columns = ["brand", "중분류", "소분류", "재고금액"]
+        chunk = chunk[["Channel 2", "产品品牌", "产品中分类", "本地小分类", "预计库存金额"]].copy()
+        chunk.columns = ["channel", "brand", "중분류", "소분류", "재고금액"]
         
         # 6) 재고금액 숫자 변환 (음수 유지, 상한 제거 없음)
         chunk["재고금액"] = pd.to_numeric(chunk["재고금액"].astype(str), errors="coerce").fillna(0)
@@ -150,13 +152,13 @@ def load_stock_agency_chunked(year: int, month: int, chunk_size: int = 100_000) 
         # 개별 이상치 경고만 (삭제/수정 없음)
         large_rows = chunk[chunk["재고금액"].abs() > MAX_INDIVIDUAL_AMOUNT]
         if len(large_rows) > 0:
-            print(f"\n⚠️  [경고] {year}년 {month:02d}월 대리상재고 - 청크 내 개별 행 이상치 감지(유지됨):")
+            print(f"\n⚠️  [경고] {year}년 {month:02d}월 전체재고 - 청크 내 개별 행 이상치 감지(유지됨):")
             for idx, row in large_rows.head(10).iterrows():
-                print(f"   - brand={row['brand']}, 중분류={row['중분류']}, 소분류={row['소분류']}: {row['재고금액']:,.0f}원")
+                print(f"   - channel={row['channel']}, brand={row['brand']}, 중분류={row['중분류']}, 소분류={row['소분류']}: {row['재고금액']:,.0f}원")
         
         # 7) 그룹 집계
         chunk_agg = (
-            chunk.groupby(["brand", "중분류", "소분류"], as_index=False)["재고금액"]
+            chunk.groupby(["channel", "brand", "중분류", "소분류"], as_index=False)["재고금액"]
             .sum()
         )
         chunk_agg["year"] = year
@@ -166,92 +168,59 @@ def load_stock_agency_chunked(year: int, month: int, chunk_size: int = 100_000) 
         del chunk
     
     if not chunks:
-        return pd.DataFrame(columns=["year", "month", "brand", "중분류", "소분류", "재고금액"])
+        return pd.DataFrame(columns=["year", "month", "channel", "brand", "중분류", "소분류", "재고금액"])
     
     result = pd.concat(chunks, ignore_index=True)
     result = (
-        result.groupby(["year", "month", "brand", "중분류", "소분류"], as_index=False)["재고금액"]
+        result.groupby(["year", "month", "channel", "brand", "중분류", "소분류"], as_index=False)["재고금액"]
         .sum()
     )
     
-    result = validate_amount(result, "재고금액", year, month, "대리상재고")
+    # 검증은 channel별로 따로 수행
+    for ch in result["channel"].unique():
+        ch_data = result[result["channel"] == ch].copy()
+        data_type = "대리상재고(FRS)" if ch == "FRS" else "직영재고(OR)"
+        validate_amount(ch_data.drop(columns=["channel"]), "재고금액", year, month, data_type)
+    
     return result
 
 
-def load_stock_or_chunked(year: int, month: int) -> pd.DataFrame:
+def get_stock_agency(all_stock_df: pd.DataFrame) -> pd.DataFrame:
     """
-    직영재고 파일을 청크 단위로 읽어서 집계
+    전체 재고 DataFrame에서 대리상재고(FRS)만 필터링
+    
+    Args:
+        all_stock_df: load_stock_all_from_agency()의 결과
     
     Returns:
-        집계된 DataFrame: [year, month, brand, 중분류, 소분류, 재고금액]
+        대리상재고 DataFrame: [year, month, brand, 중분류, 소분류, 재고금액]
     """
-    file_path = OR_STOCK_PATH / f"{year}.{month:02d}.csv"
-    
-    if not file_path.exists():
-        return pd.DataFrame()
-    
-    chunks = []
-    chunk_size = 100_000
-    
-    usecols = [
-        "브랜드명",
-        "제품계층구조",
-        "스타일 코드",
-        "TAG-기말재고"
-    ]
-    
-    for chunk in pd.read_csv(
-        file_path,
-        chunksize=chunk_size,
-        encoding='utf-8-sig',
-        usecols=usecols,
-        low_memory=False
-    ):
-        # 브랜드 필터
-        chunk = chunk[chunk["브랜드명"].isin(TARGET_BRANDS)].copy()
-        # 악세사리
-        chunk = chunk[chunk["제품계층구조"].str[:5] == "A0100"].copy()
-        # 중분류 코드
-        chunk["중분류코드"] = chunk["제품계층구조"].str[5:10]
-        chunk = chunk[chunk["중분류코드"].isin(OR_CATEGORY_MAP.keys())].copy()
-        chunk["중분류"] = chunk["중분류코드"].map(OR_CATEGORY_MAP)
-        # 소분류 (스타일 코드 7~8자리)
-        chunk["소분류"] = chunk["스타일 코드"].str[6:8]
-        
-        chunk = chunk[[
-            "브랜드명",
-            "중분류",
-            "소분류",
-            "TAG-기말재고"
-        ]].copy()
-        
-        chunk.columns = ["brand", "중분류", "소분류", "재고금액"]
-        
-        # 재고금액 숫자 변환 (음수 유지, 상한 제거 없음)
-        chunk["재고금액"] = pd.to_numeric(chunk["재고금액"].astype(str), errors='coerce').fillna(0)
-        
-        # 이상치 경고만
-        large_rows = chunk[chunk["재고금액"].abs() > MAX_INDIVIDUAL_AMOUNT]
-        if len(large_rows) > 0:
-            print(f"\n⚠️  [경고] {year}년 {month:02d}월 직영재고 - 청크 내 개별 행 이상치 감지(유지됨):")
-            for idx, row in large_rows.head(10).iterrows():
-                print(f"   - brand={row['brand']}, 중분류={row['중분류']}, 소분류={row['소분류']}: {row['재고금액']:,.0f}원")
-        
-        chunk_agg = chunk.groupby(["brand", "중분류", "소분류"], as_index=False)["재고금액"].sum()
-        chunk_agg["year"] = year
-        chunk_agg["month"] = month
-        
-        chunks.append(chunk_agg)
-        del chunk
-    
-    if not chunks:
+    if all_stock_df.empty:
         return pd.DataFrame(columns=["year", "month", "brand", "중분류", "소분류", "재고금액"])
     
-    result = pd.concat(chunks, ignore_index=True)
-    result = result.groupby(["year", "month", "brand", "중분류", "소분류"], as_index=False)["재고금액"].sum()
+    frs_df = all_stock_df[all_stock_df["channel"] == "FRS"].copy()
+    frs_df = frs_df.drop(columns=["channel"])
     
-    result = validate_amount(result, "재고금액", year, month, "직영재고")
-    return result
+    return frs_df
+
+
+def get_stock_or(all_stock_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    전체 재고 DataFrame에서 직영재고(OR)만 필터링
+    
+    Args:
+        all_stock_df: load_stock_all_from_agency()의 결과
+    
+    Returns:
+        직영재고 DataFrame: [year, month, brand, 중분류, 소분류, 재고금액]
+    """
+    if all_stock_df.empty:
+        return pd.DataFrame(columns=["year", "month", "brand", "중분류", "소분류", "재고금액"])
+    
+    or_df = all_stock_df[all_stock_df["channel"] == "OR"].copy()
+    or_df = or_df.drop(columns=["channel"])
+    
+    return or_df
 
 
 def load_sales_chunked(year: int, month: int) -> pd.DataFrame:
@@ -500,6 +469,7 @@ def preprocess_all(brand: str, n_weeks: int = 25) -> pd.DataFrame:
     years = set()
     months = set()
     
+    # 대리상재고 폴더에서 파일 목록 수집
     for file_path in AGENCY_STOCK_PATH.glob("*.csv"):
         try:
             parts = file_path.stem.split(".")
@@ -511,17 +481,7 @@ def preprocess_all(brand: str, n_weeks: int = 25) -> pd.DataFrame:
         except:
             continue
     
-    for file_path in OR_STOCK_PATH.glob("*.csv"):
-        try:
-            parts = file_path.stem.split(".")
-            if len(parts) == 2:
-                year = int(parts[0])
-                month = int(parts[1])
-                years.add(year)
-                months.add((year, month))
-        except:
-            continue
-    
+    # 판매매출 폴더에서 파일 목록 수집
     for file_path in SALES_PATH.glob("*.csv"):
         try:
             parts = file_path.stem.split(".")
@@ -538,10 +498,17 @@ def preprocess_all(brand: str, n_weeks: int = 25) -> pd.DataFrame:
     for year, month in sorted(months):
         print(f"처리 중: {year}년 {month}월 - {brand}")
         
-        stock_agency = load_stock_agency_chunked(year, month)
-        stock_or = load_stock_or_chunked(year, month)
+        # 대리상재고 CSV에서 전체 재고 로딩 (FRS + OR)
+        all_stock = load_stock_all_from_agency(year, month)
+        
+        # Channel 2 기준으로 분리
+        stock_agency = get_stock_agency(all_stock)
+        stock_or = get_stock_or(all_stock)
+        
+        # 판매매출 로딩
         sales = load_sales_chunked(year, month)
         
+        # 브랜드 필터링
         if not stock_agency.empty:
             stock_agency = stock_agency[stock_agency["brand"] == brand].copy()
         if not stock_or.empty:
@@ -549,12 +516,13 @@ def preprocess_all(brand: str, n_weeks: int = 25) -> pd.DataFrame:
         if not sales.empty:
             sales = sales[sales["brand"] == brand].copy()
         
+        # 재고주수 계산
         result = compute_stock_weeks(stock_agency, stock_or, sales, n_weeks)
         
         if not result.empty:
             all_results.append(result)
         
-        del stock_agency, stock_or, sales, result
+        del all_stock, stock_agency, stock_or, sales, result
     
     if not all_results:
         return pd.DataFrame()
@@ -774,6 +742,10 @@ if __name__ == "__main__":
        - public/data/stock_weeks_MLB.json
        - public/data/stock_weeks_MLB_KIDS.json
        - public/data/stock_weeks_DISCOVERY.json
+    
+    변경 사항:
+    - 직영재고 폴더(C:\2.대시보드(파일)\재고주수\직영재고)는 더 이상 사용하지 않음
+    - 대리상재고 폴더의 CSV 파일에서 Channel 2 기준으로 FRS/OR 분리하여 사용
     """
     for brand in TARGET_BRANDS:
         print(f"\n{'='*50}")
