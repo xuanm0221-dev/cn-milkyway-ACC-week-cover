@@ -1,8 +1,8 @@
 /**
- * 운영기준별 재고주수 데이터 타입 정의
+ * 운영기준별 재고주수 데이터 타입 정의 (channel별 분리)
  */
 
-// 월별 데이터
+// 월별 데이터 (기본 구조)
 export interface OperationMonthData {
   stock_weeks: number | null;
   is_outlier_100wks: boolean;
@@ -10,8 +10,15 @@ export interface OperationMonthData {
   total_sales: number;
 }
 
+// 채널별 월별 데이터
+export interface OperationMonthChannelData {
+  전체: OperationMonthData;
+  대리상: OperationMonthData;
+  창고: OperationMonthData;
+}
+
 // 연도별 데이터
-export type OperationYearData = Record<string, OperationMonthData>; // key: "1", "2", ..., "12"
+export type OperationYearData = Record<string, OperationMonthChannelData>; // key: "1", "2", ..., "12"
 
 // 운영기준별 데이터
 export interface OperationData {
@@ -27,6 +34,18 @@ export interface OperationCategoryData {
 export interface OperationStockWeeksData {
   [category: string]: OperationCategoryData; // 중분류별 데이터
 }
+
+// 재고 구분 타입
+export type StockType = "전체" | "대리상" | "창고";
+
+// 재고 구분 매핑
+export const STOCK_TYPE_NAMES: Record<StockType, string> = {
+  전체: "전체",
+  대리상: "대리상",
+  창고: "창고 (FF)",
+};
+
+export const STOCK_TYPE_ORDER: StockType[] = ["전체", "대리상", "창고"];
 
 // 중분류 매핑
 export const OPERATION_CATEGORY_NAMES: Record<string, string> = {

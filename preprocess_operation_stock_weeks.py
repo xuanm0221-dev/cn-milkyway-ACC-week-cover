@@ -233,6 +233,22 @@ def compute_operation_stock_weeks(
     
     merged = merged.fillna(0)
     
+    def calc_weeks(stock_val: float, sales_val: float, days: int) -> tuple:
+        """재고주수와 이상치 플래그 계산"""
+        stock_weeks = None
+        is_outlier = False
+        
+        if sales_val > 0:
+            weekly_sales = (sales_val / days) * 7
+            if weekly_sales > 0:
+                calculated_weeks = stock_val / weekly_sales
+                if pd.notna(calculated_weeks) and math.isfinite(calculated_weeks):
+                    stock_weeks = round(calculated_weeks, 2)
+                    if stock_weeks >= WEEKS_100_THRESHOLD:
+                        is_outlier = True
+        
+        return stock_weeks, is_outlier
+    
     results = []
     for _, row in merged.iterrows():
         year = int(row["year"])
@@ -251,20 +267,14 @@ def compute_operation_stock_weeks(
         total_stock = agency_stock + or_stock
         total_sales = frs_sales + or_sales
         
-        # 재고주수 계산
-        stock_weeks = None
-        if total_sales > 0:
-            weekly_sales = (total_sales / days_in_month) * 7
-            if weekly_sales > 0:
-                calculated_weeks = total_stock / weekly_sales
-                # NaN 또는 Inf 체크
-                if pd.notna(calculated_weeks) and math.isfinite(calculated_weeks):
-                    stock_weeks = round(calculated_weeks, 2)
+        # 1. 전체 재고주수 계산
+        total_weeks, total_outlier = calc_weeks(total_stock, total_sales, days_in_month)
         
-        # 100주 이상 이상치 플래그
-        is_outlier_100wks = False
-        if stock_weeks is not None and stock_weeks >= WEEKS_100_THRESHOLD:
-            is_outlier_100wks = True
+        # 2. 대리상(FRS) 재고주수 계산
+        agency_weeks, agency_outlier = calc_weeks(agency_stock, frs_sales, days_in_month)
+        
+        # 3. 창고(OR) 재고주수 계산
+        warehouse_weeks, warehouse_outlier = calc_weeks(or_stock, or_sales, days_in_month)
         
         results.append({
             "year": year,
@@ -272,10 +282,21 @@ def compute_operation_stock_weeks(
             "brand": brand,
             "item_category": item_category,
             "operation": operation,
-            "stock_weeks": stock_weeks,
-            "is_outlier_100wks": is_outlier_100wks,
+            # 전체
+            "stock_weeks_total": total_weeks,
+            "is_outlier_total": total_outlier,
             "total_stock": total_stock,
             "total_sales": total_sales,
+            # 대리상
+            "stock_weeks_agency": agency_weeks,
+            "is_outlier_agency": agency_outlier,
+            "agency_stock": agency_stock,
+            "agency_sales": frs_sales,
+            # 창고
+            "stock_weeks_warehouse": warehouse_weeks,
+            "is_outlier_warehouse": warehouse_outlier,
+            "warehouse_stock": or_stock,
+            "warehouse_sales": or_sales,
         })
     
     return pd.DataFrame(results)
@@ -367,23 +388,51 @@ def export_operation_json(df: pd.DataFrame, output_path: str = "stock_weeks_oper
                     
                     if len(month_data) > 0:
                         row = month_data.iloc[0]
-                        # stock_weeks가 NaN이면 None(null)으로 변환
-                        stock_weeks_value = row["stock_weeks"]
-                        if pd.isna(stock_weeks_value):
-                            stock_weeks_value = None
+                        
+                        # 각 channel별 데이터를 null-safe하게 변환
+                        def safe_weeks(val):
+                            return None if pd.isna(val) else val
                         
                         result_dict[category][operation][year_str][month_str] = {
-                            "stock_weeks": stock_weeks_value,
-                            "is_outlier_100wks": bool(row["is_outlier_100wks"]),
-                            "total_stock": float(row["total_stock"]),
-                            "total_sales": float(row["total_sales"]),
+                            "전체": {
+                                "stock_weeks": safe_weeks(row["stock_weeks_total"]),
+                                "is_outlier_100wks": bool(row["is_outlier_total"]),
+                                "total_stock": float(row["total_stock"]),
+                                "total_sales": float(row["total_sales"]),
+                            },
+                            "대리상": {
+                                "stock_weeks": safe_weeks(row["stock_weeks_agency"]),
+                                "is_outlier_100wks": bool(row["is_outlier_agency"]),
+                                "total_stock": float(row["agency_stock"]),
+                                "total_sales": float(row["agency_sales"]),
+                            },
+                            "창고": {
+                                "stock_weeks": safe_weeks(row["stock_weeks_warehouse"]),
+                                "is_outlier_100wks": bool(row["is_outlier_warehouse"]),
+                                "total_stock": float(row["warehouse_stock"]),
+                                "total_sales": float(row["warehouse_sales"]),
+                            },
                         }
                     else:
                         result_dict[category][operation][year_str][month_str] = {
-                            "stock_weeks": None,
-                            "is_outlier_100wks": False,
-                            "total_stock": 0,
-                            "total_sales": 0,
+                            "전체": {
+                                "stock_weeks": None,
+                                "is_outlier_100wks": False,
+                                "total_stock": 0,
+                                "total_sales": 0,
+                            },
+                            "대리상": {
+                                "stock_weeks": None,
+                                "is_outlier_100wks": False,
+                                "total_stock": 0,
+                                "total_sales": 0,
+                            },
+                            "창고": {
+                                "stock_weeks": None,
+                                "is_outlier_100wks": False,
+                                "total_stock": 0,
+                                "total_sales": 0,
+                            },
                         }
     
     with open(output_path, 'w', encoding='utf-8') as f:

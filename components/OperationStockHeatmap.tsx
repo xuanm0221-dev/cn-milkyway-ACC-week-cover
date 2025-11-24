@@ -6,6 +6,9 @@ import {
   OperationMonthData,
   OPERATION_CATEGORY_NAMES,
   OPERATION_CATEGORY_ORDER,
+  StockType,
+  STOCK_TYPE_NAMES,
+  STOCK_TYPE_ORDER,
 } from "@/types/operation-stock-weeks";
 import { getHeatmapClass, formatWeeksValue } from "@/utils/color-helper";
 import { useT } from "@/lib/i18n";
@@ -16,7 +19,7 @@ interface OperationStockHeatmapProps {
 }
 
 /**
- * 운영기준별 재고주수 히트맵 컴포넌트
+ * 운영기준별 재고주수 히트맵 컴포넌트 (월별 3섹션 구조)
  */
 export default function OperationStockHeatmap({
   data,
@@ -24,6 +27,8 @@ export default function OperationStockHeatmap({
 }: OperationStockHeatmapProps) {
   const t = useT();
   const [selectedCategory, setSelectedCategory] = useState<string>("Shoes");
+  const [selectedStockType, setSelectedStockType] = useState<StockType>("전체");
+  const [selectedMonth, setSelectedMonth] = useState<number>(1);
 
   // 선택된 카테고리의 데이터 가져오기
   const categoryData = data[selectedCategory] || {};
@@ -39,28 +44,6 @@ export default function OperationStockHeatmap({
     });
   }, [categoryData]);
 
-  // 연도 목록 추출
-  const years = useMemo(() => {
-    const yearsSet = new Set<string>();
-    operations.forEach((op) => {
-      const opData = categoryData[op];
-      if (opData) {
-        Object.keys(opData).forEach((year) => {
-          if (/^\d{4}$/.test(year)) {
-            yearsSet.add(year);
-          }
-        });
-      }
-    });
-    return Array.from(yearsSet).sort((a, b) => b.localeCompare(a));
-  }, [categoryData, operations]);
-
-  // 선택된 연도 (최신 연도)
-  const [selectedYear, setSelectedYear] = useState<string>(years[0] || "2025");
-
-  // 월 목록 (1~12)
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
-
   // 카테고리명 가져오기
   const getCategoryName = (key: string): string => {
     if (key === "Shoes") return t("categories.shoes");
@@ -73,15 +56,57 @@ export default function OperationStockHeatmap({
   // 월별 재고주수 값 가져오기
   const getWeeksValue = (
     operation: string,
+    year: string,
     month: number
   ): OperationMonthData | null => {
     const opData = categoryData[operation];
     if (!opData) return null;
 
-    const yearData = opData[selectedYear];
+    const yearData = opData[year];
     if (!yearData) return null;
 
-    return yearData[String(month)] || null;
+    const monthData = yearData[String(month)];
+    if (!monthData) return null;
+
+    return monthData[selectedStockType] || null;
+  };
+
+  // 전년 대비 증감 계산
+  const getYoYDiff = (
+    operation: string,
+    month: number
+  ): { diff: number | null; is2025Missing: boolean; is2024Missing: boolean } => {
+    const data2025 = getWeeksValue(operation, "2025", month);
+    const data2024 = getWeeksValue(operation, "2024", month);
+
+    const weeks2025 = data2025?.stock_weeks;
+    const weeks2024 = data2024?.stock_weeks;
+
+    if (weeks2025 == null || weeks2024 == null) {
+      return {
+        diff: null,
+        is2025Missing: weeks2025 == null,
+        is2024Missing: weeks2024 == null,
+      };
+    }
+
+    return {
+      diff: weeks2025 - weeks2024,
+      is2025Missing: false,
+      is2024Missing: false,
+    };
+  };
+
+  // 증감 색상 클래스 (악화: 빨강, 개선: 초록, 중립: 노랑)
+  const getDiffColorClass = (diff: number | null): string => {
+    if (diff === null) return "bg-slate-100";
+    if (diff > 5) return "bg-red-200";
+    if (diff > 2) return "bg-orange-200";
+    if (diff > 0) return "bg-yellow-100";
+    if (diff === 0) return "bg-slate-100";
+    if (diff > -2) return "bg-green-100";
+    if (diff > -5) return "bg-green-200";
+    return "bg-green-300";
   };
 
   // 브랜드별 색상
@@ -92,141 +117,312 @@ export default function OperationStockHeatmap({
     return "bg-slate-600";
   };
 
+  // 월 목록 (1~12)
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+
   return (
     <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(15,23,42,0.08)] p-6">
       {/* 헤더 */}
       <div className="mb-6">
         <h2 className="text-xl font-bold text-slate-900 mb-2">
-          {brand} {t("categories.accessories")} 운영기준별 재고주수 히트맵
+          {brand} 악세사리 운영기준별 재고주수 분석
         </h2>
         <p className="text-sm text-slate-600">
-          운영기준별 월별 재고주수를 시각화하여 표시합니다.
+          운영기준별 월별 재고주수를 2025/2024/전년 대비 증감으로 비교합니다.
         </p>
       </div>
 
-      {/* 카테고리 탭 */}
-      <div className="flex gap-2 mb-6 flex-wrap">
-        {OPERATION_CATEGORY_ORDER.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              selectedCategory === cat
-                ? `${getBrandColor()} text-white`
-                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-            }`}
+      {/* 필터 섹션 */}
+      <div className="space-y-4 mb-6">
+        {/* 아이템 탭 */}
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            아이템 분류
+          </label>
+          <div className="flex gap-2 flex-wrap">
+            {OPERATION_CATEGORY_ORDER.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  selectedCategory === cat
+                    ? `${getBrandColor()} text-white`
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                }`}
+              >
+                {getCategoryName(cat)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 재고 구분 토글 */}
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            재고 구분
+          </label>
+          <div className="flex gap-2 flex-wrap">
+            {STOCK_TYPE_ORDER.map((type) => (
+              <button
+                key={type}
+                onClick={() => setSelectedStockType(type)}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  selectedStockType === type
+                    ? "bg-slate-800 text-white"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                }`}
+              >
+                {STOCK_TYPE_NAMES[type]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 월 선택 드롭다운 */}
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            월 선택
+          </label>
+          <select
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(Number(e.target.value))}
+            className="px-4 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 font-medium hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            {getCategoryName(cat)}
-          </button>
-        ))}
+            {months.map((month) => (
+              <option key={month} value={month}>
+                {month}월
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      {/* 연도 선택 */}
-      {years.length > 1 && (
-        <div className="mb-4">
-          <label className="text-sm font-medium text-slate-700 mr-3">
-            연도:
-          </label>
-          {years.map((year) => (
-            <button
-              key={year}
-              onClick={() => setSelectedYear(year)}
-              className={`px-3 py-1 rounded-md text-sm font-medium mr-2 transition-colors ${
-                selectedYear === year
-                  ? "bg-slate-800 text-white"
-                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-              }`}
-            >
-              {year}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* 히트맵 테이블 */}
+      {/* 월별 3섹션 구조 */}
       {operations.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="sticky left-0 z-10 bg-slate-100 border border-slate-300 px-4 py-3 text-left text-sm font-semibold text-slate-800">
-                  운영기준
-                </th>
-                {months.map((month) => (
-                  <th
-                    key={month}
-                    className="border border-slate-300 px-3 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100"
-                  >
-                    {month}월
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {operations.map((operation) => (
-                <tr key={operation} className="hover:bg-slate-50">
-                  <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
-                    {operation === "运营基准없음" ? "운영기준없음" : operation}
-                  </td>
-                  {months.map((month) => {
-                    const monthData = getWeeksValue(operation, month);
+        <div className="space-y-8">
+          {/* [A] 2025년 재고주수 */}
+          <div className="border border-slate-200 rounded-lg overflow-hidden">
+            <div className="bg-blue-50 px-4 py-3 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-900">
+                2025년 {selectedMonth}월 재고주수
+              </h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr>
+                    <th className="sticky left-0 z-10 bg-slate-100 border border-slate-300 px-4 py-3 text-left text-sm font-semibold text-slate-800">
+                      운영기준
+                    </th>
+                    <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
+                      재고주수
+                    </th>
+                    <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
+                      재고금액 (M)
+                    </th>
+                    <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
+                      판매금액 (M)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {operations.map((operation) => {
+                    const monthData = getWeeksValue(
+                      operation,
+                      "2025",
+                      selectedMonth
+                    );
                     const weeksValue = monthData?.stock_weeks;
                     const isOutlier = monthData?.is_outlier_100wks || false;
-
-                    // 색상 클래스
                     const colorClass = getHeatmapClass(weeksValue);
-
-                    // 100주 이상 경고 스타일
                     const outlierStyle = isOutlier
                       ? "ring-2 ring-rose-500 ring-inset"
                       : "";
 
                     return (
-                      <td
-                        key={month}
-                        className={`border border-slate-200 px-3 py-3 text-center text-sm ${colorClass} ${outlierStyle} relative group`}
-                      >
-                        <div className="flex flex-col items-center">
-                          <span
-                            className={`font-semibold ${
-                              isOutlier ? "text-rose-900" : ""
-                            }`}
-                          >
-                            {formatWeeksValue(weeksValue, t)}
-                          </span>
-                          {isOutlier && (
-                            <span className="text-xs text-rose-700 font-medium">
-                              ⚠️
+                      <tr key={operation} className="hover:bg-slate-50">
+                        <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
+                          {operation === "运营基准없음"
+                            ? "운영기준없음"
+                            : operation}
+                        </td>
+                        <td
+                          className={`border border-slate-200 px-4 py-3 text-center text-sm ${colorClass} ${outlierStyle}`}
+                        >
+                          <div className="flex flex-col items-center">
+                            <span
+                              className={`font-semibold ${
+                                isOutlier ? "text-rose-900" : ""
+                              }`}
+                            >
+                              {formatWeeksValue(weeksValue, t)}
                             </span>
-                          )}
-                        </div>
-
-                        {/* 툴팁 */}
-                        {monthData && (
-                          <div className="absolute hidden group-hover:block z-20 bg-slate-900 text-white text-xs rounded-lg px-3 py-2 -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full whitespace-nowrap shadow-lg">
-                            <div>재고주수: {formatWeeksValue(weeksValue, t)}</div>
-                            <div>
-                              재고금액:{" "}
-                              {(monthData.total_stock / 1_000_000).toFixed(1)}M
-                            </div>
-                            <div>
-                              판매금액:{" "}
-                              {(monthData.total_sales / 1_000_000).toFixed(1)}M
-                            </div>
                             {isOutlier && (
-                              <div className="text-rose-300 font-semibold">
-                                ⚠️ 100주 이상
-                              </div>
+                              <span className="text-xs text-rose-700 font-medium">
+                                ⚠️
+                              </span>
                             )}
                           </div>
-                        )}
-                      </td>
+                        </td>
+                        <td className="border border-slate-200 px-4 py-3 text-center text-sm">
+                          {monthData
+                            ? (monthData.total_stock / 1_000_000).toFixed(1)
+                            : "-"}
+                        </td>
+                        <td className="border border-slate-200 px-4 py-3 text-center text-sm">
+                          {monthData
+                            ? (monthData.total_sales / 1_000_000).toFixed(1)
+                            : "-"}
+                        </td>
+                      </tr>
                     );
                   })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* [B] 2024년 재고주수 */}
+          <div className="border border-slate-200 rounded-lg overflow-hidden">
+            <div className="bg-slate-50 px-4 py-3 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-900">
+                2024년 {selectedMonth}월 재고주수
+              </h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr>
+                    <th className="sticky left-0 z-10 bg-slate-100 border border-slate-300 px-4 py-3 text-left text-sm font-semibold text-slate-800">
+                      운영기준
+                    </th>
+                    <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
+                      재고주수
+                    </th>
+                    <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
+                      재고금액 (M)
+                    </th>
+                    <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
+                      판매금액 (M)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {operations.map((operation) => {
+                    const monthData = getWeeksValue(
+                      operation,
+                      "2024",
+                      selectedMonth
+                    );
+                    const weeksValue = monthData?.stock_weeks;
+                    const isOutlier = monthData?.is_outlier_100wks || false;
+                    const colorClass = getHeatmapClass(weeksValue);
+                    const outlierStyle = isOutlier
+                      ? "ring-2 ring-rose-500 ring-inset"
+                      : "";
+
+                    return (
+                      <tr key={operation} className="hover:bg-slate-50">
+                        <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
+                          {operation === "运营基准없음"
+                            ? "운영기준없음"
+                            : operation}
+                        </td>
+                        <td
+                          className={`border border-slate-200 px-4 py-3 text-center text-sm ${colorClass} ${outlierStyle}`}
+                        >
+                          <div className="flex flex-col items-center">
+                            <span
+                              className={`font-semibold ${
+                                isOutlier ? "text-rose-900" : ""
+                              }`}
+                            >
+                              {formatWeeksValue(weeksValue, t)}
+                            </span>
+                            {isOutlier && (
+                              <span className="text-xs text-rose-700 font-medium">
+                                ⚠️
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="border border-slate-200 px-4 py-3 text-center text-sm">
+                          {monthData
+                            ? (monthData.total_stock / 1_000_000).toFixed(1)
+                            : "-"}
+                        </td>
+                        <td className="border border-slate-200 px-4 py-3 text-center text-sm">
+                          {monthData
+                            ? (monthData.total_sales / 1_000_000).toFixed(1)
+                            : "-"}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* [C] 전년 대비 증감 */}
+          <div className="border border-slate-200 rounded-lg overflow-hidden">
+            <div className="bg-amber-50 px-4 py-3 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-900">
+                {selectedMonth}월 전년 대비 증감
+              </h3>
+              <p className="text-xs text-slate-600 mt-1">
+                증가(악화): 빨강 / 감소(개선): 초록
+              </p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr>
+                    <th className="sticky left-0 z-10 bg-slate-100 border border-slate-300 px-4 py-3 text-left text-sm font-semibold text-slate-800">
+                      운영기준
+                    </th>
+                    <th className="border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-800 bg-slate-100">
+                      증감 (주)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {operations.map((operation) => {
+                    const { diff, is2025Missing, is2024Missing } = getYoYDiff(
+                      operation,
+                      selectedMonth
+                    );
+                    const colorClass = getDiffColorClass(diff);
+
+                    return (
+                      <tr key={operation} className="hover:bg-slate-50">
+                        <td className="sticky left-0 z-10 bg-white border border-slate-200 px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">
+                          {operation === "运营基准없음"
+                            ? "운영기준없음"
+                            : operation}
+                        </td>
+                        <td
+                          className={`border border-slate-200 px-4 py-3 text-center text-sm font-bold ${colorClass}`}
+                        >
+                          {diff !== null
+                            ? diff > 0
+                              ? `+${diff.toFixed(1)}주`
+                              : diff < 0
+                              ? `${diff.toFixed(1)}주`
+                              : "0주"
+                            : is2025Missing && is2024Missing
+                            ? "-"
+                            : is2025Missing
+                            ? "2025년 데이터 없음"
+                            : "2024년 데이터 없음"}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="text-center py-12 text-slate-500">
@@ -235,42 +431,79 @@ export default function OperationStockHeatmap({
       )}
 
       {/* 범례 */}
-      <div className="mt-6 pt-6 border-t border-slate-200">
-        <div className="flex flex-wrap gap-4 items-center text-sm">
-          <span className="text-slate-600 font-medium">
-            {t("summary.stockWeeks")}:
-          </span>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-slate-200 rounded border border-slate-300"></div>
-            <span className="text-slate-600">{t("legend.weeks0")}</span>
+      <div className="mt-8 pt-6 border-t border-slate-200">
+        <div className="space-y-4">
+          {/* 재고주수 범례 */}
+          <div>
+            <span className="text-sm text-slate-600 font-medium block mb-2">
+              재고주수 색상:
+            </span>
+            <div className="flex flex-wrap gap-4 items-center text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-slate-200 rounded border border-slate-300"></div>
+                <span className="text-slate-600">0주</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-green-100 rounded border border-slate-300"></div>
+                <span className="text-slate-600">1~19주</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-yellow-100 rounded border border-slate-300"></div>
+                <span className="text-slate-600">20~29주</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-orange-100 rounded border border-slate-300"></div>
+                <span className="text-slate-600">30~39주</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-red-100 rounded border border-slate-300"></div>
+                <span className="text-slate-600">40~49주</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-red-300 rounded border border-slate-300"></div>
+                <span className="text-slate-600">50주 이상</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-red-300 rounded border-2 border-rose-500"></div>
+                <span className="text-slate-600">100주 이상 (경고)</span>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-green-100 rounded border border-slate-300"></div>
-            <span className="text-slate-600">{t("legend.weeks1to19")}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-yellow-100 rounded border border-slate-300"></div>
-            <span className="text-slate-600">{t("legend.weeks20to29")}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-orange-100 rounded border border-slate-300"></div>
-            <span className="text-slate-600">{t("legend.weeks30to39")}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-red-100 rounded border border-slate-300"></div>
-            <span className="text-slate-600">{t("legend.weeks40to49")}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-red-300 rounded border border-slate-300"></div>
-            <span className="text-slate-600">{t("legend.weeks50plus")}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-red-300 rounded border-2 border-rose-500"></div>
-            <span className="text-slate-600">100주 이상 (경고)</span>
+
+          {/* 증감 범례 */}
+          <div>
+            <span className="text-sm text-slate-600 font-medium block mb-2">
+              전년 대비 증감 색상:
+            </span>
+            <div className="flex flex-wrap gap-4 items-center text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-green-300 rounded border border-slate-300"></div>
+                <span className="text-slate-600">크게 개선 (&lt; -5주)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-green-200 rounded border border-slate-300"></div>
+                <span className="text-slate-600">개선 (-2~-5주)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-green-100 rounded border border-slate-300"></div>
+                <span className="text-slate-600">소폭 개선 (-2주 미만)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-yellow-100 rounded border border-slate-300"></div>
+                <span className="text-slate-600">소폭 악화 (0~2주)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-orange-200 rounded border border-slate-300"></div>
+                <span className="text-slate-600">악화 (2~5주)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-red-200 rounded border border-slate-300"></div>
+                <span className="text-slate-600">크게 악화 (&gt; 5주)</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
