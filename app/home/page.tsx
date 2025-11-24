@@ -135,9 +135,12 @@ export default function HomeDashboard() {
       {/* 1. 큰 제목 섹션 */}
       <section className="px-4 sm:px-6 lg:px-8 pt-6">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-slate-900 mb-4">
-            악세사리 재고주수 대시보드
-          </h1>
+          <div className="inline-block">
+            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">
+              F&F CHINA 악세사리 재고주수
+            </h1>
+            <div className="mt-2 h-1 w-full rounded-full bg-gradient-to-r from-indigo-400 via-sky-400 to-purple-400" />
+          </div>
         </div>
       </section>
 

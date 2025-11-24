@@ -42,6 +42,14 @@ const formatM = (value: number): string => {
 };
 
 /**
+ * 숫자를 천 단위로 포맷팅 (천 단위 구분자 포함, K 단위)
+ */
+const formatK = (value: number): string => {
+  const valueK = value / 1_000;
+  return valueK.toLocaleString('ko-KR', { maximumFractionDigits: 0 });
+};
+
+/**
  * 재고주수를 포맷팅 (소수점 1자리)
  */
 const formatWeeks = (value: number | null): string => {
@@ -308,26 +316,41 @@ export default function BrandCard({ brand, data, nWeeks, selectedYear, selectedM
     if (brand === "MLB") {
       return {
         primaryColor: "#2A3DA3",
+        hoverColor: "#1f2d7a",
         bgColor: "bg-blue-50",
         textColor: "text-white",
         borderColor: "border-blue-200",
         icon: "M",
+        accBox1: "bg-gradient-to-br from-sky-50 to-indigo-50",
+        accBox2: "bg-gradient-to-br from-indigo-50 to-purple-50",
+        totalRowBg: "bg-blue-50",
+        totalRowBorder: "#2A3DA3",
       };
     } else if (brand === "MLB KIDS") {
       return {
         primaryColor: "#F7C948",
+        hoverColor: "#e6b835",
         bgColor: "bg-amber-50",
         textColor: "text-white",
         borderColor: "border-amber-200",
         icon: "I",
+        accBox1: "bg-gradient-to-br from-amber-50 to-yellow-50",
+        accBox2: "bg-gradient-to-br from-yellow-50 to-orange-50",
+        totalRowBg: "bg-amber-50",
+        totalRowBorder: "#F7C948",
       };
     } else {
       return {
         primaryColor: "#3BAF7D",
+        hoverColor: "#2d8f65",
         bgColor: "bg-emerald-50",
         textColor: "text-white",
         borderColor: "border-emerald-200",
         icon: "X",
+        accBox1: "bg-gradient-to-br from-emerald-50 to-green-50",
+        accBox2: "bg-gradient-to-br from-green-50 to-teal-50",
+        totalRowBg: "bg-emerald-50",
+        totalRowBorder: "#3BAF7D",
       };
     }
   };
@@ -357,192 +380,250 @@ export default function BrandCard({ brand, data, nWeeks, selectedYear, selectedM
     return (catData.currentEndingStock / catData.prevEndingStock) * 100;
   };
 
+  // 매출/재고 퍼센트 계산 (YOY)
+  const salesPercent = salesYOY ? Math.round(salesYOY) : null;
+  const stockPercent = endingStockYOY ? Math.round(endingStockYOY) : null;
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      {/* 브랜드 헤더 */}
-      <div className="flex items-center gap-3 mb-4">
-        <div
-          className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white"
-          style={{ backgroundColor: brandStyle.primaryColor }}
-        >
-          {brandStyle.icon}
-        </div>
-        <div className="flex-1">
-          <h2 className="text-lg font-bold text-slate-900">{brand}</h2>
-          <div className="flex gap-4 mt-1">
-            <div className="text-sm">
-              <span className="text-slate-500">매출 </span>
-              <span className="font-semibold text-slate-900">{formatPercent(salesYOY)}</span>
-            </div>
-            <div className="text-sm">
-              <span className="text-slate-500">재고 </span>
-              <span className="font-semibold text-slate-900">{formatPercent(endingStockYOY)}</span>
+    <div className="bg-white rounded-3xl shadow-lg border border-slate-100 p-7">
+      {/* 1. 카드 상단 영역: 브랜드 아이콘 + KPI 뱃지 */}
+      <div className="flex items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3">
+          {/* 브랜드 아이콘 */}
+          <div
+            className="rounded-xl w-[60px] h-[60px] flex items-center justify-center text-2xl font-bold text-white"
+            style={{ backgroundColor: brandStyle.primaryColor }}
+          >
+            {brandStyle.icon}
+          </div>
+          {/* 브랜드명 + KPI */}
+          <div>
+            <h2 className="text-lg font-bold text-slate-900 leading-tight">{brand}</h2>
+            <div className="flex items-center gap-2 mt-1">
+              {/* 매출 뱃지 */}
+              <div className="rounded-lg px-2.5 py-1 bg-green-100">
+                <span className="text-xs font-semibold text-teal-600">
+                  매출 {salesPercent !== null ? `${salesPercent}%` : "-"}
+                </span>
+              </div>
+              {/* 재고 뱃지 */}
+              <div className="rounded-lg px-2.5 py-1 bg-blue-50">
+                <span className="text-xs font-semibold text-blue-600">
+                  재고 {stockPercent !== null ? `${stockPercent}%` : "-"}
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 재고주수 요약 */}
-      <div className="mb-4 pb-4 border-b border-slate-200">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-slate-600">{t("summary.currentYear")}</span>
-          <span className="text-base font-semibold text-slate-900">
-            {formatWeeks(brandSummary.currentWeeks)}
-          </span>
-        </div>
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-slate-600">{t("summary.prevYear")}</span>
-          <span className="text-base font-semibold text-slate-900">
-            {formatWeeks(brandSummary.prevWeeks)}
-          </span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className={`text-sm font-semibold ${
-            deltaWeeks === null
-              ? "text-slate-400"
-              : deltaWeeks < 0
-              ? "text-blue-600"
-              : "text-rose-600"
-          }`}>
-            {deltaWeeks === null ? "-" : deltaWeeks < 0 ? "개선" : "악화"}
-          </span>
-          <span
-            className={`text-base font-semibold ${
+      {/* 2. 당년 / 전년 / 개선 영역 */}
+      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50 to-purple-50 border-4 border-slate-200 p-4 mt-4">
+        <div className="grid grid-cols-3 gap-0">
+          {/* 당년 */}
+          <div className="pr-4 border-r border-slate-200 text-center">
+            <div className="text-xs text-slate-500 mb-1">당년</div>
+            <div className="text-2xl font-bold text-blue-600 flex items-center justify-center gap-1">
+              <span>{brandSummary.currentWeeks !== null ? brandSummary.currentWeeks.toFixed(1) : "-"}</span>
+              {brandSummary.currentWeeks !== null && <span className="text-xs text-slate-500 font-normal">주</span>}
+            </div>
+          </div>
+          {/* 전년 */}
+          <div className="px-4 border-r border-slate-200 text-center">
+            <div className="text-xs text-slate-500 mb-1">전년</div>
+            <div className="text-2xl font-bold text-slate-700 flex items-center justify-center gap-1">
+              <span>{brandSummary.prevWeeks !== null ? brandSummary.prevWeeks.toFixed(1) : "-"}</span>
+              {brandSummary.prevWeeks !== null && <span className="text-xs text-slate-500 font-normal">주</span>}
+            </div>
+          </div>
+          {/* 개선/악화 */}
+          <div className="pl-4 text-center">
+            <div className={`text-xs mb-1 ${
               deltaWeeks === null
                 ? "text-slate-400"
                 : deltaWeeks < 0
-                ? "text-blue-600"
-                : "text-rose-600"
-            }`}
-          >
-            {deltaWeeks === null
-              ? "-"
-              : deltaWeeks < 0
-              ? `${deltaWeeks.toFixed(1)}주`
-              : `+${deltaWeeks.toFixed(1)}주`}
-          </span>
+                ? "text-green-600"
+                : "text-red-600"
+            }`}>
+              {deltaWeeks === null ? "-" : deltaWeeks < 0 ? "개선" : "악화"}
+            </div>
+            <div
+              className={`text-2xl font-bold flex items-center justify-center gap-1 ${
+                deltaWeeks === null
+                  ? "text-slate-400"
+                  : deltaWeeks < 0
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
+            >
+              <span>
+                {deltaWeeks === null
+                  ? "-"
+                  : deltaWeeks < 0
+                  ? `△${Math.abs(deltaWeeks).toFixed(1)}`
+                  : `+${deltaWeeks.toFixed(1)}`}
+              </span>
+              {deltaWeeks !== null && (
+                <span className={`text-xs font-normal ${
+                  deltaWeeks < 0
+                    ? "text-green-600"
+                    : "text-red-600"
+                }`}>
+                  주
+                </span>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* ACC 재무 요약 */}
-      <div className="mb-4 pb-4 border-b border-slate-200">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-slate-600">ACC 기말재고</span>
-          <span className="text-base font-semibold text-slate-900">
-            {formatM(brandSummary.currentEndingStock)}M
-          </span>
+      {/* 3. ACC 기말재고 / ACC 판매액 작은 카드 2개 */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+        {/* ACC 기말재고 */}
+        <div className={`rounded-2xl p-4 ${brandStyle.accBox1} border-4 border-slate-200 shadow-sm text-center`}>
+          <div className="text-xs text-slate-500 mb-1">ACC 기말재고</div>
+          <div className="text-lg font-semibold text-slate-900">
+            {formatK(brandSummary.currentEndingStock)}K
+          </div>
         </div>
-        <div className="flex justify-between items-center">
-          <span className="text-sm text-slate-600">ACC 판매액</span>
-          <span className="text-base font-semibold text-slate-900">
-            {formatM(brandSummary.currentSales)}M
-          </span>
-        </div>
-      </div>
-
-      {/* ACC 재고 상세보기 테이블 */}
-      <div className="mb-4">
-        <div className="text-sm font-medium text-slate-700 mb-3">
-          • ACC 재고 상세보기 (M, 주)
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-slate-200">
-                <th className="text-left py-2 text-slate-600 font-medium"></th>
-                <th className="text-right py-2 text-slate-600 font-medium">{t("summary.currentYear")}</th>
-                <th className="text-right py-2 text-slate-600 font-medium">{t("summary.prevYear")}</th>
-                <th className="text-right py-2 text-slate-600 font-medium">YOY</th>
-              </tr>
-            </thead>
-            <tbody>
-              {["ALL", ...CATEGORY_ORDER].map((categoryKey) => {
-                if (categoryKey === "ALL") {
-                  const catDeltaWeeks = deltaWeeks;
-                  const catYOY = endingStockYOY;
-                  return (
-                    <tr key={categoryKey} className="border-b border-slate-100">
-                      <td className="py-2 text-slate-900 font-medium">{t("categories.all")}</td>
-                      <td className="py-2 text-right text-slate-900">
-                        {formatM(brandSummary.currentEndingStock)} ({formatWeeks(brandSummary.currentWeeks)})
-                      </td>
-                      <td className="py-2 text-right text-slate-900">
-                        {formatM(brandSummary.prevEndingStock)} ({formatWeeks(brandSummary.prevWeeks)})
-                      </td>
-                      <td className="py-2 text-right">
-                        <span className="text-slate-900">{formatPercent(catYOY)} </span>
-                        <span
-                          className={`font-semibold ${
-                            catDeltaWeeks === null
-                              ? "text-slate-400"
-                              : catDeltaWeeks < 0
-                              ? "text-blue-600"
-                              : "text-rose-600"
-                          }`}
-                        >
-                          {catDeltaWeeks === null
-                            ? "-"
-                            : catDeltaWeeks < 0
-                            ? `(${catDeltaWeeks.toFixed(1)}주)`
-                            : `(+${catDeltaWeeks.toFixed(1)}주)`}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                }
-
-                const catData = brandSummary.categoryData[categoryKey];
-                if (!catData) return null;
-
-                const catDeltaWeeks = catData.currentWeeks !== null && catData.prevWeeks !== null
-                  ? catData.currentWeeks - catData.prevWeeks
-                  : null;
-                const catYOY = getCategoryYOY(catData);
-                const categoryDisplayName = categoryKey === "Acc_etc" ? "기타 ACC" : getCategoryName(categoryKey);
-
-                return (
-                  <tr key={categoryKey} className="border-b border-slate-100">
-                    <td className="py-2 text-slate-900 font-medium">{categoryDisplayName}</td>
-                    <td className="py-2 text-right text-slate-900">
-                      {formatM(catData.currentEndingStock)} ({formatWeeks(catData.currentWeeks)})
-                    </td>
-                    <td className="py-2 text-right text-slate-900">
-                      {formatM(catData.prevEndingStock)} ({formatWeeks(catData.prevWeeks)})
-                    </td>
-                    <td className="py-2 text-right">
-                      <span className="text-slate-900">{formatPercent(catYOY)} </span>
-                      <span
-                        className={`font-semibold ${
-                          catDeltaWeeks === null
-                            ? "text-slate-400"
-                            : catDeltaWeeks < 0
-                            ? "text-blue-600"
-                            : "text-rose-600"
-                        }`}
-                      >
-                        {catDeltaWeeks === null
-                          ? "-"
-                          : catDeltaWeeks < 0
-                          ? `(${catDeltaWeeks.toFixed(1)}주)`
-                          : `(+${catDeltaWeeks.toFixed(1)}주)`}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+        {/* ACC 판매액 */}
+        <div className={`rounded-2xl p-4 ${brandStyle.accBox2} border-4 border-slate-200 shadow-sm text-center`}>
+          <div className="text-xs text-slate-500 mb-1">ACC 판매액</div>
+          <div className="text-lg font-semibold text-slate-900">
+            {formatK(brandSummary.currentSales)}K
+          </div>
         </div>
       </div>
 
-      {/* 전체 대시보드 보기 버튼 */}
-      <Link
-        href={getBrandPath(brand)}
-        className={`block w-full text-center py-3 rounded-lg font-semibold text-white transition-colors hover:opacity-90`}
-        style={{ backgroundColor: brandStyle.primaryColor }}
-      >
-        전체 대시보드 보기
-      </Link>
+      {/* 4. ACC 재고 상세보기 테이블 */}
+      <div className="mt-6">
+        <div className="text-sm font-bold text-slate-600 mb-2">
+          • ACC 재고 상세보기 (주)
+        </div>
+        {/* 헤더 행 */}
+        <div className="grid grid-cols-[minmax(60px,1.1fr)_minmax(90px,1.2fr)_minmax(90px,1.2fr)_minmax(70px,0.9fr)] text-xs font-bold text-slate-700 bg-slate-100 rounded-xl px-3 py-2 mt-4 mb-2">
+          <div>항목</div>
+          <div className="text-right">당년</div>
+          <div className="text-right">전년</div>
+          <div className="text-right">YOY</div>
+        </div>
+        <div className="space-y-2">
+          {["ALL", ...CATEGORY_ORDER].map((categoryKey) => {
+            if (categoryKey === "ALL") {
+              const catDeltaWeeks = deltaWeeks;
+              const catYOY = endingStockYOY;
+              return (
+                <div
+                  key={categoryKey}
+                  className={`grid grid-cols-[minmax(60px,1.1fr)_minmax(90px,1.2fr)_minmax(90px,1.2fr)_minmax(70px,0.9fr)] items-center gap-2 rounded-2xl ${brandStyle.totalRowBg} border-2 px-3 py-2 mb-2`}
+                  style={{ borderColor: brandStyle.totalRowBorder }}
+                >
+                  <div className="text-xs font-bold text-slate-900">{t("categories.all")}</div>
+                  <div className="text-right">
+                    <div className="text-sm font-bold text-slate-900">{formatK(brandSummary.currentEndingStock)}K</div>
+                    <div className="text-sm font-bold text-blue-600">{formatWeeks(brandSummary.currentWeeks)}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-semibold text-slate-900">{formatK(brandSummary.prevEndingStock)}K</div>
+                    <div className="text-sm font-bold text-blue-600">{formatWeeks(brandSummary.prevWeeks)}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className={`text-xs font-semibold ${
+                      catYOY === null
+                        ? "text-slate-400"
+                        : catYOY >= 100
+                        ? "text-red-500"
+                        : "text-emerald-600"
+                    }`}>
+                      {formatPercent(catYOY)}
+                    </div>
+                    <div
+                      className={`text-[11px] ${
+                        catDeltaWeeks === null
+                          ? "text-slate-400"
+                          : catDeltaWeeks >= 0
+                          ? "text-red-500"
+                          : "text-emerald-600"
+                      }`}
+                    >
+                      {catDeltaWeeks === null
+                        ? "-"
+                        : catDeltaWeeks >= 0
+                        ? `+${catDeltaWeeks.toFixed(1)}주`
+                        : `△${Math.abs(catDeltaWeeks).toFixed(1)}주`}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
+            const catData = brandSummary.categoryData[categoryKey];
+            if (!catData) return null;
+
+            const catDeltaWeeks = catData.currentWeeks !== null && catData.prevWeeks !== null
+              ? catData.currentWeeks - catData.prevWeeks
+              : null;
+            const catYOY = getCategoryYOY(catData);
+            const categoryDisplayName = categoryKey === "Acc_etc" ? "기타" : getCategoryName(categoryKey);
+
+            return (
+              <div
+                key={categoryKey}
+                className="grid grid-cols-[minmax(60px,1.1fr)_minmax(90px,1.2fr)_minmax(90px,1.2fr)_minmax(70px,0.9fr)] items-center gap-2 rounded-2xl bg-slate-50 px-3 py-2 mb-2"
+              >
+                <div className="text-xs font-bold text-slate-900">{categoryDisplayName}</div>
+                <div className="text-right">
+                  <div className="text-sm font-bold text-slate-900">{formatK(catData.currentEndingStock)}K</div>
+                  <div className="text-sm font-bold text-blue-600">{formatWeeks(catData.currentWeeks)}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm font-semibold text-slate-900">{formatK(catData.prevEndingStock)}K</div>
+                  <div className="text-sm font-bold text-blue-600">{formatWeeks(catData.prevWeeks)}</div>
+                </div>
+                <div className="text-right">
+                  <div className={`text-xs font-semibold ${
+                    catYOY === null
+                      ? "text-slate-400"
+                      : catYOY >= 100
+                      ? "text-red-500"
+                      : "text-emerald-600"
+                  }`}>
+                    {formatPercent(catYOY)}
+                  </div>
+                  <div
+                    className={`text-[11px] ${
+                      catDeltaWeeks === null
+                        ? "text-slate-400"
+                        : catDeltaWeeks >= 0
+                        ? "text-red-500"
+                        : "text-emerald-600"
+                    }`}
+                  >
+                    {catDeltaWeeks === null
+                      ? "-"
+                      : catDeltaWeeks >= 0
+                      ? `+${catDeltaWeeks.toFixed(1)}주`
+                      : `${catDeltaWeeks.toFixed(1)}주`}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 5. 하단 "전체 대시보드 보기" 버튼 */}
+      <div className="mt-6">
+        <Link
+          href={getBrandPath(brand)}
+          className="block rounded-2xl py-3.5 px-3 text-sm font-semibold text-white text-center transition-colors hover:opacity-90"
+          style={{ 
+            backgroundColor: brandStyle.primaryColor,
+          }}
+        >
+          전체 대시보드 보기
+        </Link>
+      </div>
     </div>
   );
 }

@@ -851,7 +851,7 @@ export default function StockWeeksHeatmap({
                 href="/home"
                 className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-gray-500 text-white hover:bg-gray-600 transition-all duration-200 shadow-sm hover:shadow-md"
               >
-                {t("common.home") || "홈"}
+                Home
               </Link>
             </div>
           )}
