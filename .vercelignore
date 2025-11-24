@@ -1,0 +1,8 @@
+*.py
+*.bat
+check_*.py
+preprocess_stock_weeks.py
+remove_2023_data.py
+node_modules
+.env*.local
+
